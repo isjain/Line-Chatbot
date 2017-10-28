@@ -3,7 +3,11 @@ private void handleTextContent(String replyToken, Event event, TextMessageConten
     	    	String text = content.getText();
 	           	String reply = null;
             	String[] arr = text.split(",")
-            	reply = getRecommendation(arr);
+            	ArrayList<String> arr2 = new ArrayList<String>();
+            	for(String ss: arr){
+            		arr2.add(getFOOD(ss));
+            	}
+            	reply = getRecommendation(arr2);
                 // log.info("Returns echo message {}: {}", replyToken, reply);
                 this.replyText(
                         replyToken,
@@ -12,25 +16,25 @@ private void handleTextContent(String replyToken, Event event, TextMessageConten
                 break;
         }
     }
-    public class WagnerFischer {
-    	private char[] s1;
-   		private char[] s2;
+public class WagnerFischer {
+    private char[] s1;
+   	private char[] s2;
 
-  		  public WagnerFischer(String s1, String s2) {
+  	public WagnerFischer(String s1, String s2) {
       	  this.s1 = s1.toLowerCase().toCharArray();
       	  this.s2 = s2.toLowerCase().toCharArray();
     }
 
-    	private int min(int a, int b, int c) {
-       	 return Math.min(a, Math.min(b, c));
-    }
+	private int min(int a, int b, int c) {
+	       	 return Math.min(a, Math.min(b, c));
+	}
 
     /**
      * Using Dynamic Programming, the Wagner-Fischer algorithm is able to 
      * calculate the edit distance between two strings.
      * @return edit distance between s1 and s2
      */
-    	public int getDistance() {
+    public int getDistance() {
       	  int[][] dp = new int[s1.length + 1][s2.length + 1];
 	        for (int i = 0; i <= s1.length; dp[i][0] = i++);
 	        for (int j = 0; j <= s2.length; dp[0][j] = j++);
@@ -47,17 +51,21 @@ private void handleTextContent(String replyToken, Event event, TextMessageConten
 	        }
 	        return dp[s1.length][s2.length];
     }
+	public int dist(String input, String knownDrink){
+		return (new WagnerFischer(input, knownDrink)).getDistance();
+	}
 
-    public String getBeverage(String s){
-    	String result = null;
+public String getFOOD(String s){
+    	ArrayList<String> FOOD = new ArrayList<String>();
+
 		try {
+
 			Connection con = getConnection();
-			PreparedStatement smt = con.prepareStatement("SELECT COLUMN_NAME FROM TABLE_NAME where COLUMN_NAME like concat('%', ? ,'%')");
-			smt.setString(1,text);
+			PreparedStatement smt = con.prepareStatement("SELECT DESCRIPTION FROM TABLE_NAME ");
 			ResultSet rs = smt.executeQuery();
 			while(rs.next())
 			{
-				result = rs.getString("response");
+				FOOD.add(rs.getString("COLUMN_NAME"));
 			}
 			rs.close();
 			smt.close();
@@ -66,47 +74,18 @@ private void handleTextContent(String replyToken, Event event, TextMessageConten
 			System.out.println(e);
 		}
 		// TODO: find the word with minimum edit distance
-		String closestDrink = BEVERAGES[0];
-		int min_dist = dist(s, BEVERAGES[0]);
-		for(int index = 1; index < BEVERAGES.length; index++){
-			int dist = dist(s, BEVERAGES[index]);
+		String closestFOOD = FOOD[0];
+		int min_dist = dist(s, FOOD[0]);
+		for(int index = 1; index < FOOD.length; index++){
+			int dist = dist(s, FOOD[index]);
 			if(dist < min_dist){
 				min_dist = dist;
-				closestDrink = BEVERAGES[index];
+				closestFOOD = FOOD[index];
 			}
 		}
 		if (min_dist <= 3) {
-			return closestDrink;
+			return closestFOOD;
 		}else{
 			return null;
 		}
-	}
-
-	public int dist(String input, String knownDrink){
-		return (new WagnerFischer(input, knownDrink)).getDistance();
-	}
-
-	String search(String text) throws Exception {
-		//Write your code here
-		String result = null;
-		try {
-			Connection con = getConnection();
-			PreparedStatement smt = con.prepareStatement("SELECT response FROM msg where keyword like concat('%', ? ,'%')");
-			smt.setString(1,text);
-			ResultSet rs = smt.executeQuery();
-			while(rs.next())
-			{
-				result = rs.getString("response");
-			}
-			rs.close();
-			smt.close();
-			con.close();
-		}catch (Exception e) {
-			System.out.println(e);
-		}
-		
-		if(result!=null)
-			return result;
-		throw new Exception("NOT FOUND");
-		
 	}
