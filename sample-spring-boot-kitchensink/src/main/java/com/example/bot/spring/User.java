@@ -15,7 +15,24 @@ public class User {
 	private String name;
 	private String gender;
 	private String goal;
+	
+	// For bmi and bmr, when the user is inputting, need to invoke set methods as constructor wont do it
 
+	public User(float weight, int userId, float height, int gymFrequency,
+			float loseGainPerWeek, int age, int waterReminder, String name, String gender, String goal) {
+		
+		this.name= name;
+		this.userId= userId;
+		this.height= height;
+		this.gymFrequency= gymFrequency;
+		this.loseGainPerWeek= loseGainPerWeek;
+		this.age= age;
+		this.waterReminder= waterReminder;
+		this.name= name;
+		this.gender= gender;
+		this.goal= goal;
+		
+	}
 	
 	public void setBMI() {
 		bmi= weight/((height)*height);
