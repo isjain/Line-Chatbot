@@ -37,7 +37,6 @@ public class setNewUser {
                 replyToken,
                 getUserName;
         );
-		handleTextContent(getUserName);
 		this.replyText(
                 replyToken,
                 getUserName;

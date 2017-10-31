@@ -9,8 +9,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserInputDatabaseEngine extends DatabaseEngine {
+	
 	@Override
-	boolean newUser(User new_User) throws Exception{
+	void newUser(User new_User) throws Exception{
 		boolean success = false;
 		try {
 			Connection con = getConnection();
