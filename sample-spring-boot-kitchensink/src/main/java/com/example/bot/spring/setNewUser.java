@@ -1,4 +1,12 @@
 
+string text = null;
+private void handleTextContent(String replyToken, Event event, TextMessageContent content) {
+    	    			text = content.getText();
+    }
+    
+   
+
+	
 public class setNewUser {
 	string getUserWeight = "Enter your weight in kgs";
 	string getUserName = "Enter your name";
@@ -25,7 +33,16 @@ public class setNewUser {
 	
 	void createNewUser()
 	{
-		replyText()
+		this.replyText(
+                replyToken,
+                getUserName;
+        );
+		handleTextContent(getUserName);
+		this.replyText(
+                replyToken,
+                getUserName;
+        );
+		
 		
 		
 		
