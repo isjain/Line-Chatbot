@@ -72,7 +72,7 @@ public class User {
 	}
 	
 	public String getBMR() {
-		return Integer.toString((int)bmr);
+		return Integer.toString((int) bmr);
 	}
 	
 	public String getBMI() {
