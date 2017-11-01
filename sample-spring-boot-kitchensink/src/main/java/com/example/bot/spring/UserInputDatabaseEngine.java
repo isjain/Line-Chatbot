@@ -15,7 +15,7 @@
 //		boolean success = false;
 //		try {
 //			Connection con = getConnection();
-//			PreparedStatement smt = con.prepareStatement("INSERT INTO user (weight, userId, height, gymFrequency, bmi, bmr, loseGainPerWeek, age, waterReminder, name, gender, goal) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
+//			PreparedStatement smt = con.prepareStatement("INSERT INTO user (weight, userId, height, gymFrequency, bmi, bmr, loseGainPerWeek, age, waterReminder, name, gender, goal, reqcalday) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
 //			smt.setString(1,new_User.getWeight());
 //			smt.setString(2,new_User.getUserId());
 //			smt.setString(3,new_User.getHeight());
@@ -28,6 +28,7 @@
 //			smt.setString(10,new_User.getName());
 //			smt.setString(11,new_User.getGender());
 //			smt.setString(12,new_User.getGoal());
+//			smt.setString(13,getCalDay());
 //			ResultSet rs = smt.executeQuery();
 //			rs.close();
 //			smt.close();

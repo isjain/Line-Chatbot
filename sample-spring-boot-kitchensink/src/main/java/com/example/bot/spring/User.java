@@ -17,6 +17,7 @@
 //	private String name;
 //	private String gender;
 //	private String goal;
+//  private float calDay;
 //	
 //	// weight should be in kgs
 //	//height should be in cms
@@ -40,6 +41,23 @@
 //		
 //	}
 //	
+//	public void getCalDay() {
+//			switch(gymFrequency) {
+//				case 0: calDay = bmr*1.2;
+//						break;
+//				case 1:
+//				case 2: 
+//				case 3: calDay = bmr*1.375;
+//						break;
+//				case 4:
+//				case 5: calDay = bmr*1.55;
+//						break;
+//				case 6: 
+//				case 7: calDay = bmr*1.725;
+//						break;
+//			}
+//	}
+
 //	public void setBMI() {
 //		bmi= weight/((height)*height);
 //	}
@@ -102,6 +120,8 @@
 //	public String getGoal() {
 //		return goal;
 //	}
+
+//	
 //	
 //	
 //	//Need to find a timer interval, which displays the reminder every 24/waterReminder hours
