@@ -54,41 +54,41 @@ public class User {
 		}
 	}
 	
-	public float getWeight() {
-		return weight;
+	public String getWeight() {
+		return Integer.toString((int) weight);
 	}
 	
-	public int getUserId() {
-		return userId;
+	public String getUserId() {
+		return Integer.toString((int) userId);
 	}
 	
-	public float getHeight() {
-		return height;
+	public String getHeight() {
+		return Integer.toString((int) height);
 	}
 	
-	public int getGymFrequency() {
-		return gymFrequency;
+	public String getGymFrequency() {
+		return Integer.toString((int) gymFrequency);
 
 	}
 	
-	public float getBMR() {
-		return bmr;
+	public String getBMR() {
+		return Integer.toString((int) bmr);
 	}
 	
-	public float getBMI() {
-		return bmi;
+	public String getBMI() {
+		return Integer.toString((int) bmi);
 	}
 	
-	public float getLoseGainPerWeek() {
-		return loseGainPerWeek;
+	public String getLoseGainPerWeek() {
+		return Integer.toString((int) loseGainPerWeek);
 	}
 	
-	public int getAge() {
-		return age;
+	public String getAge() {
+		return Integer.toString((int) age);
 	}
 	
-	public int getWaterReminder() {
-		return waterReminder;
+	public String getWaterReminder() {
+		return Integer.toString((int) waterReminder);
 	}
 	
 	public String getName() {
