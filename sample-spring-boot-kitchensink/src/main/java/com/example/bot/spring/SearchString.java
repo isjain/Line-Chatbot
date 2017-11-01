@@ -1,17 +1,16 @@
 private void handleTextContent(String replyToken, Event event, TextMessageContent content)
 
     	    	String text = content.getText();
-	           	String reply = null;
+	           	String recommendation = null;
             	String[] arr = text.split(",")
-            	ArrayList<String> arr2 = new ArrayList<String>();
-            	for(String ss: arr){
-            		arr2.add(getFOOD(ss));
-            	}
-            	reply = getRecommendation(arr2);
+            	ArrayList<String> reply = new ArrayList<String>();
+            	reply = database.search(arr);
+
+            	recommendation = getRecommendation(reply);
                 // log.info("Returns echo message {}: {}", replyToken, reply);
                 this.replyText(
                         replyToken,
-                        reply
+                        recommendation
                 );
                 break;
         }
@@ -55,17 +54,23 @@ public class WagnerFischer {
 		return (new WagnerFischer(input, knownDrink)).getDistance();
 	}
 
-public String getFOOD(String s){
-    	ArrayList<String> FOOD = new ArrayList<String>();
 
+
+
+	@Slf4j
+public class SQLDatabaseEngine extends DatabaseEngine {
+	@Override
+	String[] search(String[] text) throws Exception {
+		//Write your code here
+		String[] result = null;
 		try {
-
 			Connection con = getConnection();
-			PreparedStatement smt = con.prepareStatement("SELECT DESCRIPTION FROM TABLE_NAME ");
+			PreparedStatement smt = con.prepareStatement("SELECT * FROM TABLE_NAME");
+			// smt.setString(1,text);
 			ResultSet rs = smt.executeQuery();
 			while(rs.next())
 			{
-				FOOD.add(rs.getString("COLUMN_NAME"));
+				result.add(rs.getString("INGREDIENTS"));
 			}
 			rs.close();
 			smt.close();
@@ -73,19 +78,51 @@ public String getFOOD(String s){
 		}catch (Exception e) {
 			System.out.println(e);
 		}
-		// TODO: find the word with minimum edit distance
-		String closestFOOD = FOOD[0];
-		int min_dist = dist(s, FOOD[0]);
-		for(int index = 1; index < FOOD.length; index++){
-			int dist = dist(s, FOOD[index]);
-			if(dist < min_dist){
-				min_dist = dist;
-				closestFOOD = FOOD[index];
+
+		//To find closest ingredients possible
+		ArrayList<String> ingred = new ArrayList<String>();
+		for(String s:text)
+		{
+			String closestFOOD = result[0];
+			int min_dist = dist(s, result[0]);
+			for(int index = 1; index < result.length; index++){
+				int dist = dist(s, result[index]);
+				if(dist < min_dist){
+					min_dist = dist;
+					closestFOOD = result[index];
+				}
+				else if(dist ==0)
+				{
+					closestFOOD = result[index];
+					break;
+				}
+			}
+			if (min_dist <= 3) {
+				ingred.add(closestFOOD);
+			}
+			else {
+				ingred.add(null);
 			}
 		}
-		if (min_dist <= 3) {
-			return closestFOOD;
-		}else{
-			return null;
-		}
+		return ingred;
+		
 	}
+	
+	
+	private Connection getConnection() throws URISyntaxException, SQLException {
+		Connection connection;
+		URI dbUri = new URI(System.getenv("DATABASE_URL"));
+
+		String username = dbUri.getUserInfo().split(":")[0];
+		String password = dbUri.getUserInfo().split(":")[1];
+		String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath() +  "?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory";
+
+		log.info("Username: {} Password: {}", username, password);
+		log.info ("dbUrl: {}", dbUrl);
+		
+		connection = DriverManager.getConnection(dbUrl, username, password);
+
+		return connection;
+	}
+
+}
