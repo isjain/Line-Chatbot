@@ -22,5 +22,6 @@ dependencies {
 }
 
 test {
-    environment "DATABASE_URL", "postgres://xtoimwepeqgqjd:12cf80a17ee22dd2b4eab544324a62a035411d09c78e12c594f02992e2a06c09@ec2-23-21-184-181.compute-1.amazonaws.com:5432/d1k62ad22q24kc" 
+    environment "DATABASE_URL", "postgres://udtpilygnahnzc:9ebaa6edb5d6b68012a7c0e19b242b506bf9f815cd16115fd231c3dd227911c2@ec2-184-72-230-93.compute-1.amazonaws.com:5432/d47c0aamo3vmn6" 
 }
+ //   environment "DATABASE_URL", "postgres://xtoimwepeqgqjd:12cf80a17ee22dd2b4eab544324a62a035411d09c78e12c594f02992e2a06c09@ec2-23-21-184-181.compute-1.amazonaws.com:5432/d1k62ad22q24kc" 
