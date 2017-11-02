@@ -9,6 +9,193 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserInputDatabaseEngine extends DatabaseEngine {
+	public void UpdateUserWeight(string UserId, float weight)
+	{
+		try {
+			Connection con = getConnection();
+			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET weight=? WHERE user_id='?'");
+			smt.setFloat(1,weight);
+			smt.setString(2,UserId);
+			ResultSet rs = smt.executeQuery();
+			rs.close();
+			smt.close();
+			con.close();
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
+	public void UpdateUserHeight(string UserId, float height)
+	{
+		try {
+			Connection con = getConnection();
+			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET height=? WHERE user_id='?'");
+			smt.setFloat(1,height);
+			smt.setString(2,UserId);
+			ResultSet rs = smt.executeQuery();
+			rs.close();
+			smt.close();
+			con.close();
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
+	public void UpdateUserGymFrequency(string UserId, int gymFrequency)
+	{
+		try {
+			Connection con = getConnection();
+			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET gymfrequency=? WHERE user_id='?'");
+			smt.setInt(1,gymFrequency);
+			smt.setString(2,UserId);
+			ResultSet rs = smt.executeQuery();
+			rs.close();
+			smt.close();
+			con.close();
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
+	public void UpdateUserBMI(string UserId, float weight)
+	{
+		try {
+			Connection con = getConnection();
+			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET weight=? WHERE user_id='?'");
+			smt.setFloat(1,weight);
+			smt.setString(2,UserId);
+			ResultSet rs = smt.executeQuery();
+			rs.close();
+			smt.close();
+			con.close();
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
+	public void UpdateUserBMR(string UserId, float weight)
+	{
+		try {
+			Connection con = getConnection();
+			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET weight=? WHERE user_id='?'");
+			smt.setFloat(1,weight);
+			smt.setString(2,UserId);
+			ResultSet rs = smt.executeQuery();
+			rs.close();
+			smt.close();
+			con.close();
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
+	public void UpdateUserLoseGain(string UserId, float loseGain)
+	{
+		try {
+			Connection con = getConnection();
+			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET losegainperweek=? WHERE user_id='?'");
+			smt.setFloat(1,loseGain);
+			smt.setString(2,UserId);
+			ResultSet rs = smt.executeQuery();
+			rs.close();
+			smt.close();
+			con.close();
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
+	public void UpdateUserAge(string UserId, int age)
+	{
+		try {
+			Connection con = getConnection();
+			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET age=? WHERE user_id='?'");
+			smt.setInt(1,age);
+			smt.setString(2,UserId);
+			ResultSet rs = smt.executeQuery();
+			rs.close();
+			smt.close();
+			con.close();
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
+	public void UpdateUserWaterReminder(string UserId, int waterReminder)
+	{
+		try {
+			Connection con = getConnection();
+			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET waterreminder=? WHERE user_id='?'");
+			smt.setInt(1,waterReminder);
+			smt.setString(2,UserId);
+			ResultSet rs = smt.executeQuery();
+			rs.close();
+			smt.close();
+			con.close();
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
+	public void UpdateUserName(string UserId, string name)
+	{
+		try {
+			Connection con = getConnection();
+			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET name='?' WHERE user_id='?'");
+			smt.setString(1,name);
+			smt.setString(2,UserId);
+			ResultSet rs = smt.executeQuery();
+			rs.close();
+			smt.close();
+			con.close();
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
+	public void UpdateUserGender(string UserId, string gender)
+	{
+		try {
+			Connection con = getConnection();
+			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET gender='?' WHERE user_id='?'");
+			smt.setString(1,gender);
+			smt.setString(2,UserId);
+			ResultSet rs = smt.executeQuery();
+			rs.close();
+			smt.close();
+			con.close();
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
+	public void UpdateUserReqCalDay(string UserId, double reqcal)
+	{
+		try {
+			Connection con = getConnection();
+			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET reqcalday=? WHERE user_id='?'");
+			smt.setDouble(1,reqcal);
+			smt.setString(2,UserId);
+			ResultSet rs = smt.executeQuery();
+			rs.close();
+			smt.close();
+			con.close();
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
 	public void CreateNewUser(User new_User) throws Exception{
 		try {
 			Connection con = getConnection();
