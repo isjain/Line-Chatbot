@@ -242,7 +242,7 @@ public class KitchenSinkController {
 
             		String userId = event.getSource().getUserId();
             		User user = new User(userId);
-            		this.replyText(replyToken, user.getUserId() + " User created: Please enter the following details for name, gender, weight(kg), height(cm),age, gymFrequency(0 to 7 per week), loseGainPerWeek(No. of kgs to gain or lose. eg: -10 for losing 10 kgs per week), waterReminder(Integer No. of reminders per day)");	
+            		this.replyText(replyToken,"User created: Please enter the following details for name,\ngender,\nweight(kg),\nheight(cm),\nage,\ngymFrequency(0 to 7 per week),\nloseGainPerWeek(No. of kgs to gain or lose. eg: -10 for losing 10 kgs per week),\nwaterReminder(Integer No. of reminders per day)");	
             		database.CreateNewUser(user);
             		break;
             }
