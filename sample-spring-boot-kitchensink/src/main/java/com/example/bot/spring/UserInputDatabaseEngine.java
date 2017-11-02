@@ -25,36 +25,65 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		
 	}
 	
-	public void newUser(User new_User) throws Exception{
-		boolean success = false;
+	public boolean searchUser(String userID)
+	{
 		try {
-			Connection con = getConnection();
-
-			PreparedStatement smt = con.prepareStatement("INSERT INTO user (weight, userId, height, gymFrequency, bmi, bmr, loseGainPerWeek, age, waterReminder, name, gender, goal, reqcalday) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
-			smt.setString(1,new_User.getWeight());
-			smt.setString(2,new_User.getUserId());
-			smt.setString(3,new_User.getHeight());
-			smt.setString(4,new_User.getGymFrequency());
-			smt.setString(5,new_User.getBMI());
-			smt.setString(6,new_User.getBMR());
-			smt.setString(7,new_User.getLoseGainPerWeek());
-			smt.setString(8,new_User.getAge());
-			smt.setString(9,new_User.getWaterReminder());
-			smt.setString(10,new_User.getName());
-			smt.setString(11,new_User.getGender());
-			smt.setString(12,new_User.getGoal());
-			smt.setString(13,new_User.getCalDay());
-			ResultSet rs = smt.executeQuery();
-			rs.close();
-			smt.close();
-			con.close();
-			
+		boolean found = false;
+		String result = null;
+		Connection con = getConnection();
+		PreparedStatement smt = con.prepareStatement("SELECT * FROM userdatatable WHERE user_id = '?'");
+		smt.setString(1,userID);
+		ResultSet rs = smt.executeQuery();
+		while(rs.next())
+		{
+			result = rs.getString("user_id");
+		}
+		rs.close();
+		smt.close();
+		con.close();
+		if (result.length()>0)
+		{
+			return true;
+		}
+		else
+			return false;
 		}catch (Exception e) {
 			System.out.println(e);
 		}
-		
+		return false;
 		
 	}
+	
+//	public void newUser(User new_User) throws Exception{
+//		boolean success = false;
+//		try {
+//			Connection con = getConnection();
+//
+//			PreparedStatement smt = con.prepareStatement("INSERT INTO user (weight, userId, height, gymFrequency, bmi, bmr, loseGainPerWeek, age, waterReminder, name, gender, goal, reqcalday) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+//			smt.setString(1,new_User.getWeight());
+//			smt.setString(2,new_User.getUserId());
+//			smt.setString(3,new_User.getHeight());
+//			smt.setString(4,new_User.getGymFrequency());
+//			smt.setString(5,new_User.getBMI());
+//			smt.setString(6,new_User.getBMR());
+//			smt.setString(7,new_User.getLoseGainPerWeek());
+//			smt.setString(8,new_User.getAge());
+//			smt.setString(9,new_User.getWaterReminder());
+//			smt.setString(10,new_User.getName());
+//			smt.setString(11,new_User.getGender());
+//			smt.setString(12,new_User.getGoal());
+//			smt.setString(13,new_User.getCalDay());
+//			ResultSet rs = smt.executeQuery();
+//			rs.close();
+//			smt.close();
+//			con.close();
+//			
+//		}catch (Exception e) {
+//			System.out.println(e);
+//		}
+//		
+//		
+//	}
 	
 	@Override
 	String search(String text) throws Exception {
