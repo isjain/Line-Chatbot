@@ -17,7 +17,8 @@ public class User {
 	private String name;
 	private String gender;
 	private String goal;
-	
+	private float calDay;
+
 	// weight should be in kgs
 	//height should be in cms
 	//age should be in years
@@ -53,7 +54,24 @@ public class User {
 			bmr=(float) (10 * weight + 6.25 * height - 5 * age - 161);
 		}
 	}
+	//added func to calculate req number of calories per day
 	
+	public void setCalDay() {
+		switch (gymFrequency) {
+		case 0:calDay = bmr*1.2;
+				break;
+		case 1:
+		case 2:
+		case 3:calDay = bmr*1.375;
+				break;
+		case 4:
+		case 5:calDay = bmr*1.55;
+				break;
+		case 6:
+		case 7:calDay = bmr*1.725;
+				break;
+	}
+
 	public String getWeight() {
 		return Integer.toString((int) weight);
 	}
@@ -102,6 +120,10 @@ public class User {
 	public String getGoal() {
 		return goal;
 	}
+	public String getCalDay() {
+		return calDay;
+	}
+	
 	
 	
 	//Need to find a timer interval, which displays the reminder every 24/waterReminder hours
