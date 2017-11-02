@@ -13,7 +13,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 	{
 		try {
 			Connection con = getConnection();
-			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET weight=? WHERE user_id='?'");
+			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET weight=? WHERE user_id=?");
 			smt.setFloat(1,weight);
 			smt.setString(2,UserId);
 			ResultSet rs = smt.executeQuery();
@@ -47,7 +47,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 	{
 		try {
 			Connection con = getConnection();
-			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET gymfrequency=? WHERE user_id='?'");
+			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET gymfrequency=? WHERE user_id=?");
 			smt.setInt(1,gymFrequency);
 			smt.setString(2,UserId);
 			ResultSet rs = smt.executeQuery();
@@ -64,7 +64,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 	{
 		try {
 			Connection con = getConnection();
-			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET weight=? WHERE user_id='?'");
+			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET weight=? WHERE user_id=?");
 			smt.setFloat(1,weight);
 			smt.setString(2,UserId);
 			ResultSet rs = smt.executeQuery();
@@ -81,7 +81,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 	{
 		try {
 			Connection con = getConnection();
-			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET weight=? WHERE user_id='?'");
+			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET weight=? WHERE user_id=?");
 			smt.setFloat(1,weight);
 			smt.setString(2,UserId);
 			ResultSet rs = smt.executeQuery();
@@ -98,7 +98,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 	{
 		try {
 			Connection con = getConnection();
-			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET losegainperweek=? WHERE user_id='?'");
+			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET losegainperweek=? WHERE user_id=?");
 			smt.setFloat(1,loseGain);
 			smt.setString(2,UserId);
 			ResultSet rs = smt.executeQuery();
@@ -115,7 +115,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 	{
 		try {
 			Connection con = getConnection();
-			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET age=? WHERE user_id='?'");
+			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET age=? WHERE user_id=?");
 			smt.setInt(1,age);
 			smt.setString(2,UserId);
 			ResultSet rs = smt.executeQuery();
@@ -132,7 +132,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 	{
 		try {
 			Connection con = getConnection();
-			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET waterreminder=? WHERE user_id='?'");
+			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET waterreminder=? WHERE user_id=?");
 			smt.setInt(1,waterReminder);
 			smt.setString(2,UserId);
 			ResultSet rs = smt.executeQuery();
@@ -149,7 +149,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 	{
 		try {
 			Connection con = getConnection();
-			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET name='?' WHERE user_id='?'");
+			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET name='?' WHERE user_id=?");
 			smt.setString(1,name);
 			smt.setString(2,UserId);
 			ResultSet rs = smt.executeQuery();
@@ -166,7 +166,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 	{
 		try {
 			Connection con = getConnection();
-			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET gender='?' WHERE user_id='?'");
+			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET gender='?' WHERE user_id=?");
 			smt.setString(1,gender);
 			smt.setString(2,UserId);
 			ResultSet rs = smt.executeQuery();
@@ -183,7 +183,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 	{
 		try {
 			Connection con = getConnection();
-			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET reqcalday=? WHERE user_id='?'");
+			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET reqcalday=? WHERE user_id=?");
 			smt.setDouble(1,reqcal);
 			smt.setString(2,UserId);
 			ResultSet rs = smt.executeQuery();
