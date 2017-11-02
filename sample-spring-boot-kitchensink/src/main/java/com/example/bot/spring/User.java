@@ -12,7 +12,7 @@ public class User {
 	private float bmr;
 	private float loseGainPerWeek;
 	private int age;
-	private int waterReminder;
+	private float waterReminder;
 	
 	private String name;
 	private String gender;
@@ -47,9 +47,6 @@ public class User {
 	}
 	public void setGender(String w) {
 		this.gender = w;
-	}
-	public void setWaterReminder(int w) {
-		this.waterReminder = w;
 	}
 	public void setLostGainPerWeek(float w) {
 		this.loseGainPerWeek = w;
@@ -130,7 +127,7 @@ public class User {
 	}
 	
 	public String getWaterReminder() {
-		return Integer.toString(waterReminder);
+		return Float.toString(waterReminder);
 	}
 	
 	public String getName() {
@@ -147,19 +144,38 @@ public class User {
 	public String getCalDay() {
 		return Integer.toString((int)calDay);
 	}
-	
+
 	
 	
 	//Need to find a timer interval, which displays the reminder every 24/waterReminder hours
 	//The Joption code, displays the alert to the user right now
-	public void setWaterReminder(int waterReminder) {
+	public void setWaterReminder(float waterReminder) {
 		// one way to do this, is to divide 4 daily reminders by 24 ie remind every 6 hours
-		for(int i=1; i<=waterReminder;i++) {
-			
-			JOptionPane.showMessageDialog(null, "Paani Paani time");
 		
-		}
-	}
+		float gapHours = 24/waterReminder;
+		
+		Thread t = new Thread() {
+		    @Override
+		    public void run() {
+		        while(true) {
+		            try {
+		                Thread.sleep(1000*60*60*((long)gapHours));
+//		                "This is your reminder to drink water :)"
+		                //Send notification to Line  
+		                
+		                
+		            } catch (InterruptedException ie) {
+		            }
+		        }
+		    }
+		};
+		t.start();
+	
+		
+		
+
+	
+}
 	
 
 	

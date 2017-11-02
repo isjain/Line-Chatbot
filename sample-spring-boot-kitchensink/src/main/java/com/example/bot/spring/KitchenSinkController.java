@@ -210,7 +210,9 @@ public class KitchenSinkController {
 	private void handleTextContent(String replyToken, Event event, TextMessageContent content)
             throws Exception {
         String text = content.getText();
-        String arr = text.split(":");
+        String[] arr = text.split(":");
+        String command = arr[0];
+        String inputData = arr[1];
         
         log.info("Got text message from {}: {}", replyToken, text);
         switch (text) {
@@ -236,17 +238,8 @@ public class KitchenSinkController {
                 break;
             }
             case "Start": {
-//            		float weight = 0;
-            		string userId= 0;
-//            		float height= 0;
-//            		int gymFrequency= 0;
-//            		float loseGainPerWeek= 0;
-//            		int age= 0;
-//            		int waterReminder= 0;
-//            		String name= "";
-//            		String gender= "";
-//            		String goal= "";
-            		userId = event.getSource().getUserId();
+
+            		String userId = event.getSource().getUserId();
             		User user = new User(userId);
             		this.reply(replyToken, new TextMessage("User created: Please enter the following details for name, gender, weight(kg), height(cm),age, gymFrequency(0 to 7 per week), loseGainPerWeek(No. of kgs to gain or lose. eg: -10 for losing 10 kgs per week), waterReminder(Integer No. of reminders per day)"));	
             		break;
