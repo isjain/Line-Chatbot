@@ -248,38 +248,9 @@ public class KitchenSinkController {
 //            		String goal= "";
             		userId = event.getSource().getUserId();
             		User user = new User(userId);
-            		this.reply(replyToken, new TextMessage("User created: Please enter the following details for name, gender, weight(kg), height(cm),age, gymFrequency(0 to 7 per week), loseGainPerWeek(No. of kgs to gain or lose. eg: -10 for losing 10 kgs per week), waterReminder(Integer No. of reminders per day)"));
-//                 name = content.getText();
-
-//            		this.reply(replyToken, new TextMessage("Enter your weight in kgs"));
-//                weight = Float.parseFloat(content.getText());
-//
-//                this.reply(replyToken, new TextMessage("Enter your gender male or female"));
-//                gender = content.getText();
-//            		
-//                this.reply(replyToken, new TextMessage("Please enter your goal: LoseWeight or GainWeight"));
-//                goal = content.getText();
-//                
-//                this.reply(replyToken, new TextMessage("Please enter the number of times you exercise in a week (0-7)"));
-//                gymFrequency = Integer.parseInt(content.getText());
-//                
-//                this.reply(replyToken, new TextMessage("Please enter your height in cm"));
-//                height = Float.parseFloat(content.getText());
-//                
-//                this.reply(replyToken, new TextMessage("Please enter the number of Water reminder notifications you would like in a day (recommended is 8)"));
-//                waterReminder = Integer.parseInt(content.getText());
-//                
-//                this.reply(replyToken, new TextMessage("Please enter the amount of weight you wish to lose or gain per week in kgs"));
-//                loseGainPerWeek = Float.parseFloat(content.getText());
-//                 
-//            		User user = new User(weight, userId, height, gymFrequency,
-//            				loseGainPerWeek, age, waterReminder, name, gender, goal);       	
-//            	
+            		this.reply(replyToken, new TextMessage("User created: Please enter the following details for name, gender, weight(kg), height(cm),age, gymFrequency(0 to 7 per week), loseGainPerWeek(No. of kgs to gain or lose. eg: -10 for losing 10 kgs per week), waterReminder(Integer No. of reminders per day)"));	
             		break;
             }
-            
-            
-            
             case "carousel": {
                 String imageUrl = createUri("/static/buttons/1040.jpg");
                 CarouselTemplate carouselTemplate = new CarouselTemplate(
