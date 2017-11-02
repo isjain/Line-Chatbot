@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> master
 package com.example.bot.spring;
 
 import java.net.URI;
@@ -10,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserInputDatabaseEngine extends DatabaseEngine {
+<<<<<<< HEAD
 	@Override
 	boolean newUser(User new_User) throws Exception{
 		boolean success = false;
@@ -28,6 +32,26 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 			smt.setString(10,new_User.name);
 			smt.setString(11,new_User.gender);
 			smt.setString(12,new_User.goal);
+=======
+	
+	public void newUser(User new_User) throws Exception{
+		boolean success = false;
+		try {
+			Connection con = getConnection();
+			PreparedStatement smt = con.prepareStatement("INSERT INTO user (weight, userId, height, gymFrequency, bmi, bmr, loseGainPerWeek, age, waterReminder, name, gender, goal) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
+			smt.setString(1,new_User.getWeight());
+			smt.setString(2,new_User.getUserId());
+			smt.setString(3,new_User.getHeight());
+			smt.setString(4,new_User.getGymFrequency());
+			smt.setString(5,new_User.getBMI());
+			smt.setString(6,new_User.getBMR());
+			smt.setString(7,new_User.getLoseGainPerWeek());
+			smt.setString(8,new_User.getAge());
+			smt.setString(9,new_User.getWaterReminder());
+			smt.setString(10,new_User.getName());
+			smt.setString(11,new_User.getGender());
+			smt.setString(12,new_User.getGoal());
+>>>>>>> master
 			ResultSet rs = smt.executeQuery();
 			rs.close();
 			smt.close();
@@ -39,6 +63,11 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		
 		
 	}
+<<<<<<< HEAD
+=======
+	
+	@Override
+>>>>>>> master
 	String search(String text) throws Exception {
 		//Write your code here
 		String result = null;
@@ -73,6 +102,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		String password = dbUri.getUserInfo().split(":")[1];
 		String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath() +  "?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory";
 
+<<<<<<< HEAD
 		log.info("Username: {} Password: {}", username, password);
 		log.info ("dbUrl: {}", dbUrl);
 		
@@ -167,4 +197,15 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 //	}
 //
 //}
+>>>>>>> master
+=======
+//		log.info("Username: {} Password: {}", username, password);
+//		log.info ("dbUrl: {}", dbUrl);
+		
+		connection = DriverManager.getConnection(dbUrl, username, password);
+
+		return connection;
+	}
+
+}
 >>>>>>> master

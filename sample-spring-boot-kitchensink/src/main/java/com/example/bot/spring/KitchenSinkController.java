@@ -316,11 +316,11 @@ public class KitchenSinkController {
 
 
 	public KitchenSinkController() {
-		database = new SQLDatabaseEngine();
+		database = new UserInputDatabaseEngine();
 		itscLOGIN = System.getenv("ITSC_LOGIN");
 	}
 
-	private SQLDatabaseEngine database;
+	private UserInputDatabaseEngine database;
 	private String itscLOGIN;
 	
 
