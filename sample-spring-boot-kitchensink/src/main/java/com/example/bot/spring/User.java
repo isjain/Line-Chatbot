@@ -5,7 +5,7 @@ import javax.swing.JOptionPane; // one of the java alert libraries i found onlin
 public class User {
 
 	private float weight;
-	private int userId;
+	private String userId;
 	private float height;
 	private int gymFrequency;
 	private float bmi;
@@ -25,22 +25,45 @@ public class User {
 	
 	// For bmi and bmr, when the user is inputting, need to invoke set methods as constructor wont do it
 
-	public User(float weight, int userId, float height, int gymFrequency,
-			float loseGainPerWeek, int age, int waterReminder, String name, String gender, String goal) {
+	public User(String userId) {
 		
-		this.name= name;
+//		this.name= name;
 		this.userId= userId;
-		this.height= height;
-		this.gymFrequency= gymFrequency;
-		this.loseGainPerWeek= loseGainPerWeek;
-		this.age= age;
-		this.waterReminder= waterReminder;
-		this.name= name;
-		this.gender= gender;
-		this.goal= goal;
+//		this.height= height;
+//		this.gymFrequency= gymFrequency;
+//		this.loseGainPerWeek= loseGainPerWeek;
+//		this.age= age;
+//		this.waterReminder= waterReminder;
+//		this.name= name;
+//		this.gender= gender;
+//		this.goal= goal;
 		
 	}
-	
+	public void setAge(int w) {
+		this.age = w;
+	}
+	public void setWeight(float w) {
+		this.weight = w;
+	}
+	public void setGender(String w) {
+		this.gender = w;
+	}
+	public void setWaterReminder(int w) {
+		this.waterReminder = w;
+	}
+	public void setLostGainPerWeek(float w) {
+		this.loseGainPerWeek = w;
+	}
+	public void setGymFrequency(int w) {
+		if(w>0 && w<8)
+			this.gymFrequency = w;
+	}
+	public void setHeight(float w) {
+		this.height = w;
+	}
+	public void setName(String n) {
+		this.name = n;
+	}
 	public void setBMI() {
 		bmi= weight/((height)*height);
 	}
@@ -78,7 +101,7 @@ public class User {
 	}
 	
 	public String getUserId() {
-		return Integer.toString(userId);
+		return userId;
 	}
 	
 	public String getHeight() {
