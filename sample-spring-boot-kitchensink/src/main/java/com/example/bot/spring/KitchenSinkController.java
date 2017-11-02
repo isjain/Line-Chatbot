@@ -240,7 +240,7 @@ public class KitchenSinkController {
             case "Start": {
 
             		String userId = event.getSource().getUserId();
-            		User user = new User("gfdsfsd");
+            		User user = new User(userId);
             		this.replyText(replyToken, user.getUserId() + " User created: Please enter the following details for name, gender, weight(kg), height(cm),age, gymFrequency(0 to 7 per week), loseGainPerWeek(No. of kgs to gain or lose. eg: -10 for losing 10 kgs per week), waterReminder(Integer No. of reminders per day)");	
             		break;
             }
