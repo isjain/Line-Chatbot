@@ -267,7 +267,7 @@ public class KitchenSinkController {
                 break;
             }
 
-            default:
+            default:{
             	String reply = null;
             	try {
             		reply = database.search(text);
@@ -280,6 +280,7 @@ public class KitchenSinkController {
                         itscLOGIN + " says " + reply
                 );
                 break;
+                }
         }
     }
 
