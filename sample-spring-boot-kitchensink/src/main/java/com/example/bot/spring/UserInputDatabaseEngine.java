@@ -149,7 +149,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 	{
 		try {
 			Connection con = getConnection();
-			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET name='?' WHERE user_id=?");
+			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET name=? WHERE user_id=?");
 			smt.setString(1,name);
 			smt.setString(2,UserId);
 			ResultSet rs = smt.executeQuery();
@@ -166,7 +166,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 	{
 		try {
 			Connection con = getConnection();
-			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET gender='?' WHERE user_id=?");
+			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET gender=? WHERE user_id=?");
 			smt.setString(1,gender);
 			smt.setString(2,UserId);
 			ResultSet rs = smt.executeQuery();
