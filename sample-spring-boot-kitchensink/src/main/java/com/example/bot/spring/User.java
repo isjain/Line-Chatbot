@@ -5,14 +5,14 @@ import javax.swing.JOptionPane; // one of the java alert libraries i found onlin
 public class User {
 
 	private float weight;
-	private int userId;
+	private String userId;
 	private float height;
 	private int gymFrequency;
 	private float bmi;
 	private float bmr;
 	private float loseGainPerWeek;
 	private int age;
-	private int waterReminder;
+	private float waterReminder;
 	
 	private String name;
 	private String gender;
@@ -25,22 +25,42 @@ public class User {
 	
 	// For bmi and bmr, when the user is inputting, need to invoke set methods as constructor wont do it
 
-	public User(float weight, int userId, float height, int gymFrequency,
-			float loseGainPerWeek, int age, int waterReminder, String name, String gender, String goal) {
+	public User(String userId) {
 		
-		this.name= name;
+//		this.name= name;
 		this.userId= userId;
-		this.height= height;
-		this.gymFrequency= gymFrequency;
-		this.loseGainPerWeek= loseGainPerWeek;
-		this.age= age;
-		this.waterReminder= waterReminder;
-		this.name= name;
-		this.gender= gender;
-		this.goal= goal;
+//		this.height= height;
+//		this.gymFrequency= gymFrequency;
+//		this.loseGainPerWeek= loseGainPerWeek;
+//		this.age= age;
+//		this.waterReminder= waterReminder;
+//		this.name= name;
+//		this.gender= gender;
+//		this.goal= goal;
 		
 	}
-	
+	public void setAge(int w) {
+		this.age = w;
+	}
+	public void setWeight(float w) {
+		this.weight = w;
+	}
+	public void setGender(String w) {
+		this.gender = w;
+	}
+	public void setLostGainPerWeek(float w) {
+		this.loseGainPerWeek = w;
+	}
+	public void setGymFrequency(int w) {
+		if(w>0 && w<8)
+			this.gymFrequency = w;
+	}
+	public void setHeight(float w) {
+		this.height = w;
+	}
+	public void setName(String n) {
+		this.name = n;
+	}
 	public void setBMI() {
 		bmi= weight/((height)*height);
 	}
@@ -78,7 +98,7 @@ public class User {
 	}
 	
 	public String getUserId() {
-		return Integer.toString(userId);
+		return userId;
 	}
 	
 	public String getHeight() {
@@ -107,7 +127,7 @@ public class User {
 	}
 	
 	public String getWaterReminder() {
-		return Integer.toString(waterReminder);
+		return Float.toString(waterReminder);
 	}
 	
 	public String getName() {
@@ -124,19 +144,38 @@ public class User {
 	public String getCalDay() {
 		return Integer.toString((int)calDay);
 	}
-	
+
 	
 	
 	//Need to find a timer interval, which displays the reminder every 24/waterReminder hours
 	//The Joption code, displays the alert to the user right now
-	public void setWaterReminder(int waterReminder) {
+	public void setWaterReminder(float waterReminder) {
 		// one way to do this, is to divide 4 daily reminders by 24 ie remind every 6 hours
-		for(int i=1; i<=waterReminder;i++) {
-			
-			JOptionPane.showMessageDialog(null, "Paani Paani time");
 		
-		}
-	}
+		float gapHours = 24/waterReminder;
+		
+		Thread t = new Thread() {
+		    @Override
+		    public void run() {
+		        while(true) {
+		            try {
+		                Thread.sleep(1000*60*60*((long)gapHours));
+//		                "This is your reminder to drink water :)"
+		                //Send notification to Line  
+		                
+		                
+		            } catch (InterruptedException ie) {
+		            }
+		        }
+		    }
+		};
+		t.start();
+	
+		
+		
+
+	
+}
 	
 
 	
