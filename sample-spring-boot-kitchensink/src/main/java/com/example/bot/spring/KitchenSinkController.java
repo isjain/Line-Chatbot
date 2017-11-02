@@ -217,6 +217,7 @@ public class KitchenSinkController {
         
         log.info("Got text message from {}: {}", replyToken, text);
         switch (command) {
+
             case "profile": {
                 String userId = event.getSource().getUserId();
                 if (userId != null) {
@@ -249,6 +250,48 @@ public class KitchenSinkController {
             		}
             		break;
             }
+            case "name": {
+                String userId = event.getSource().getUserId();
+            	database.updateUserName(userId, inputData);
+          
+
+        		break;
+        }
+        case "gender": {
+        	String userId = event.getSource().getUserId();
+        	database.updateGender(userId, inputData);
+    		break;
+        }
+        case "weight": {
+        	String userId = event.getSource().getUserId();
+        	database.updateWeight(userId, Float.parseFloat(inputData));
+        	break;
+        }
+        case "height": {
+        	String userId = event.getSource().getUserId();
+        		database.updateHeight(userId, Float.parseFloat(inputData));
+    		break;
+        }
+        case "age": {
+        	String userId = event.getSource().getUserId();
+    		database.updateAge(userId, Integer.parseInt(inputData));
+    		break;
+        }
+        case "gymFrequency": {
+        	String userId = event.getSource().getUserId();
+    		database.updateGymFrequency(userId, Integer.parseInt(inputData));
+    		break;
+        }
+        case "loseGainPerWeek": {
+        	String userId = event.getSource().getUserId();
+    		database.updateLoseGain(userId, Integer.parseInt(inputData));
+    		break;
+        }
+        case "waterReminder": {
+        	String userId = event.getSource().getUserId();
+    		database.updateWaterReminder(userId, Integer.parseInt(inputData));
+    		break;
+        }
             case "carousel": {
                 String imageUrl = createUri("/static/buttons/1040.jpg");
                 CarouselTemplate carouselTemplate = new CarouselTemplate(
