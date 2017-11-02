@@ -211,12 +211,12 @@ public class KitchenSinkController {
 	private void handleTextContent(String replyToken, Event event, TextMessageContent content)
             throws Exception {
         String text = content.getText();
-//        String[] arr = text.split(":");
-//        String command = arr[0];
-//        String inputData = arr[1];
+        String[] arr = text.split(":");
+        String command = arr[0];
+        String inputData = arr[1];
         
         log.info("Got text message from {}: {}", replyToken, text);
-        switch (text) {
+        switch (command) {
             case "profile": {
                 String userId = event.getSource().getUserId();
                 if (userId != null) {
