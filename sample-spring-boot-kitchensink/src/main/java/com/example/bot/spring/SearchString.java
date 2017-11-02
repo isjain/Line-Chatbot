@@ -3,11 +3,11 @@ private void handleTextContent(String replyToken, Event event, TextMessageConten
 {
 	String text = content.getText();
     Recommendation[] robject = new Recommendation[];
-    	String[] arr = text.split(",")
-    	ArrayList<String> reply = new ArrayList<String>();
-    	reply = database.search(arr);
+    	String[] arr = text.split(",");
+    	Recommendation[] sortedObject = new Recommendation[];
+    	robject = database.search(arr);
 
-    	robject = sortedMenu(reply);
+    	sortedObject = sortedMenu(robject);
         // log.info("Returns echo message {}: {}", replyToken, reply);
         this.replyText(
                 replyToken,
@@ -58,22 +58,22 @@ public class WagnerFischer {
 	}
 
 
-
+// robject = database.search(arr);
 
 	@Slf4j
 public class SQLDatabaseEngine extends DatabaseEngine {
 	@Override
-	String[] search(String[] text) throws Exception {
-		Write your code here
-		String[] result = null;
+	Recommendation[] search(String[] text) throws Exception {
+		Recommendation[] result = null;
 		try {
 			Connection con = getConnection();
-			PreparedStatement smt = con.prepareStatement("SELECT * FROM TABLE_NAME");
-			 smt.setString(1,text);
+			PreparedStatement smt = con.prepareStatement("SELECT * FROM nutrienttable");
+			smt.setString(1,text);
 			ResultSet rs = smt.executeQuery();
 			while(rs.next())
-			{
-				result.add(rs.getString("INGREDIENTS"));
+			{ 
+				result.add(rs.getString("Description"));
+				result.add(rs.getString("Energy"));
 			}
 			rs.close();
 			smt.close();
@@ -82,7 +82,7 @@ public class SQLDatabaseEngine extends DatabaseEngine {
 			System.out.println(e);
 		}
 
-		To find closest ingredients possible
+		// To find closest ingredients possible
 		ArrayList<String> ingred = new ArrayList<String>();
 		for(String s:text)
 		{

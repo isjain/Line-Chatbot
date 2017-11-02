@@ -2,6 +2,9 @@ public class Recommendation{
 	private String menu;
 	private float cal;
 	
+	public String setMenu(String m) {menu=m; }
+	public float setCal(float c) {cal=c; }
+	
 	public String getMenu() {return menu; }
 	public float getCal() {return cal; }
 
