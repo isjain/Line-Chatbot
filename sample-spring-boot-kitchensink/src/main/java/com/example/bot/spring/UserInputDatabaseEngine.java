@@ -14,6 +14,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		boolean success = false;
 		try {
 			Connection con = getConnection();
+
 			PreparedStatement smt = con.prepareStatement("INSERT INTO user (weight, userId, height, gymFrequency, bmi, bmr, loseGainPerWeek, age, waterReminder, name, gender, goal, reqcalday) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
 			smt.setString(1,new_User.getWeight());
 			smt.setString(2,new_User.getUserId());

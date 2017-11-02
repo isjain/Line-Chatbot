@@ -17,7 +17,7 @@ public class User {
 	private String name;
 	private String gender;
 	private String goal;
-	private float calDay;
+	private double calDay;
 
 	// weight should be in kgs
 	//height should be in cms
@@ -70,6 +70,7 @@ public class User {
 		case 6:
 		case 7:calDay = bmr*1.725;
 				break;
+		}
 	}
 
 	public String getWeight() {
@@ -121,7 +122,7 @@ public class User {
 		return goal;
 	}
 	public String getCalDay() {
-		return calDay;
+		return Integer.toString((int)calDay);
 	}
 	
 	
