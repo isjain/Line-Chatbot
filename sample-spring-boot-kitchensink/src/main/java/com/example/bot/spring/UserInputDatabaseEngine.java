@@ -9,6 +9,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserInputDatabaseEngine extends DatabaseEngine {
+	public void CreateNewUser(User new_User) throws Exception{
+		try {
+			Connection con = getConnection();
+			PreparedStatement smt = con.prepareStatement("INSERT INTO userdatatable (weight, userId, height, gymFrequency, bmi, bmr, loseGainPerWeek, age, waterReminder, name, gender, goal, reqcalday) VALUES (0.0,?,0.0,0,0.0,0.0,0.0,0,0,'noname','nogender','nogoal',0)");
+			smt.setString(1,new_User.getUserId());
+			ResultSet rs = smt.executeQuery();
+			rs.close();
+			smt.close();
+			con.close();
+			
+		}catch (Exception e) {
+			System.out.println(e);
+		}
+		
+	}
 	
 	public void newUser(User new_User) throws Exception{
 		boolean success = false;

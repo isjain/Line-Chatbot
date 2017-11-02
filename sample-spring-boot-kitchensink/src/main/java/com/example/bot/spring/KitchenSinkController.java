@@ -92,6 +92,7 @@ public class KitchenSinkController {
 
 	@Autowired
 	private LineMessagingClient lineMessagingClient;
+	private UserInputDatabaseEngine database;
 
 	@EventMapping
 	public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) throws Exception {
@@ -242,6 +243,7 @@ public class KitchenSinkController {
             		String userId = event.getSource().getUserId();
             		User user = new User(userId);
             		this.replyText(replyToken, user.getUserId() + " User created: Please enter the following details for name, gender, weight(kg), height(cm),age, gymFrequency(0 to 7 per week), loseGainPerWeek(No. of kgs to gain or lose. eg: -10 for losing 10 kgs per week), waterReminder(Integer No. of reminders per day)");	
+            		database.CreateNewUser(user);
             		break;
             }
             case "carousel": {
@@ -331,7 +333,6 @@ public class KitchenSinkController {
 		itscLOGIN = System.getenv("ITSC_LOGIN");
 	}
 
-	private UserInputDatabaseEngine database;
 	private String itscLOGIN;
 	
 
