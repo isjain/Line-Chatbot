@@ -88,12 +88,12 @@ import java.sql.SQLException;
 
 public class UserInputDatabaseEngine extends DatabaseEngine {
 	
-	
+	//added reqcalday 
 	public void newUser(User new_User) throws Exception{
 		boolean success = false;
 		try {
 			Connection con = getConnection();
-			PreparedStatement smt = con.prepareStatement("INSERT INTO user (weight, userId, height, gymFrequency, bmi, bmr, loseGainPerWeek, age, waterReminder, name, gender, goal) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
+			PreparedStatement smt = con.prepareStatement("INSERT INTO user (weight, userId, height, gymFrequency, bmi, bmr, loseGainPerWeek, age, waterReminder, name, gender, goal, reqcalday) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
 			smt.setString(1,new_User.getWeight());
 			smt.setString(2,new_User.getUserId());
 			smt.setString(3,new_User.getHeight());
@@ -106,6 +106,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 			smt.setString(10,new_User.getName());
 			smt.setString(11,new_User.getGender());
 			smt.setString(12,new_User.getGoal());
+			smt.setString(13,new_User.getCalDay());
 			ResultSet rs = smt.executeQuery();
 			rs.close();
 			smt.close();
