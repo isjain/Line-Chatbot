@@ -253,50 +253,50 @@ public class KitchenSinkController {
             case "name": {
                 String userId = event.getSource().getUserId();
             	database.updateUserName(userId, inputData);
-            	this.replyText(replyToken,inputData + "received");
+            	this.replyText(replyToken,inputData + " received");
 
         		break;
         }
         case "gender": {
         	String userId = event.getSource().getUserId();
         	database.updateGender(userId, inputData);
-        	this.replyText(replyToken,inputData + "received");
+        	this.replyText(replyToken,inputData + " received");
     		break;
         }
         case "weight": {
         	String userId = event.getSource().getUserId();
         	database.updateWeight(userId, Float.parseFloat(inputData));
-        	this.replyText(replyToken,inputData + "received");
+        	this.replyText(replyToken,inputData + " received");
         	break;
         }
         case "height": {
         	String userId = event.getSource().getUserId();
         		database.updateHeight(userId, Float.parseFloat(inputData));
-        		this.replyText(replyToken,inputData + "received");
+        		this.replyText(replyToken,inputData + " received");
     		break;
         }
         case "age": {
         	String userId = event.getSource().getUserId();
     		database.updateAge(userId, Integer.parseInt(inputData));
-    		this.replyText(replyToken,inputData + "received");
+    		this.replyText(replyToken,inputData + " received");
     		break;
         }
         case "gymFrequency": {
         	String userId = event.getSource().getUserId();
     		database.updateGymFrequency(userId, Integer.parseInt(inputData));
-    		this.replyText(replyToken,inputData + "received");
+    		this.replyText(replyToken,inputData + " received");
     		break;
         }
         case "loseGainPerWeek": {
         	String userId = event.getSource().getUserId();
     		database.updateLoseGain(userId, Integer.parseInt(inputData));
-    		this.replyText(replyToken,inputData + "received");
+    		this.replyText(replyToken,inputData + " received");
     		break;
         }
         case "waterReminder": {
         	String userId = event.getSource().getUserId();
     		database.updateWaterReminder(userId, Integer.parseInt(inputData));
-    		this.replyText(replyToken,inputData + "received");
+    		this.replyText(replyToken,inputData + " received");
     		break;
         }
             case "carousel": {

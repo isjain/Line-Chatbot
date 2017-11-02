@@ -30,7 +30,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 	{
 		try {
 			Connection con = getConnection();
-			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET height=? WHERE user_id='?'");
+			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET height=? WHERE user_id=?");
 			smt.setFloat(1,height);
 			smt.setString(2,UserId);
 			ResultSet rs = smt.executeQuery();
