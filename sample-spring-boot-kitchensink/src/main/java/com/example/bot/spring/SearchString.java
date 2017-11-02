@@ -64,16 +64,18 @@ public class WagnerFischer {
 public class SQLDatabaseEngine extends DatabaseEngine {
 	@Override
 	Recommendation[] search(String[] text) throws Exception {
-		Recommendation[] result = null;
+		Recommendation[] result = new Recommendation[];;
 		try {
 			Connection con = getConnection();
 			PreparedStatement smt = con.prepareStatement("SELECT * FROM nutrienttable");
 			smt.setString(1,text);
 			ResultSet rs = smt.executeQuery();
+			int i=0;
 			while(rs.next())
 			{ 
-				result.add(rs.getString("Description"));
-				result.add(rs.getString("Energy"));
+				result.setMenu(rs.getString("Description"));
+				result.setCal(rs.getString("Energy"));
+				i++;
 			}
 			rs.close();
 			smt.close();
@@ -83,28 +85,33 @@ public class SQLDatabaseEngine extends DatabaseEngine {
 		}
 
 		// To find closest ingredients possible
-		ArrayList<String> ingred = new ArrayList<String>();
+		Recommendation[] ingred = new Recommendation[];
 		for(String s:text)
 		{
-			String closestFOOD = result[0];
-			int min_dist = dist(s, result[0]);
+			String closestFOOD = result[0].getMenu();
+			Recommendation closestMatch = null;
+			int min_dist = dist(s, result[0].getMenu());
 			for(int index = 1; index < result.length; index++){
-				int dist = dist(s, result[index]);
+				int dist = dist(s, result[index].getMenu());
 				if(dist < min_dist){
 					min_dist = dist;
-					closestFOOD = result[index];
+					closestFOOD = result[index].getMenu();
+					closestMatch = result[index];
 				}
 				else if(dist ==0)
 				{
-					closestFOOD = result[index];
+					closestFOOD = result[index].getMenu();
+					closestMatch = result[index];
 					break;
 				}
 			}
 			if (min_dist <= 3) {
-				ingred.add(closestFOOD);
+				ingred.setMenu(closestFOOD);
+				ingred.setCal(closestMatch.getCal());
 			}
 			else {
-				ingred.add(null);
+				ingred.setMenu(null);
+				ingred.setCal(null);
 			}
 		}
 		return ingred;
