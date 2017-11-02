@@ -234,50 +234,50 @@ public class KitchenSinkController {
                 this.reply(replyToken, templateMessage);
                 break;
             }
-            case "Sign up": {
-            		float weight = 0;
-            		int userId= 0;
-            		float height= 0;
-            		int gymFrequency= 0;
-            		float loseGainPerWeek= 0;
-            		int age= 0;
-            		int waterReminder= 0;
-            		String name= "";
-            		String gender= "";
-            		String goal= "";
-            		
-            		this.reply(replyToken, new TextMessage("Enter your name"));
-                 name = content.getText();
-
-            		this.reply(replyToken, new TextMessage("Enter your weight in kgs"));
-                weight = Float.parseFloat(content.getText());
-
-                this.reply(replyToken, new TextMessage("Enter your gender male or female"));
-                gender = content.getText();
-            		
-                this.reply(replyToken, new TextMessage("Please enter your goal: LoseWeight or GainWeight"));
-                goal = content.getText();
-                
-                this.reply(replyToken, new TextMessage("Please enter the number of times you exercise in a week (0-7)"));
-                gymFrequency = Integer.parseInt(content.getText());
-                
-                this.reply(replyToken, new TextMessage("Please enter your height in cm"));
-                height = Float.parseFloat(content.getText());
-                
-                this.reply(replyToken, new TextMessage("Please enter the number of Water reminder notifications you would like in a day (recommended is 8)"));
-                waterReminder = Integer.parseInt(content.getText());
-                
-                this.reply(replyToken, new TextMessage("Please enter the amount of weight you wish to lose or gain per week in kgs"));
-                loseGainPerWeek = Float.parseFloat(content.getText());
-                 
-            		User user = new User(weight, userId, height, gymFrequency,
-            				loseGainPerWeek, age, waterReminder, name, gender, goal);       	
-            	
-            		break;
-            }
-            
-            
-            
+//            case "Sign up": {
+//            		float weight = 0;
+//            		int userId= 0;
+//            		float height= 0;
+//            		int gymFrequency= 0;
+//            		float loseGainPerWeek= 0;
+//            		int age= 0;
+//            		int waterReminder= 0;
+//            		String name= "";
+//            		String gender= "";
+//            		String goal= "";
+//            		
+//            		this.reply(replyToken, new TextMessage("Enter your name"));
+//                 name = content.getText();
+//
+//            		this.reply(replyToken, new TextMessage("Enter your weight in kgs"));
+//                weight = Float.parseFloat(content.getText());
+//
+//                this.reply(replyToken, new TextMessage("Enter your gender male or female"));
+//                gender = content.getText();
+//            		
+//                this.reply(replyToken, new TextMessage("Please enter your goal: LoseWeight or GainWeight"));
+//                goal = content.getText();
+//                
+//                this.reply(replyToken, new TextMessage("Please enter the number of times you exercise in a week (0-7)"));
+//                gymFrequency = Integer.parseInt(content.getText());
+//                
+//                this.reply(replyToken, new TextMessage("Please enter your height in cm"));
+//                height = Float.parseFloat(content.getText());
+//                
+//                this.reply(replyToken, new TextMessage("Please enter the number of Water reminder notifications you would like in a day (recommended is 8)"));
+//                waterReminder = Integer.parseInt(content.getText());
+//                
+//                this.reply(replyToken, new TextMessage("Please enter the amount of weight you wish to lose or gain per week in kgs"));
+//                loseGainPerWeek = Float.parseFloat(content.getText());
+//                 
+//            		User user = new User(weight, userId, height, gymFrequency,
+//            				loseGainPerWeek, age, waterReminder, name, gender, goal);       	
+//            	
+//            		break;
+//            }
+//            
+//            
+//            
             case "carousel": {
                 String imageUrl = createUri("/static/buttons/1040.jpg");
                 CarouselTemplate carouselTemplate = new CarouselTemplate(
