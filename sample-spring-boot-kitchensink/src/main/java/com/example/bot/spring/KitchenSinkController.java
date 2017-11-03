@@ -326,7 +326,7 @@ public class KitchenSinkController {
            	 Random rand = new Random();
             String[] msgs = {"Good progress! One more step towards a healthier lifestyle", "Add oil!", "Strive for progress, not perfection", "The struggle you're in today is developing the strength you need for tomorrow", "Yes, you can! The road may be bumpy, but stay committed to the process.", "Making excuses burns 0 calories per hour."};
             int  n = rand.nextInt(6);
-            this.replyText(replyToken,"motivation msg");    
+            this.replyText(replyToken,msgs[n]);    
             break;
            }
             default:
