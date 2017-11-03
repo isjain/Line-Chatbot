@@ -9,12 +9,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserInputDatabaseEngine extends DatabaseEngine {
+
 	
 	public void updateWeight(String UserId, float weight)
 	{
 		try {
 			Connection con = getConnection();
 			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET weight=? WHERE user_id=?");
+
 			smt.setFloat(1,weight);
 			smt.setString(2,UserId);
 			ResultSet rs = smt.executeQuery();
@@ -27,11 +29,13 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		}
 	}
 	
+
 	public void updateHeight(String UserId, float height)
 	{
 		try {
 			Connection con = getConnection();
 			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET height=? WHERE user_id=?");
+
 			smt.setFloat(1,height);
 			smt.setString(2,UserId);
 			ResultSet rs = smt.executeQuery();
@@ -44,11 +48,13 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		}
 	}
 	
+
 	public void updateGymFrequency(String UserId, int gymFrequency)
 	{
 		try {
 			Connection con = getConnection();
 			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET gymfrequency=? WHERE user_id=?");
+
 			smt.setInt(1,gymFrequency);
 			smt.setString(2,UserId);
 			ResultSet rs = smt.executeQuery();
@@ -61,11 +67,13 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		}
 	}
 	
+
 	public void updateBMI(String UserId, float weight)
 	{
 		try {
 			Connection con = getConnection();
 			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET weight=? WHERE user_id=?");
+
 			smt.setFloat(1,weight);
 			smt.setString(2,UserId);
 			ResultSet rs = smt.executeQuery();
@@ -78,11 +86,13 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		}
 	}
 	
+
 	public void updateUserBMR(String UserId, float weight)
 	{
 		try {
 			Connection con = getConnection();
 			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET weight=? WHERE user_id=?");
+
 			smt.setFloat(1,weight);
 			smt.setString(2,UserId);
 			ResultSet rs = smt.executeQuery();
@@ -95,11 +105,13 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		}
 	}
 	
+
 	public void updateLoseGain(String UserId, float loseGain)
 	{
 		try {
 			Connection con = getConnection();
 			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET losegainperweek=? WHERE user_id=?");
+
 			smt.setFloat(1,loseGain);
 			smt.setString(2,UserId);
 			ResultSet rs = smt.executeQuery();
@@ -112,11 +124,13 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		}
 	}
 	
+
 	public void updateAge(String UserId, int age)
 	{
 		try {
 			Connection con = getConnection();
 			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET age=? WHERE user_id=?");
+
 			smt.setInt(1,age);
 			smt.setString(2,UserId);
 			ResultSet rs = smt.executeQuery();
@@ -129,11 +143,13 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		}
 	}
 	
+
 	public void updateWaterReminder(String UserId, int waterReminder)
 	{
 		try {
 			Connection con = getConnection();
 			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET waterreminder=? WHERE user_id=?");
+
 			smt.setInt(1,waterReminder);
 			smt.setString(2,UserId);
 			ResultSet rs = smt.executeQuery();
@@ -151,6 +167,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		try {
 			Connection con = getConnection();
 			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET name=? WHERE user_id=?");
+
 			smt.setString(1,name);
 			smt.setString(2,UserId);
 			ResultSet rs = smt.executeQuery();
@@ -168,6 +185,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		try {
 			Connection con = getConnection();
 			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET gender=? WHERE user_id=?");
+
 			smt.setString(1,gender);
 			smt.setString(2,UserId);
 			ResultSet rs = smt.executeQuery();
@@ -180,6 +198,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		}
 	}
 	
+
 	public User getUserRecord(String UserId) {
 		boolean found = false;
 		String id = UserId;
@@ -271,6 +290,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 			smt2.close();
 			smt1.close();
 			con.close();
+
 		}
 		catch (Exception e) {
 			System.out.println(e);
@@ -304,6 +324,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		}
 		return calDay;
 	}
+
 	public void CreateNewUser(User new_User) throws Exception{
 		try {
 			Connection con = getConnection();
