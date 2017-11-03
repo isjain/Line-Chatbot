@@ -110,7 +110,9 @@ public class User {
 				break;
 		}
 	}
-
+	public void setCalDay(double c) {
+		this.calDay = c;
+	}	
 	public String getWeight() {
 		return Integer.toString((int) weight);
 	}
@@ -161,6 +163,9 @@ public class User {
 	}
 	public String getCalDay() {
 		return Integer.toString((int)calDay);
+	}
+	public void setWaterReminder(float w) {
+		this.waterReminder = w;
 	}
 
 	
