@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserInputDatabaseEngine extends DatabaseEngine {
-	public void UpdateUserWeight(string UserId, float weight)
+	public void updateUserWeight(String UserId, float weight)
 	{
 		try {
 			Connection con = getConnection();
@@ -26,7 +26,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		}
 	}
 	
-	public void UpdateUserHeight(string UserId, float height)
+	public void updateUserHeight(String UserId, float height)
 	{
 		try {
 			Connection con = getConnection();
@@ -43,7 +43,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		}
 	}
 	
-	public void UpdateUserGymFrequency(string UserId, int gymFrequency)
+	public void updateUserGymFrequency(String UserId, int gymFrequency)
 	{
 		try {
 			Connection con = getConnection();
@@ -60,7 +60,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		}
 	}
 	
-	public void UpdateUserBMI(string UserId, float weight)
+	public void updateUserBMI(String UserId, float weight)
 	{
 		try {
 			Connection con = getConnection();
@@ -77,7 +77,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		}
 	}
 	
-	public void UpdateUserBMR(string UserId, float weight)
+	public void UpdateUserBMR(String UserId, float weight)
 	{
 		try {
 			Connection con = getConnection();
@@ -94,7 +94,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		}
 	}
 	
-	public void UpdateUserLoseGain(string UserId, float loseGain)
+	public void UpdateUserLoseGain(String UserId, float loseGain)
 	{
 		try {
 			Connection con = getConnection();
@@ -111,7 +111,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		}
 	}
 	
-	public void UpdateUserAge(string UserId, int age)
+	public void UpdateUserAge(String UserId, int age)
 	{
 		try {
 			Connection con = getConnection();
@@ -128,7 +128,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		}
 	}
 	
-	public void UpdateUserWaterReminder(string UserId, int waterReminder)
+	public void UpdateUserWaterReminder(String UserId, int waterReminder)
 	{
 		try {
 			Connection con = getConnection();
@@ -145,7 +145,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		}
 	}
 	
-	public void UpdateUserName(string UserId, string name)
+	public void UpdateUserName(String UserId, String name)
 	{
 		try {
 			Connection con = getConnection();
@@ -162,7 +162,26 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		}
 	}
 	
-	public void UpdateUserGender(string UserId, string gender)
+	public void UserSetCalories(String UserId, String name)
+	{
+		try {
+			Connection con = getConnection();
+			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET name='?' WHERE user_id='?'");
+			smt.setString(1,name);
+			smt.setString(2,UserId);
+			ResultSet rs = smt.executeQuery();
+			rs.close();
+			smt.close();
+			con.close();
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
+	
+	
+	public void UpdateUserGender(String UserId, String gender)
 	{
 		try {
 			Connection con = getConnection();
@@ -179,14 +198,36 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		}
 	}
 	
-	public void UpdateUserReqCalDay(string UserId, double reqcal)
+	public void UpdateUserReqCalDay(String UserId, double reqcal)
 	{
 		try {
+			String weight = null;
+			String height = null;
+			String gender = null;
+			String age = null;
+			String losegainperweek = null;
+			String gymfrequency = null;
 			Connection con = getConnection();
-			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET reqcalday=? WHERE user_id='?'");
-			smt.setDouble(1,reqcal);
+			PreparedStatement smt1 = con.prepareStatement("SELECT * FROM userdatatable WHERE user_id=?");
+			smt1.setString(1,UserId);
+			while(rs.next())
+			{
+				weight = rs.getString("weight");
+				height = rs.getString("height");
+				age = rs.getString("age");
+				losegainperweek = rs.getString("losegainperweek");
+				gymfrequency = rs.getString("gymfrequency");	
+			}
+			float weight1 = parseFloat(weight);
+			float height1 = parseFloat(height);
+			int age1 = parseInt(age);
+			int losegainperweek1= parseInt(losegainperweek);
+			int gymfrequency1 = parseInt(gymfrequency);
+			float calDayReq = setCalDay(gender, weight1, height1, age1, losegainperweek1, gymfrequency1);
+			PreparedStatement smt2 = con.prepareStatement("UPDATE userdatatable SET reqcalday=? WHERE user_id='?'");
+			smt.setFloat(1,calDayReq);
 			smt.setString(2,UserId);
-			ResultSet rs = smt.executeQuery();
+			ResultSet rs = smt2.executeQuery();
 			rs.close();
 			smt.close();
 			con.close();
@@ -194,6 +235,33 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		catch (Exception e) {
 			System.out.println(e);
 		}
+	}
+	
+	public float setCalDay(String gender, float weight, float height, int age, int loseGainPerWeek, int gymFrequency) {
+		float calDay;
+		float goal_bmr;
+		if(gender=="male") {
+			goal_bmr= (float) (10 * (weight+loseGainPerWeek) + 6.25 * height - 5 * age + 5);
+		}
+		else {
+			goal_bmr=(float) (10 * (weight+loseGainPerWeek) + 6.25 * height - 5 * age - 161);
+		}
+		switch (gymFrequency) {
+		case 0:calDay = goal_bmr*1.2;
+				break;
+		case 1:
+		case 2:
+		case 3:calDay = goal_bmr*1.375;
+				break;
+		case 4:
+		case 5:calDay = goal_bmr*1.55;
+		
+				break;
+		case 6:
+		case 7:calDay = goal_bmr*1.725;
+				break;
+		}
+		return calDay;
 	}
 	
 	public void CreateNewUser(User new_User) throws Exception{
@@ -211,6 +279,8 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		}
 		
 	}
+	
+	
 	
 	public boolean searchUser(String userID)
 	{
