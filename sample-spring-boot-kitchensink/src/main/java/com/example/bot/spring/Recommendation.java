@@ -15,7 +15,7 @@ import java.sql.SQLException;
 public class Recommendation extends DatabaseEngine{
 	
     @Override
-    String search(String userId) throws Exception {
+    String search_calday(String userId) throws Exception {
         //Write your code here
         String result = null;
         try {
@@ -53,7 +53,13 @@ public class Recommendation extends DatabaseEngine{
 	public float getCal() {return cal; }
 
 	public static Recommendation[] sortedMenu(Recommendation [] r, String userId, int n ){
-        float x = (Float.parseFloat(search(userId)))/3;
+			try {
+	    		reply = database.search_calday();
+	    	} catch (Exception e) {
+	    		reply = text;
+	    	}
+			
+		float x = (Float.parseFloat(search_calday(userId)))/3;
         //int n=3;  // IMP:figure out x from database and n from total menu list- HARD CODED RIGHT NOW
 		Recommendation temp;
 
@@ -71,7 +77,7 @@ public class Recommendation extends DatabaseEngine{
         return r;
 	} 
 
-    public void input_into_database(Recommendation r, String userId) throws Exception {
+    public static void input_into_database(Recommendation r, String userId) throws Exception {
         boolean success = false;
         try {
             Connection con = getConnection();
