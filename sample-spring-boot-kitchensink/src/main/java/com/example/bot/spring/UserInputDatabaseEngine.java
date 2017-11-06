@@ -481,6 +481,33 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 	}
 	
 
+	public double getRequiredCalories(String userID) {
+		double reqCal = 0;
+		String reqCalString = null;
+
+
+		try {
+			Connection con = getConnection();
+			PreparedStatement smt = con.prepareStatement("SELECT reqcalday FROM userdatatable WHERE user_id=?");
+
+			smt.setString(1,userID);
+			ResultSet rs = smt.executeQuery();
+			reqCalString = rs.getString("reqcalday");
+			reqCal = Double.parseDouble(reqCalString);
+
+			rs.close();
+			smt.close();
+			con.close();
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
+
+		return reqCal;
+	}
+	
+	
+
 	
 //	@Override
 //	String search(String text) throws Exception {
