@@ -46,45 +46,70 @@ import com.example.bot.spring.DatabaseEngine;
 
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = { KitchenSinkTester.class, SQLDatabaseEngine.class })
+@SpringBootTest(classes = { KitchenSinkTester.class, UserInputDatabaseEngine.class })
 public class KitchenSinkTester {
 	@Autowired
-	private SQLDatabaseEngine databaseEngine;
+	private UserInputDatabaseEngine databaseEngine;
 	
-	@Test
-	public void testNotFound() throws Exception {
-		boolean thrown = false;
-		try {
-			this.databaseEngine.search("no");
-		} catch (Exception e) {
-			thrown = true;
-		}
-		assertThat(thrown).isEqualTo(true);
-	}
-	
-	@Test
-	public void testFound2() throws Exception {
-		boolean thrown = false;
-		String result = null;
-		try {
-			result = this.databaseEngine.search("Hi");
-		} catch (Exception e) {
-			thrown = true;
-		}
-		//assertThat(!thrown).isEqualTo(true);
-		//assertThat(result).isEqualTo("Hey, how things going?");
-	}
+//	@Test
+//	public void testNotFound() throws Exception {
+//		boolean thrown = false;
+//		try {
+//			
+//			this.databaseEngine.search("no");
+//		} catch (Exception e) {
+//			thrown = true;
+//		}
+//		assertThat(thrown).isEqualTo(true);
+//	}
+//	
+//	@Test
+//	public void testFound2() throws Exception {
+//		boolean thrown = false;
+//		String result = null;
+//		try {
+//			result = this.databaseEngine.search("Hi");
+//		} catch (Exception e) {
+//			thrown = true;
+//		}
+//		assertThat(!thrown).isEqualTo(false);
+////		assertThat(result).isEqualTo("Hey, how things going?");
+//	}
 	
 	@Test
 	public void testFound() throws Exception {
 		boolean thrown = false;
-		String result = null;
+		User result = null;
+		String userId = "heylo";
+		User new_user = new User(userId);
 		try {
-			result = this.databaseEngine.search("abc");
+			
+			this.databaseEngine.CreateNewUser(new_user);
+			this.databaseEngine.updateWeight(userId, 65);
+			this.databaseEngine.updateHeight(userId, 172);
+			this.databaseEngine.updateGymFrequency(userId, 4);
+			this.databaseEngine.updateLoseGain(userId, 5);
+			this.databaseEngine.updateAge(userId, 21);
+//			this.databaseEngine.updateWaterReminder(userId, 3);
+			this.databaseEngine.updateUserName(userId, "abcd");
+			this.databaseEngine.updateGender(userId, "male");
+			this.databaseEngine.updateReqCalDay(userId, 210);
+			
+			result = this.databaseEngine.getUserRecord("heylo");
+			
 		} catch (Exception e) {
 			thrown = true;
 		}
-		//assertThat(!thrown).isEqualTo(true);
-		//assertThat(result).isEqualTo("def");
+		assertThat(result.getWeight()).isEqualTo("65");
+		assertThat(result.getHeight()).isEqualTo("172");
+		assertThat(result.getGymFrequency()).isEqualTo("4");
+		assertThat(result.getLoseGainPerWeek()).isEqualTo("5");
+		assertThat(result.getAge()).isEqualTo("21");
+//		assertThat(result.getWaterReminder()).isEqualTo("3");
+		assertThat(result.getName()).isEqualTo("abcd");
+		assertThat(result.getGender()).isEqualTo("male");
+		assertThat(result.getCalDay()).isEqualTo("210");
+		
+		
 	}
 }
