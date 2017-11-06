@@ -261,24 +261,32 @@ public class KitchenSinkController {
         	String userId = event.getSource().getUserId();
         	database.updateGender(userId, inputData);
         	this.replyText(replyToken,inputData + " received");
+        	database.setBMR(userId);
+        	database.setBMI(userId);
     		break;
         }
         case "weight": {
         	String userId = event.getSource().getUserId();
         	database.updateWeight(userId, Float.parseFloat(inputData));
         	this.replyText(replyToken,inputData + " received");
+        	database.setBMR(userId);
+        	database.setBMI(userId);
         	break;
         }
         case "height": {
         	String userId = event.getSource().getUserId();
-        		database.updateHeight(userId, Float.parseFloat(inputData));
-        		this.replyText(replyToken,inputData + " received");
+        	database.updateHeight(userId, Float.parseFloat(inputData));
+        	this.replyText(replyToken,inputData + " received");
+        	database.setBMR(userId);
+        database.setBMI(userId);
     		break;
         }
         case "age": {
         	String userId = event.getSource().getUserId();
     		database.updateAge(userId, Integer.parseInt(inputData));
     		this.replyText(replyToken,inputData + " received");
+    		database.setBMR(userId);
+        	database.setBMI(userId);
     		break;
         }
         case "gymFrequency": {

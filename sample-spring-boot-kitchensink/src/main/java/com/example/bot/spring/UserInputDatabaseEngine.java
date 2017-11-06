@@ -9,6 +9,116 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserInputDatabaseEngine extends DatabaseEngine {
+	
+	public void setBMR(String UserId)
+	{
+		try {
+			float bmr = calcBMR(UserId);
+			Connection con = getConnection();
+			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET bmr=? WHERE user_id=?");
+			smt.setFloat(1,bmr);
+			smt.setString(2,UserId);
+			ResultSet rs = smt.executeQuery();
+			rs.close();
+			smt.close();
+			con.close();
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
+		
+	}
+	
+	public float calcBMR(String UserId)
+	{
+		try {
+			float weight = 0;
+			float height = 0;
+			String gender = "nogender";
+			int age = 0;
+			
+			Connection con = getConnection();
+			PreparedStatement smt = con.prepareStatement("SELECT * from userdatatable WHERE user_id=?");
+			smt.setString(1, UserId);
+			ResultSet rs = smt.executeQuery();
+			float bmr = 0;
+			while(rs.next())
+			{
+				weight = Float.parseFloat(rs.getString("weight"));
+				height = Float.parseFloat(rs.getString("height"));
+				gender = rs.getString("gender");
+				age = Integer.parseInt(rs.getString("age"));
+			}
+			if (weight!=0.0 && height!=0.0 && age!=0 && gender!="nogender")
+			{
+				if(gender=="male") {
+					bmr= (float) (10 * weight + 6.25 * height - 5 * age + 5);
+				}
+				else {
+					bmr=(float) (10 * weight + 6.25 * height - 5 * age - 161);
+				}
+			}
+			rs.close();
+			smt.close();
+			con.close();
+			return bmr;
+		}
+		catch (Exception e) {
+			System.out.println(e);
+			return 0;
+
+		}
+	}
+	
+	public void setBMI(String UserId)
+	{
+		try {
+			float bmi = calcBMI(UserId);
+			Connection con = getConnection();
+			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET bmi=? WHERE user_id=?");
+			smt.setFloat(1,bmi);
+			smt.setString(2,UserId);
+			ResultSet rs = smt.executeQuery();
+			rs.close();
+			smt.close();
+			con.close();
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
+		
+	}
+	
+	public float calcBMI(String UserId)
+	{
+		try {
+			float weight = 0;
+			float height = 0;
+			Connection con = getConnection();
+			PreparedStatement smt = con.prepareStatement("SELECT * from userdatatable WHERE user_id=?");
+			smt.setString(1, UserId);
+			ResultSet rs = smt.executeQuery();
+			float bmi = 0;
+			while(rs.next())
+			{
+				weight = Float.parseFloat(rs.getString("weight"));
+				height = Float.parseFloat(rs.getString("height"));
+			}
+			if (weight!=0.0 && height!=0.0)
+			{
+				bmi=weight/((height)*height);
+			}
+			rs.close();
+			smt.close();
+			con.close();
+			return bmi;
+			
+		}
+		catch (Exception e) {
+			System.out.println(e);
+			return 0;
+		}
+	}
 
 	
 	public void updateWeight(String UserId, float weight)
