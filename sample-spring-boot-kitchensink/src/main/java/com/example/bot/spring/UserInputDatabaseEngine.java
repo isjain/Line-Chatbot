@@ -9,9 +9,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserInputDatabaseEngine extends DatabaseEngine {
+<<<<<<< HEAD
 
 	
 	public void updateWeight(String UserId, float weight)
+=======
+	public void updateUserWeight(String UserId, float weight)
+>>>>>>> master
 	{
 		try {
 			Connection con = getConnection();
@@ -29,8 +33,12 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		}
 	}
 	
+<<<<<<< HEAD
 
 	public void updateHeight(String UserId, float height)
+=======
+	public void updateUserHeight(String UserId, float height)
+>>>>>>> master
 	{
 		try {
 			Connection con = getConnection();
@@ -48,8 +56,12 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		}
 	}
 	
+<<<<<<< HEAD
 
 	public void updateGymFrequency(String UserId, int gymFrequency)
+=======
+	public void updateUserGymFrequency(String UserId, int gymFrequency)
+>>>>>>> master
 	{
 		try {
 			Connection con = getConnection();
@@ -67,8 +79,12 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		}
 	}
 	
+<<<<<<< HEAD
 
 	public void updateBMI(String UserId, float weight)
+=======
+	public void updateUserBMI(String UserId, float weight)
+>>>>>>> master
 	{
 		try {
 			Connection con = getConnection();
@@ -86,8 +102,12 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		}
 	}
 	
+<<<<<<< HEAD
 
 	public void updateUserBMR(String UserId, float weight)
+=======
+	public void UpdateUserBMR(String UserId, float weight)
+>>>>>>> master
 	{
 		try {
 			Connection con = getConnection();
@@ -105,8 +125,12 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		}
 	}
 	
+<<<<<<< HEAD
 
 	public void updateLoseGain(String UserId, float loseGain)
+=======
+	public void UpdateUserLoseGain(String UserId, float loseGain)
+>>>>>>> master
 	{
 		try {
 			Connection con = getConnection();
@@ -124,8 +148,12 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		}
 	}
 	
+<<<<<<< HEAD
 
 	public void updateAge(String UserId, int age)
+=======
+	public void UpdateUserAge(String UserId, int age)
+>>>>>>> master
 	{
 		try {
 			Connection con = getConnection();
@@ -143,8 +171,12 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		}
 	}
 	
+<<<<<<< HEAD
 
 	public void updateWaterReminder(String UserId, int waterReminder)
+=======
+	public void UpdateUserWaterReminder(String UserId, int waterReminder)
+>>>>>>> master
 	{
 		try {
 			Connection con = getConnection();
@@ -162,7 +194,11 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		}
 	}
 	
+<<<<<<< HEAD
 	public void updateUserName(String UserId, String name)
+=======
+	public void UpdateUserName(String UserId, String name)
+>>>>>>> master
 	{
 		try {
 			Connection con = getConnection();
@@ -180,7 +216,30 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		}
 	}
 	
+<<<<<<< HEAD
 	public void updateGender(String UserId, String gender)
+=======
+	public void UserSetCalories(String UserId, String name)
+	{
+		try {
+			Connection con = getConnection();
+			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET name='?' WHERE user_id='?'");
+			smt.setString(1,name);
+			smt.setString(2,UserId);
+			ResultSet rs = smt.executeQuery();
+			rs.close();
+			smt.close();
+			con.close();
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
+	
+	
+	public void UpdateUserGender(String UserId, String gender)
+>>>>>>> master
 	{
 		try {
 			Connection con = getConnection();
@@ -198,6 +257,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		}
 	}
 	
+<<<<<<< HEAD
 
 	public User getUserRecord(String UserId) {
 		boolean found = false;
@@ -232,6 +292,38 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 				gender = rs.getString("gender");
 				calDay = Double.parseDouble(rs.getString("reqcalday"));
 			}
+=======
+	public void UpdateUserReqCalDay(String UserId, double reqcal)
+	{
+		try {
+			String weight = null;
+			String height = null;
+			String gender = null;
+			String age = null;
+			String losegainperweek = null;
+			String gymfrequency = null;
+			Connection con = getConnection();
+			PreparedStatement smt1 = con.prepareStatement("SELECT * FROM userdatatable WHERE user_id=?");
+			smt1.setString(1,UserId);
+			while(rs.next())
+			{
+				weight = rs.getString("weight");
+				height = rs.getString("height");
+				age = rs.getString("age");
+				losegainperweek = rs.getString("losegainperweek");
+				gymfrequency = rs.getString("gymfrequency");	
+			}
+			float weight1 = parseFloat(weight);
+			float height1 = parseFloat(height);
+			int age1 = parseInt(age);
+			int losegainperweek1= parseInt(losegainperweek);
+			int gymfrequency1 = parseInt(gymfrequency);
+			float calDayReq = setCalDay(gender, weight1, height1, age1, losegainperweek1, gymfrequency1);
+			PreparedStatement smt2 = con.prepareStatement("UPDATE userdatatable SET reqcalday=? WHERE user_id='?'");
+			smt.setFloat(1,calDayReq);
+			smt.setString(2,UserId);
+			ResultSet rs = smt2.executeQuery();
+>>>>>>> master
 			rs.close();
 			smt.close();
 			con.close();
@@ -297,9 +389,14 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		}
 	}
 	
+<<<<<<< HEAD
 
 	public double setCalDay(String gender, float weight, float height, int age, int loseGainPerWeek, int gymFrequency) {
 		double calDay=0;
+=======
+	public float setCalDay(String gender, float weight, float height, int age, int loseGainPerWeek, int gymFrequency) {
+		float calDay;
+>>>>>>> master
 		float goal_bmr;
 		if(gender=="male") {
 			goal_bmr= (float) (10 * (weight+loseGainPerWeek) + 6.25 * height - 5 * age + 5);
@@ -324,7 +421,11 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		}
 		return calDay;
 	}
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> master
 	public void CreateNewUser(User new_User) throws Exception{
 		try {
 			Connection con = getConnection();
