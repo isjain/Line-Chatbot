@@ -307,18 +307,30 @@ public class KitchenSinkController {
         case "waterReminder": {
         	String userId = event.getSource().getUserId();
     		database.updateWaterReminder(userId, Integer.parseInt(inputData));
-    		this.replyText(replyToken,inputData + " received");
+    		this.replyText(replyToken,"Thank you, you will be alerted");
     		break;
+        }
+        
+        case "recommend" : {
+    		//this.replyText(replyToken,"We recommend a corn soup with salad and cheese, and croutons.");
+        	String userId = event.getSource().getUserId();
+            String fromLang = "en";
+            String toLang = "zh-CN";
+        	Translator translator = new Translator();
+        	this.replyText(replyToken,inputData + " received");
+        	this.replyText(replyToken, translator.translate(fromLang, toLang, inputData)); 
+        	break;
         }
         
         case "translate": {
         	String userId = event.getSource().getUserId();
             String fromLang = "en";
-            String toLang = "fr";
+            String toLang = "zh-CN";
         	Translator translator = new Translator();
         this.replyText(replyToken, translator.translate(fromLang, toLang, inputData));        	
         	break;
         }
+        
         
         case "carousel": {
            String imageUrl = createUri("/static/buttons/1040.jpg");
