@@ -23,6 +23,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -94,6 +95,7 @@ public class KitchenSinkController {
 	@Autowired
 	private LineMessagingClient lineMessagingClient;
 	private UserInputDatabaseEngine database;
+	private RecommendationDatabaseEngine recomDB;
 
 	@EventMapping
 	public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) throws Exception {
@@ -317,7 +319,24 @@ public class KitchenSinkController {
             String fromLang = "en";
             String toLang = "zh-CN";
         	Translator translator = new Translator();
-        	this.replyText(replyToken,inputData + " " + translator.translate(fromLang, toLang, inputData));
+        	//Recommendation
+        	String[] menu = inputData.split(",");
+        	List<Dish> dishes = new ArrayList<Dish>();
+        	for (String str: menu)
+        	{
+        		dishes.add(new Dish(str));
+        	}
+        	Dish[] dishes2 = dishes.toArray(new Dish[dishes.size()]);
+        	Dish[] final_dishes = recomDB.findCaloricContent(dishes2);
+        	User curr_user = database.getUserRecord(userId);
+        	Recommendation recommend = new Recommendation(curr_user, final_dishes);
+        	Dish[] recommended_dishes = recommend.getRecommendedDishes();
+        	String reply_msg = "Recommended dishes in best to least: ";
+        	for(Dish d: recommended_dishes)
+        	{
+        		reply_msg = reply_msg + d.getName() + " ";
+        	}
+        	this.replyText(replyToken, reply_msg + "\n" + translator.translate(fromLang, toLang, reply_msg));
         	break;
         }
         
@@ -416,6 +435,7 @@ public class KitchenSinkController {
 	public KitchenSinkController() {
 		database = new UserInputDatabaseEngine();
 		itscLOGIN = System.getenv("ITSC_LOGIN");
+		recomDB = new RecommendationDatabaseEngine();
 	}
 
 	private String itscLOGIN;

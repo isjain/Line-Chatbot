@@ -10,6 +10,7 @@ public class Dish {
 	private String fatty_acids;
 
 	public Dish(String name) {
+		this.dishId = null;
 		this.name = name;
 		this.keywords = name.split(" ");
 		
