@@ -16,8 +16,32 @@ public class RecommendationDatabaseEngine extends DatabaseEngine {
 	
 	public Dish[] findCaloricContent(Dish[] dishes) {
 		
-		return dishes;
-	}
+		
+			
+			try {
+				
+				Connection con = getConnection();
+				for(Dish d: dishes) {
+					PreparedStatement smt = con.prepareStatement("SELECT * FROM nutrienttable WHERE Description LIKE '%?%' and Description LIKE '%?%' and Description LIKE '%?%' and Description LIKE '%?%' and Description LIKE '%?%'");
+					String[] key = d.getKeywords();
+					for(int i=1;i<=5;i++) {
+						smt.setString(i,key[i-1]);
+					}
+					ResultSet rs = smt.executeQuery();
+					while(rs.next()) {
+						d.setCalories(Double.parseDouble(rs.getString("Energy")));
+						d.setDishId(rs.getString("Id"));
+					}
+					rs.close();
+					smt.close();
+				}
+				con.close();
+			}catch(Exception e) {
+				System.out.println(e);
+			}
+			return dishes;
+		}
+
 	
 	
 	

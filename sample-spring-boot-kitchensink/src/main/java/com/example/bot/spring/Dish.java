@@ -13,6 +13,7 @@ public class Dish {
 		this.dishId = null;
 		this.name = name;
 		this.keywords = name.split(" ");
+		this.calories = 0;
 		
 	}
 	public String getDishId() {
