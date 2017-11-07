@@ -78,6 +78,16 @@ import com.linecorp.bot.model.message.template.ConfirmTemplate;
 import com.linecorp.bot.model.response.BotApiResponse;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
+import org.springframework.web.bind.annotation.*;
+import com.linecorp.bot.client.LineMessagingServiceBuilder;
+import com.linecorp.bot.model.response.BotApiResponse;
+import com.linecorp.bot.model.profile.UserProfileResponse;
+import retrofit2.Response;
+
+
+
+import com.linecorp.bot.client.LineMessagingClient;
+import com.linecorp.bot.model.*;
 
 import lombok.NonNull;
 import lombok.Value;
@@ -89,7 +99,6 @@ import java.net.URI;
 @LineMessageHandler
 public class KitchenSinkController {
 	
-
 
 	@Autowired
 	private LineMessagingClient lineMessagingClient;
@@ -283,6 +292,25 @@ public class KitchenSinkController {
     		break;
         }
         
+        case "waterMe" : {
+        	String userId = event.getSource().getUserId();
+        	TextMessage textMessage = new TextMessage("hello");
+        	PushMessage pushMessage = new PushMessage(
+        	        userID,
+        	        textMessage
+        	);
+
+        	Response<BotApiResponse> response =
+        	        LineMessagingServiceBuilder
+        	                .create("b0fe7dcda60c54eee834d8914041c523") // channel access token
+        	                .build()
+        	                .pushMessage(pushMessage)
+        	                .execute();
+        	System.out.println(response.code() + " " + response.message());
+        	
+        	break;
+        }
+        
         
         case "age": {
         	String userId = event.getSource().getUserId();
@@ -409,6 +437,23 @@ public class KitchenSinkController {
 		return new DownloadedContent(tempFile, createUri("/downloaded/" + tempFile.getFileName()));
 	}
 
+	@RequestMapping("/")
+	public String index (@RequestParam(value="to", defaultValue="Ishan") String name) {
+		TextMessage textMessage = new TextMessage("hello" + name);
+		PushMessage pushMessage = new PushMessage(name, textMessage);
+		lineMessagingClient.pushMessage(pushMessage);
+		System.out.println("Message Pushed");
+		return "Greetings from Spring Boot";
+	}
+
+
+	@RequestMapping(value="/hi", method = RequestMethod.GET)
+		public Student sayHitoStudent(
+			@RequestParam(value = "parameter1", defaultValue= "Ishan") String name,
+			@RequestParam(value ="parameter2", defaultValue = "") String who
+			) {
+			return new Student(name + " " + who, 3);
+		}
 
 	
 
@@ -455,6 +500,25 @@ public class KitchenSinkController {
         	);
     	}
     }
+	
+	class Student {
+		private String name;
+		private int year;
+
+		public Student(String name, int year) {
+			this.name = name;
+			this.year = year;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public int getYear() {
+			return year;	
+		}
+
+	}
 	
 	
 
