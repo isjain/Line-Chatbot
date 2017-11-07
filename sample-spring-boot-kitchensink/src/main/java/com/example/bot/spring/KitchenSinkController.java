@@ -317,8 +317,7 @@ public class KitchenSinkController {
             String fromLang = "en";
             String toLang = "zh-CN";
         	Translator translator = new Translator();
-        	this.replyText(replyToken,inputData + " received");
-        	this.replyText(replyToken, translator.translate(fromLang, toLang, inputData)); 
+        	this.replyText(replyToken,inputData + " " + translator.translate(fromLang, toLang, inputData));
         	break;
         }
         
