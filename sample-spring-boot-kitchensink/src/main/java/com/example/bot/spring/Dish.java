@@ -11,7 +11,8 @@ public class Dish {
 
 	public Dish(String name) {
 		this.name = name;
-		this.keywords = name.split(",");
+		this.keywords = name.split(" ");
+		
 	}
 	public String getDishId() {
 		return dishId;
