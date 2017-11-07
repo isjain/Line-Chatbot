@@ -296,7 +296,7 @@ public class KitchenSinkController {
         	String userId = event.getSource().getUserId();
         	TextMessage textMessage = new TextMessage("hello");
         	PushMessage pushMessage = new PushMessage(
-        	        userID,
+        	        userId,
         	        textMessage
         	);
 
