@@ -31,6 +31,7 @@ import java.util.function.Consumer;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 import com.linecorp.bot.model.profile.UserProfileResponse;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -281,6 +282,8 @@ public class KitchenSinkController {
         database.setBMI(userId);
     		break;
         }
+        
+        
         case "age": {
         	String userId = event.getSource().getUserId();
     		database.updateAge(userId, Integer.parseInt(inputData));
@@ -331,6 +334,14 @@ public class KitchenSinkController {
                 this.reply(replyToken, templateMessage);
                 break;
             }
+        
+        case "Motivation" : {
+          	 Random rand = new Random();
+           String[] msgs = {"Good progress! One more step towards a healthier lifestyle", "Add oil!", "Strive for progress, not perfection", "The struggle you're in today is developing the strength you need for tomorrow", "Yes, you can! The road may be bumpy, but stay committed to the process.", "Making excuses burns 0 calories per hour."};
+           int  n = rand.nextInt(6);
+           this.replyText(replyToken,msgs[n]);    
+           break;
+          }
 
             default:
             	String reply = null;
