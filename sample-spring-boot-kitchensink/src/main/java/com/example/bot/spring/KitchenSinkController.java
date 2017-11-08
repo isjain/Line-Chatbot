@@ -296,13 +296,16 @@ public class KitchenSinkController {
         
         case "waterMe" : {
         	
+        	int hourGap = Integer.parseInt(inputData);
+        	hourGap = 24/hourGap;
+        	
         	Timer timer = new Timer ();
         	TimerTask hourlyTask = new TimerTask () {
         	    @Override
         	    public void run () {
         	        // your code here...
                 	String userId = event.getSource().getUserId();
-                	TextMessage textMessage = new TextMessage("hello");
+                	TextMessage textMessage = new TextMessage("It is time to drink your water :)");
                 	PushMessage pushMessage = new PushMessage(userId, textMessage);
                 	try {
                 	Response<BotApiResponse> response =
@@ -320,35 +323,7 @@ public class KitchenSinkController {
         	};
 
         	// schedule the task to run starting now and then every hour...
-        	timer.schedule (hourlyTask, 0l, 1000*5);
-        	      	
-//        	Timer timer = new Timer();
-//        	
-//        	timer.schedule(new TimerTask() {
-//        		@Override
-//        		public void run() {
-//        			
-//                	
-//                	String userId = event.getSource().getUserId();
-//                	TextMessage textMessage = new TextMessage("hello");
-//                	PushMessage pushMessage = new PushMessage(userId, textMessage);
-//                	try {
-//                	Response<BotApiResponse> response =
-//                	        LineMessagingServiceBuilder
-//                	                .create("CJo3Ka/VX7VW4fsG78i5dNDpP5qqYgr1PD7YUclFFc62ZtnrIpHiM/Muof6oLc/J/bPoaheiYdHNoUkg09kAt5VqnD+tMyzOCClGLwvJaR3+etoVOdsHo1DGXv2UqOljNgUIFR/zQWk1U4iFRPr4TQdB04t89/1O/w1cDnyilFU=") // channel access token
-//                	                .build()
-//                	                .pushMessage(pushMessage)
-//                	                .execute();
-//                	System.out.println(response.code() + " " + response.message());
-//                	}
-//                	catch (Exception e) {
-//                		e.printStackTrace();
-//                	}
-//                	
-//                	
-//        		}
-//        	}, 10000);
-        	
+        	timer.schedule (hourlyTask, 0l, 1000*60*60*hourGap);
         	
         	break;
         }
