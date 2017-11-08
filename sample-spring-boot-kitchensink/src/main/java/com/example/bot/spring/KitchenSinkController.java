@@ -297,7 +297,6 @@ public class KitchenSinkController {
         case "waterMe" : {
         	
         	int hourGap = Integer.parseInt(inputData);
-        	hourGap = 24/hourGap;
         	
         	Timer timer = new Timer ();
         	TimerTask hourlyTask = new TimerTask () {
