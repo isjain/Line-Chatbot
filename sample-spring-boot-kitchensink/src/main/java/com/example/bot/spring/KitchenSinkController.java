@@ -334,7 +334,7 @@ public class KitchenSinkController {
         	String reply_msg = "Recommended dishes in best to least:\n";
         	for(Dish d: dishes2)
         	{
-        		reply_msg = reply_msg + d.getName() + "\n";
+        		reply_msg = reply_msg + d.getName() + d.getCalories() + "\n";
         	}
         	this.replyText(replyToken, reply_msg + "\n\n" + translator.translate(fromLang, toLang, reply_msg));
         	break;
@@ -383,7 +383,7 @@ public class KitchenSinkController {
                 log.info("Returns echo message {}: {}", replyToken, reply);
                 this.replyText(
                         replyToken,
-                        itscLOGIN + " says " + reply
+                        inputData
                 );
                 break;
                
