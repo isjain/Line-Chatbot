@@ -302,7 +302,7 @@ public class KitchenSinkController {
 
         	Response<BotApiResponse> response =
         	        LineMessagingServiceBuilder
-        	                .create("b0fe7dcda60c54eee834d8914041c523") // channel access token
+        	                .create("CJo3Ka/VX7VW4fsG78i5dNDpP5qqYgr1PD7YUclFFc62ZtnrIpHiM/Muof6oLc/J/bPoaheiYdHNoUkg09kAt5VqnD+tMyzOCClGLwvJaR3+etoVOdsHo1DGXv2UqOljNgUIFR/zQWk1U4iFRPr4TQdB04t89/1O/w1cDnyilFU=") // channel access token
         	                .build()
         	                .pushMessage(pushMessage)
         	                .execute();
