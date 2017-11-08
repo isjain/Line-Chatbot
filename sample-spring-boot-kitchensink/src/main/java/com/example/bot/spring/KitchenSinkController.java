@@ -88,6 +88,8 @@ import retrofit2.Response;
 
 import com.linecorp.bot.client.LineMessagingClient;
 import com.linecorp.bot.model.*;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import lombok.NonNull;
 import lombok.Value;
@@ -293,59 +295,47 @@ public class KitchenSinkController {
         }
         
         case "waterMe" : {
-//        	String userId = event.getSource().getUserId();
-//        	TextMessage textMessage = new TextMessage("hello");
-//        	PushMessage pushMessage = new PushMessage(
-//        	        userId,
-//        	        textMessage
-//        	);
-//
-//        	Response<BotApiResponse> response =
-//        	        LineMessagingServiceBuilder
-//        	                .create("CJo3Ka/VX7VW4fsG78i5dNDpP5qqYgr1PD7YUclFFc62ZtnrIpHiM/Muof6oLc/J/bPoaheiYdHNoUkg09kAt5VqnD+tMyzOCClGLwvJaR3+etoVOdsHo1DGXv2UqOljNgUIFR/zQWk1U4iFRPr4TQdB04t89/1O/w1cDnyilFU=") // channel access token
-//        	                .build()
-//        	                .pushMessage(pushMessage)
-//        	                .execute();
-//        	System.out.println(response.code() + " " + response.message());
-//        	
-//        	break;
+        	      	
+        	Timer timer = new Timer();
         	
-
-		    String userId = event.getSource().getUserId();
-        	TextMessage textMessage = new TextMessage("hello");
-        	PushMessage pushMessage = new PushMessage(
-        	        userId,
-        	        textMessage
-        	);
-
-   		int gapHours = 24/waterReminder;
-   		Timer timer = new Timer();
-   		TimerTask gapTask = new TimerTask() {
-   			@Override
-   			public void Run() {
-   				//notify 
-	        	String userId = event.getSource().getUserId();
-	        	TextMessage textMessage = new TextMessage("It is time for you to drink water");
-	        	PushMessage pushMessage = new PushMessage(
-	        	        userId,
-	        	        textMessage
-	        	);
-
-	        	Response<BotApiResponse> response =
-	        	        LineMessagingServiceBuilder
-	        	                .create("CJo3Ka/VX7VW4fsG78i5dNDpP5qqYgr1PD7YUclFFc62ZtnrIpHiM/Muof6oLc/J/bPoaheiYdHNoUkg09kAt5VqnD+tMyzOCClGLwvJaR3+etoVOdsHo1DGXv2UqOljNgUIFR/zQWk1U4iFRPr4TQdB04t89/1O/w1cDnyilFU=") // channel access token
-	        	                .build()
-	        	                .pushMessage(pushMessage)
-	        	                .execute();
-	        	System.out.println(response.code() + " " + response.message());
-   			}
-   		};
-   		// timer.schedule(gapTask, 0l, 1000*60*60*gapHours);
-   		timer.schedule(gapTask, 0l, 3000);
-
-    	break;
-    
+        	timer.schedule(new TimerTask() {
+        		@Override
+        		public void run() {
+        			
+                	
+                	String userId = event.getSource().getUserId();
+                	TextMessage textMessage = new TextMessage("hello");
+                	PushMessage pushMessage = new PushMessage(userId, textMessage);
+                	try {
+                	Response<BotApiResponse> response =
+                	        LineMessagingServiceBuilder
+                	                .create("CJo3Ka/VX7VW4fsG78i5dNDpP5qqYgr1PD7YUclFFc62ZtnrIpHiM/Muof6oLc/J/bPoaheiYdHNoUkg09kAt5VqnD+tMyzOCClGLwvJaR3+etoVOdsHo1DGXv2UqOljNgUIFR/zQWk1U4iFRPr4TQdB04t89/1O/w1cDnyilFU=") // channel access token
+                	                .build()
+                	                .pushMessage(pushMessage)
+                	                .execute();
+                	System.out.println(response.code() + " " + response.message());
+                	}
+                	catch (Exception e) {
+                		e.printStackTrace();
+                	}
+                	
+                	
+        		}
+        	}, 10000);
+        	
+        	
+        	break;
         }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         
         case "age": {
