@@ -22,16 +22,30 @@ public class RecommendationDatabaseEngine extends DatabaseEngine {
 				
 				Connection con = getConnection();
 				for(Dish d: dishes) {
-					PreparedStatement smt = con.prepareStatement("SELECT * FROM nutrienttable WHERE Description LIKE '%?%' and Description LIKE '%?%' and Description LIKE '%?%' and Description LIKE '%?%' and Description LIKE '%?%'");
+					String st = "SELECT * FROM nutrienttable WHERE  ";
 					String[] key = d.getKeywords();
-					for(int i=1;i<=5;i++) {
+					for (int j=0;j<key.length;j++)
+					{
+						st = st + "Description LIKE '%?%'";
+						if(j!=key.length-1)
+						{
+							st = st + " and ";
+						}
+					}
+					PreparedStatement smt = con.prepareStatement(st);
+					for(int i=1;i<=key.length;i++) {
 						smt.setString(i,key[i-1]);
 					}
 					ResultSet rs = smt.executeQuery();
+					double k = 0;
+					String l = "";
 					while(rs.next()) {
-						d.setCalories(Double.parseDouble(rs.getString("Energy")));
-						d.setDishId(rs.getString("Id"));
+						 k = Double.parseDouble(rs.getString("energy"));
+						 l = rs.getString("ndb_no");
+						
 					}
+					d.setCalories(k);
+					d.setDishId(l);
 					rs.close();
 					smt.close();
 				}
