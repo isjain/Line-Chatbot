@@ -26,13 +26,13 @@ public class RecommendationDatabaseEngine extends DatabaseEngine {
 					String[] key = d.getKeywords();
 					for (int j=0;j<key.length;j++)
 					{
-						st = st + "Description LIKE '%?%'";
+						st = st + "lower(Description) LIKE '%?%'";
 						if(j!=key.length-1)
 						{
 							st = st + " and ";
 						}
 					}
-					System.out.println("Statement"+st);
+//					System.out.println("Statement"+st);
 					PreparedStatement smt = con.prepareStatement(st);
 					for(int i=1;i<=key.length;i++) {
 						smt.setString(i,key[i-1]);
@@ -49,6 +49,7 @@ public class RecommendationDatabaseEngine extends DatabaseEngine {
 					d.setDishId(l);
 					rs.close();
 					smt.close();
+					
 				}
 				con.close();
 			}catch(Exception e) {
