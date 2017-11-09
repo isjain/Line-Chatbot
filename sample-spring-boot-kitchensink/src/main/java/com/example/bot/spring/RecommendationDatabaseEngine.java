@@ -21,6 +21,7 @@ public class RecommendationDatabaseEngine extends DatabaseEngine {
 			try {
 				
 				Connection con = getConnection();
+				
 				for(Dish d: dishes) {
 					String st = "SELECT * FROM nutrienttable WHERE  ";
 					String[] key = d.getKeywords();
@@ -32,7 +33,7 @@ public class RecommendationDatabaseEngine extends DatabaseEngine {
 							st = st + " and ";
 						}
 					}
-//					System.out.println("Statement"+st);
+					System.out.println("Statement: "+st);
 					PreparedStatement smt = con.prepareStatement(st);
 					for(int i=1;i<=key.length;i++) {
 						smt.setString(i,key[i-1]);
@@ -51,7 +52,8 @@ public class RecommendationDatabaseEngine extends DatabaseEngine {
 					smt.close();
 					
 				}
-				con.close();
+				
+			con.close();
 			}catch(Exception e) {
 				System.out.println(e);
 			}
