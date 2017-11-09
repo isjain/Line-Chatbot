@@ -332,7 +332,7 @@ public class KitchenSinkController {
 //        	Recommendation recommend = new Recommendation(curr_user, final_dishes);
 //        	Dish[] recommended_dishes = recommend.getRecommendedDishes();
         	String reply_msg = "Recommended dishes in best to least:\n";
-        	for(Dish d: dishes2)
+        	for(Dish d: final_dishes)
         	{
         		reply_msg = reply_msg + d.getName() + d.getCalories() + "\n";
         	}
