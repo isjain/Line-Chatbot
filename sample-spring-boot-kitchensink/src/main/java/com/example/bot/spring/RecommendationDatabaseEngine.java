@@ -34,6 +34,9 @@ public class RecommendationDatabaseEngine extends DatabaseEngine {
 						}
 					}
 					PreparedStatement smt = con.prepareStatement(st);
+					System.out.println("Statement: "+st);
+					System.out.println("Keywords: "+ key[0] + key[1]);
+
 					for(int i=1;i<=key.length;i++) {
 						smt.setString(i,key[i-1]);
 					}
