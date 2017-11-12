@@ -325,7 +325,13 @@ public class KitchenSinkController {
 //        	timer.schedule (hourlyTask, 0l, 1000*60*60*hourGap);
         	timer.schedule (hourlyTask, 0l, 1000*60*10);
 
-        	
+        	break;
+        }
+        
+      case "waterMeNow" : {
+       
+                	String userId = event.getSource().getUserId();
+                	database.waterReminder(userId);
         	break;
         }
         
