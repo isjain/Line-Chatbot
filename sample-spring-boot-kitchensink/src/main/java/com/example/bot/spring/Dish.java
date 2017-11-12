@@ -3,6 +3,7 @@ package com.example.bot.spring;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;  
+import java.util.*;
 
 
 public class Dish {
@@ -18,28 +19,14 @@ public class Dish {
 		this.dishId = null;
 		this.name = name;
     		this.keywords = name.toLowerCase().split(" ");
+  
+    		
     		cleanKWORDS();
+    		
 		this.calories = 0;
 		
 	}	
-//	public void cleanKWORDS() {	
-////		String[] dirty_words = {"the","and","with","or","of","a","an","&"," "};		
-//		ArrayList<String> words = new ArrayList<String>();
-//		words.add("the");
-//		words.add("and");
-//		words.add("with");
-//		words.add("or");
-//		words.add("of");
-//		words.add("a");
-//		words.add("an");
-//		words.add("&");
-//		words.add(" ");
-//	    List<String> kwords = Arrays.asList(keywords);  
-//		kwords.removeAll(words);
-//		keywords = kwords.toArray(new String[kwords.size()]);
-//	}
 	public void cleanKWORDS() {	
-//		String[] dirty_words = {"the","and","with","or","of","a","an","&"," "};		
 		ArrayList<String> words = new ArrayList<String>();
 		words.add("the");
 		words.add("and");
@@ -50,10 +37,13 @@ public class Dish {
 		words.add("an");
 		words.add("&");
 		words.add(" ");
-	    List<String> kwords = Arrays.asList(keywords);  
+		List<String> kwords = new ArrayList<String>();  
+        Collections.addAll(kwords, keywords); 
 		kwords.removeAll(words);
 		keywords = kwords.toArray(new String[kwords.size()]);
+      	System.out.println("keywords 2: "+Arrays.toString(keywords));
 	}
+
 	public String getDishId() {
 		return dishId;
 	}

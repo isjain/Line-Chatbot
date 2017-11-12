@@ -42,7 +42,10 @@ public class RecommendationDatabaseEngine extends DatabaseEngine {
 						smt.setString(i, "%"+key[i-1]+"%");
 					}
 					
-					System.out.println("Statement: "+smt);
+					System.out.println("Statement:  e"+smt);
+					System.out.println("keywords: "+d.getKeywords());					
+				
+
 					ResultSet rs = smt.executeQuery();
 					double k = 0;
 					String l = "";
