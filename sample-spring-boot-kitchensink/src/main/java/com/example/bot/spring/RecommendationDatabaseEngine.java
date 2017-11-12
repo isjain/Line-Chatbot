@@ -24,25 +24,25 @@ public class RecommendationDatabaseEngine extends DatabaseEngine {
 				
 				for(Dish d: dishes) { 
 
-					String st = "select * from nutrienttable where ";
-					String[] key = d.getKeywords();
-					for (int j=0;j<key.length;j++)
-					{
-						st = st + "lower(Description) like '%?%'";
-						if(j!=key.length-1)
-						{
-							st = st + " and ";
-						}
-					}
-					PreparedStatement smt = con.prepareStatement(st);
+//					String st = "select * from nutrienttable where ";
+//					String[] key = d.getKeywords();
+//					for (int j=0;j<key.length;j++)
+//					{
+//						st = st + "lower(Description) like '%?%'";
+//						if(j!=key.length-1)
+//						{
+//							st = st + " and ";
+//						}
+//					}
+					PreparedStatement smt = con.prepareStatement("select * from nutrienttable where lower(description) like '%chicken%' and lower(description) like '%rice%'");
 
 
-					System.out.println("Statement: "+st);
+//					System.out.println("Statement: "+st);
+//					
+//					smt.setString(1, "chicken");
+//					smt.setString(2, "rice");
 					
-					smt.setString(1, key[0]);
-					smt.setString(2, key[1]);
-					
-					System.out.println("Statement: "+st);
+//					System.out.println("Statement: "+st);
 					ResultSet rs = smt.executeQuery();
 					double k = 0;
 					String l = "";
