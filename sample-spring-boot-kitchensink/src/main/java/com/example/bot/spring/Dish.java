@@ -17,21 +17,33 @@ public class Dish {
 	public Dish(String name) {
 		this.dishId = null;
 		this.name = name;
-    		this.keywords = name.split(" ");
-    		ArrayList<String> words = new ArrayList<String>();
-    		words.add("the");
-    		words.add("and");
-    		words.add("with");
-    		words.add("or");
-    		words.add("of");
-    		words.add("a");
-    		words.add("an");
-    		words.add("&");
-    	    List<String> kwords = Arrays.asList(keywords);  
-    		kwords.removeAll(words);
-    		keywords = kwords.toArray(new String[kwords.size()]);
+    		this.keywords = name.toLowerCase().split(" ");
+    		cleanKWORDS();
 		this.calories = 0;
 		
+	}
+	
+	public void cleanKWORDS() {
+		
+//		String[] dirty_words = {"the","and","with","or","of","a","an","&"," "};
+		
+		ArrayList<String> words = new ArrayList<String>();
+		words.add("the");
+		words.add("and");
+		words.add("with");
+		words.add("or");
+		words.add("of");
+		words.add("a");
+		words.add("an");
+		words.add("&");
+		words.add(" ");
+	    List<String> kwords = Arrays.asList(keywords);  
+		kwords.removeAll(words);
+		keywords = kwords.toArray(new String[kwords.size()]);
+		System.out.println("keywords: "+keywords);
+		System.out.println("kwords: "+kwords);
+		System.out.println("words: "+words);
+
 	}
 	public String getDishId() {
 		return dishId;

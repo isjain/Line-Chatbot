@@ -37,7 +37,6 @@ public class RecommendationDatabaseEngine extends DatabaseEngine {
 					PreparedStatement smt = con.prepareStatement(st);
 
 
-					System.out.println("Statement: "+st);
 					for(int i=1;i<=key.length;i++)
 					{
 						smt.setString(i, "%"+key[i-1]+"%");
