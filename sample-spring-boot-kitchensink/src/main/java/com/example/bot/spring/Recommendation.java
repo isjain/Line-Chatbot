@@ -43,12 +43,14 @@ public class Recommendation{
 		        }
 		    }
 		    //keep only the first 5 elements of rDishes
-		    Dish[] tempp = new Dish[5];
-		    for(int i=0; i<5; i++) {
-		    		tempp[i] = rDishes[i];
+		    if (rDishes.length>5)
+		    {
+			    Dish[] tempp = new Dish[5];
+			    for(int i=0; i<5; i++) {
+			    		tempp[i] = rDishes[i];
+			    }
+			    rDishes = tempp.clone();	   
 		    }
-		    rDishes = tempp.clone();
-		    
 		
 	}
 	
