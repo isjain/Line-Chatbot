@@ -42,8 +42,6 @@ public class RecommendationDatabaseEngine extends DatabaseEngine {
 						smt.setString(i, "%"+key[i-1]+"%");
 					}
 					
-
-					
 					System.out.println("Statement: "+smt);
 					ResultSet rs = smt.executeQuery();
 					double k = 0;
