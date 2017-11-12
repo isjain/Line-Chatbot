@@ -24,7 +24,7 @@ public class RecommendationDatabaseEngine extends DatabaseEngine {
 				
 				for(Dish d: dishes) { 
 
-					String st = "select * from nutrienttable where  ";
+					String st = "select * from nutrienttable where ";
 					String[] key = d.getKeywords();
 					for (int j=0;j<key.length;j++)
 					{
@@ -38,11 +38,10 @@ public class RecommendationDatabaseEngine extends DatabaseEngine {
 
 
 					System.out.println("Statement: "+st);
-
-
-					for(int i=1;i<=key.length;i++) {
-						smt.setString(i,key[i-1]);
-					}
+					
+					smt.setString(1, key[0]);
+					smt.setString(2, key[1]);
+					
 					System.out.println("Statement: "+st);
 					ResultSet rs = smt.executeQuery();
 					double k = 0;
