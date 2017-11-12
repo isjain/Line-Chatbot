@@ -282,6 +282,7 @@ public class KitchenSinkController {
         	this.replyText(replyToken,inputData + " received");
         	database.setBMR(userId);
         database.setBMI(userId);
+
     		break;
         }
         
@@ -330,6 +331,7 @@ public class KitchenSinkController {
         	Dish[] final_dishes = recomDB.findCaloricContent(dishes2);
         	User curr_user = database.getUserRecord(userId);
         	Recommendation recommend = new Recommendation(curr_user, final_dishes);
+        	System.out.println("inputted dishes: "+recommend.getInputDishes());
         	Dish[] recommended_dishes = recommend.getRecommendedDishes();
         	String reply_msg = "Recommended dishes in best to least:\n";
         	for(Dish d: recommended_dishes)

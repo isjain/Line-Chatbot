@@ -22,6 +22,9 @@ public class Recommendation{
 		inputUser = user;
 		findRecommendation();	
 	}
+	public Dish[] getInputDishes() {
+		return inputDishes;
+	}
 	public void findRecommendation()
 	{
 			rDishes = inputDishes.clone();
