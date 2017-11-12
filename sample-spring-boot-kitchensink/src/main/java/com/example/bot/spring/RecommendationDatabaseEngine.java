@@ -34,13 +34,13 @@ public class RecommendationDatabaseEngine extends DatabaseEngine {
 //							st = st + " and ";
 //						}
 //					}
-					PreparedStatement smt = con.prepareStatement("select * from nutrienttable where lower(description) like '%chicken%' and lower(description) like '%rice%'");
-
+					PreparedStatement smt = con.prepareStatement("select * from nutrienttable where lower(description) like '%?%' and lower(description) like '%?%'");
+					
 
 //					System.out.println("Statement: "+st);
 //					
-//					smt.setString(1, "chicken");
-//					smt.setString(2, "rice");
+					smt.setString(1, "chicken");
+					smt.setString(2, "rice");
 					
 //					System.out.println("Statement: "+st);
 					ResultSet rs = smt.executeQuery();
