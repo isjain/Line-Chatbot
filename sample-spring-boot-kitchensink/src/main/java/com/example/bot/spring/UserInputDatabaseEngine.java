@@ -630,32 +630,5 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		return connection;
 	}
 	
-	public void waterReminder(String id) {
-      	Timer timer = new Timer ();
-    	TimerTask hourlyTask = new TimerTask () {
-    	    @Override
-    	    public void run () {
-    	        // your code here...
-            	TextMessage textMessage = new TextMessage("It is time to drink your water :)");
-            	PushMessage pushMessage = new PushMessage(id, textMessage);
-            	try {
-            	Response<BotApiResponse> response =
-            	        LineMessagingServiceBuilder
-            	                .create("CJo3Ka/VX7VW4fsG78i5dNDpP5qqYgr1PD7YUclFFc62ZtnrIpHiM/Muof6oLc/J/bPoaheiYdHNoUkg09kAt5VqnD+tMyzOCClGLwvJaR3+etoVOdsHo1DGXv2UqOljNgUIFR/zQWk1U4iFRPr4TQdB04t89/1O/w1cDnyilFU=") // channel access token
-            	                .build()
-            	                .pushMessage(pushMessage)
-            	                .execute();
-            	System.out.println(response.code() + " " + response.message());
-            	}
-            	catch (Exception e) {
-            		e.printStackTrace();
-            	}
-    	    }
-    	};
-    	timer.schedule (hourlyTask, 0l, 1000*60*31);
-
-	
-
-}
 }
 

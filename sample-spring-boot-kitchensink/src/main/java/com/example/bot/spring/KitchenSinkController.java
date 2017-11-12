@@ -322,29 +322,12 @@ public class KitchenSinkController {
         	};
 
         	// schedule the task to run starting now and then every hour...
-//        	timer.schedule (hourlyTask, 0l, 1000*60*60*hourGap);
-        	timer.schedule (hourlyTask, 0l, 1000*60*60);
+        	timer.schedule (hourlyTask, 0l, 1000*60*60*hourGap);
+//        	timer.schedule (hourlyTask, 0l, 1000*60*60);
 
         	break;
         }
-        
-      case "waterMeNow" : {
-       
-                	String userId = event.getSource().getUserId();
-                	database.waterReminder(userId);
-        	break;
-        }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+           
         
         case "age": {
         	String userId = event.getSource().getUserId();
@@ -366,13 +349,6 @@ public class KitchenSinkController {
     		this.replyText(replyToken,inputData + " received");
     		break;
         }
-        case "waterReminder": {
-        	String userId = event.getSource().getUserId();
-    		database.updateWaterReminder(userId, Integer.parseInt(inputData));
-    		this.replyText(replyToken,"Thank you, you will be alerted");
-    		break;
-        }
-        
         case "recommend" : {
     		//this.replyText(replyToken,"We recommend a corn soup with salad and cheese, and croutons.");
         	String userId = event.getSource().getUserId();
