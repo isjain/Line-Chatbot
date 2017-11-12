@@ -329,14 +329,14 @@ public class KitchenSinkController {
         	Dish[] dishes2 = dishes.toArray(new Dish[dishes.size()]);
         	Dish[] final_dishes = recomDB.findCaloricContent(dishes2);
         	User curr_user = database.getUserRecord(userId);
-        	Recommendation recommend = new Recommendation(curr_user, final_dishes);
-        	Dish[] recommended_dishes = recommend.getRecommendedDishes();
-        	String reply_msg = "Recommended dishes in best to least: ";
-        	for(Dish d: recommended_dishes)
+//        	Recommendation recommend = new Recommendation(curr_user, final_dishes);
+//        	Dish[] recommended_dishes = recommend.getRecommendedDishes();
+        	String reply_msg = "Recommended dishes in best to least:\n";
+        	for(Dish d: final_dishes)
         	{
-        		reply_msg = reply_msg + d.getName() + " ";
+        		reply_msg = reply_msg + d.getName() + d.getCalories() + "\n";
         	}
-        	this.replyText(replyToken, reply_msg + "\n" + translator.translate(fromLang, toLang, reply_msg));
+        	this.replyText(replyToken, reply_msg + "\n\n" + translator.translate(fromLang, toLang, reply_msg));
         	break;
         }
         
@@ -383,7 +383,7 @@ public class KitchenSinkController {
                 log.info("Returns echo message {}: {}", replyToken, reply);
                 this.replyText(
                         replyToken,
-                        itscLOGIN + " says " + reply
+                        text
                 );
                 break;
                
