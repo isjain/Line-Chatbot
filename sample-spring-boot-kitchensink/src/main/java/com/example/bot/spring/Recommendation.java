@@ -40,7 +40,7 @@ public class Recommendation{
 		 
 		        // Insert arr[i] at correct place
 		        int j = i - 1;
-		        if (Math.abs(inputDishes[j].getCalories() - reqcal) > diff) {
+		        if (Math.abs(rDishes[j].getCalories() - reqcal) > diff) {
 		            Dish temp = new Dish(rDishes[i]);
 		            while (j >= 0 && Math.abs(rDishes[j].getCalories() - reqcal) > diff) {
 		                rDishes[j + 1] = rDishes[j];
