@@ -26,6 +26,13 @@ public class Dish {
 		this.calories = 0;
 		
 	}	
+	public Dish(Dish dishes) {
+		this.dishId = dishes.dishId;
+		this.name = dishes.name;
+    		this.keywords = dishes.keywords;    		
+		this.calories = dishes.calories;
+		
+	}	
 	public void cleanKWORDS() {	
 		ArrayList<String> words = new ArrayList<String>();
 		words.add("the");
