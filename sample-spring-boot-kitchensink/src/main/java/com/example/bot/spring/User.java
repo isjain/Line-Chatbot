@@ -8,7 +8,20 @@ import retrofit2.Response;
 import com.linecorp.bot.model.ReplyMessage;
 import com.linecorp.bot.model.profile.UserProfileResponse;
 import com.linecorp.bot.client.LineMessagingServiceBuilder;
-
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.sql.Array;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
 
 
 
@@ -28,6 +41,8 @@ public class User {
 	private String gender;
 	private String goal;
 	private double calDay;
+	private float consumeCalDay[];
+	private Date calDate[];
 
 	// weight should be in kgs
 	//height should be in cms
@@ -167,7 +182,12 @@ public class User {
 	public void setWaterReminder(float w) {
 		this.waterReminder = w;
 	}
-
+//	public void setConsumecal(float w[]) {
+//		this.consumeCalDay = w;
+//	}
+//	public void setConsume(String w[]) {
+//		this.calDate = w;
+//	}
 	
 	
 	//Need to find a timer interval, which displays the reminder every 24/waterReminder hours

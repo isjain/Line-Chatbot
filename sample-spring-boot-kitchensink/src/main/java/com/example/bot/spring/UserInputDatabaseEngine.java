@@ -2,11 +2,20 @@ package com.example.bot.spring;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Collections;
+import java.util.Arrays;
 
 public class UserInputDatabaseEngine extends DatabaseEngine {
 	
@@ -39,7 +48,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 			
 			Connection con = getConnection();
 			PreparedStatement smt = con.prepareStatement("SELECT * from userdatatable WHERE user_id=?");
-			smt.setString(1, UserId);
+			smt.setString(0, UserId);
 			ResultSet rs = smt.executeQuery();
 			float bmr = 0;
 			while(rs.next())
@@ -88,6 +97,65 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		}
 		
 	}
+	
+//	public void setAddCal(float cal)
+//	{
+//		try {
+//			int i=0;  boolean found=false;
+//			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+//			Date date = dateFormat.parse(dateFormat.format(new Date()));
+//			//System.out.println(date); //2016/11/16 
+//			//Need to get the calories consumed per meal here
+//			Connection conn = getConnection();
+//			PreparedStatement smt = conn.prepareStatement("SELECT caldate, consumecaldate FROM userdatatable WHERE userId=?");
+//			smt.setString(1, UserId);
+//			ResultSet rs = smt.executeQuery();
+//			Array calDate=rs.getArray(1);
+//			Array consumeCalDate=rs.getArray(2);
+//			Date[] date_calDate=(Date[])calDate.getArray();
+//			float[] date_consumeCalDate=(float[])consumeCalDate.getArray();
+//			
+//			for(i=0;i<date_calDate.length;i++)
+//			{
+//				if(date_calDate[i]==date) {
+//				date_consumeCalDate[i]+=date_consumeCalDate[i];
+//				found=true;
+//				}
+//			}
+//			if(found!=true)
+//			{
+//				Date minDate = Collections.min(date_calDate);
+//				for(i=0;i<date_calDate.length;i++)
+//				{
+//				if(minDate==date_calDate[i])
+//					{		date_calDate[i]=date;
+//							date_consumeCalDate[i]=cal;
+//							found=true;
+//							break;
+//					}
+//				}
+//			}
+//			
+//			
+//			 Array array1 = conn.createArrayOf("text", date_calDate);
+//			 Array array2 = conn.createArrayOf("text", date_consumeCalDate);
+//			 
+//			 PreparedStatement pstmt = conn.prepareStatement("UPDATE userdatatable SET calDate = ? WHERE userId =?");
+//			 pstmt.setArray(1, array1);
+//			 pstmt.executeUpdate();
+//			 PreparedStatement qstmt = conn.prepareStatement("UPDATE userdatatable SET consumerCalDate = ? WHERE userId =?");
+//			 qstmt.setArray(1, array2);
+//			 qstmt.executeUpdate();
+//			 conn.commit();
+//			rs.close();
+//			smt.close();
+//			conn.close();
+//		}
+//		catch (Exception e) {
+//			System.out.println(e);
+//		}
+//		
+//	}
 	
 	public float calcBMI(String UserId)
 	{
