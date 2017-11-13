@@ -27,7 +27,10 @@ public class Recommendation{
 	}
 	public void findRecommendation()
 	{
-			rDishes = inputDishes.clone();
+//			rDishes = inputDishes.clone();
+			for(int i=0; i<inputDishes.length; i++) {
+				rDishes[i] = inputDishes[i];
+			}
 			double reqcal  = Double.parseDouble(inputUser.getCalDay());
 		    // Below lines are similar to insertion sort
 		    for (int i = 1; i < rDishes.length; i++) {
