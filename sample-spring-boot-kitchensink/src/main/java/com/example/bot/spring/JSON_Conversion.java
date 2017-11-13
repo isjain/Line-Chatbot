@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 public class JSON_Conversion {
 
-	public static String ResultJSON(String jsonStr) throws JSONException {
+	public String ResultJSON(String jsonStr) throws JSONException {
 		
 		//String jsonStr=null; ---- need to initialize jsonStr as null and then check in Kitchen Sink
 		//how to check if the user selects the jSON input String jsonStr=?
