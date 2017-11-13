@@ -3,6 +3,7 @@ package com.example.bot.spring;
 
 import java.util.Random;
 import java.net.URI;
+import java.lang.*;
 //import java.math;
 import java.net.URISyntaxException;
 import java.sql.Connection;
@@ -40,8 +41,8 @@ public class Recommendation{
 		        // Insert arr[i] at correct place
 		        int j = i - 1;
 		        if (Math.abs(inputDishes[j].getCalories() - reqcal) > diff) {
-		            Dish temp = rDishes[i];
-		            while (Math.abs(rDishes[j].getCalories() - reqcal) > diff && j >= 0) {
+		            Dish temp = new Dish(rDishes[i]);
+		            while (j >= 0 && Math.abs(rDishes[j].getCalories() - reqcal) > diff) {
 		                rDishes[j + 1] = rDishes[j];
 		                j--;
 		            }
