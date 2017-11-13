@@ -331,15 +331,16 @@ public class KitchenSinkController {
         	break;
         }
         
-        case "jsonConvert": {
+        case "json": {
         	JSON_Conversion obj1= new JSON_Conversion();
     		String jsonStr = "{\"userInput\": [{\r\n\t\"name\":\"Spicy Bean curd with Minced Pork served with Rice\",\r\n\t\"price\":35,\r\n\t\"ingredients\":[\"Pork\",\"Bean curd\",\"Rice\"]\r\n},\r\n{\r\n\t\"name\":\"Sweet and Sour Pork served with Rice\",\r\n\t\"price\":36,\r\n\t\"ingredients\":[\"Pork\",\"Sweet and Sour Sauce\",\"Pork\"]\r\n},\r\n{\r\n\t\"name\":\"Chili Chicken on Rice\",\r\n\t\"price\":28,\r\n\t\"ingredients\":[\"Chili\",\"Chicken\",\"Rice\"]\r\n}]}";
     		String result = obj1.ResultJSON(jsonStr);
-    		this.replyText(replyToken, result);
-//    		this.replyText(replyToken, "hi Akash, this function sucks!");
-
-    			
-        	break;
+    		if (result == null) 
+    			this.replyText(replyToken, result);
+    		
+    		else {this.replyText(replyToken, "hiii");}
+        
+    		break;
         }
         
         
