@@ -211,7 +211,7 @@ public class KitchenSinkController {
 		reply(replyToken, new StickerMessage(content.getPackageId(), content.getStickerId()));
 	}
 
-	private void handleTextContent(String replyToken, Event event, TextMessageContent content)
+	private void handleTextContent(String replyToken, Event event, TextMessageContent content) 
             throws Exception {
         String text = content.getText();
         String[] arr = text.split(":");
