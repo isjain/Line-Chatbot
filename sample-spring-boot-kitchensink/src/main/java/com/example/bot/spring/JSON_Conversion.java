@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 public class JSON_Conversion {
 
-	public static void ResultJSON(String jsonStr) throws JSONException {
+	public static String[] ResultJSON(String jsonStr) throws JSONException {
 		
 		//String jsonStr=null; ---- need to initialize jsonStr as null and then check in Kitchen Sink
 		//how to check if the user selects the jSON input String jsonStr=?
@@ -48,7 +48,7 @@ public class JSON_Conversion {
 		        for(int j=0;j<dishes.length();j++){
 		        	 System.out.println(Dishes[j]);	//Returns the String input from JSON in an Array for 
 		        }
-		        
+		        return Dishes;
 				}
 	
 //	public static void main(String [] args) throws JSONException{
