@@ -333,12 +333,13 @@ public class KitchenSinkController {
         	Recommendation recommend = new Recommendation(curr_user, final_dishes);
         	log.info("inputted dishes: "+recommend.getInputDishes());
         	Dish[] recommended_dishes = recommend.getRecommendedDishes();
+        	String motivation = recommend.motivationMessage();
         	String reply_msg = "Recommended dishes in best to least:\n";
         	for(Dish d: recommended_dishes)
         	{
         		reply_msg = reply_msg + d.getName() + "  " + d.getpropCalories() + "\n";
         	}
-        	this.replyText(replyToken, reply_msg + "User reqcalday:"+ curr_user.getCalDay() + "\n\n" + translator.translate(fromLang, toLang, reply_msg));
+        	this.replyText(replyToken, reply_msg + "User reqcalday:"+ curr_user.getCalDay() + "\n\n" + translator.translate(fromLang, toLang, reply_msg) + "\n\n"+ motivation);
         	break;
         }
         
@@ -367,13 +368,13 @@ public class KitchenSinkController {
                 break;
             }
         
-        case "Motivation" : {
-          	 Random rand = new Random();
-           String[] msgs = {"Good progress! One more step towards a healthier lifestyle", "Add oil!", "Strive for progress, not perfection", "The struggle you're in today is developing the strength you need for tomorrow", "Yes, you can! The road may be bumpy, but stay committed to the process.", "Making excuses burns 0 calories per hour."};
-           int  n = rand.nextInt(6);
-           this.replyText(replyToken,msgs[n]);    
-           break;
-          }
+//        case "Motivation" : {
+//          	 Random rand = new Random();
+//           String[] msgs = {"Good progress! One more step towards a healthier lifestyle", "Add oil!", "Strive for progress, not perfection", "The struggle you're in today is developing the strength you need for tomorrow", "Yes, you can! The road may be bumpy, but stay committed to the process.", "Making excuses burns 0 calories per hour."};
+//           int  n = rand.nextInt(6);
+//           this.replyText(replyToken,msgs[n]);    
+//           break;
+//          }
 
             default:
             	String reply = null;

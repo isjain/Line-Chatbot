@@ -67,7 +67,29 @@ public class Recommendation{
 	{
 		return rDishes;
 	}
+
+
+//------------motivational messages------------------
+
+	public String motivationMessage(){
+		Random rand = new Random();
+		String[] msgs = {"good progress! One more step towards a healthier lifestyle", "add oil!", "strive for progress not perfection", "you can do it! The road may be bumpy, but stay committed to the process", "making excuses burns 0 calories per hour", "a little progress each day adds up to big results", "when you feel like stopping think about why you started", "the best project you will ever work on is you", "you're not there yet but you're closer than you were yesterday", "be stronger than your excuse", "nothing tastes as good as being healthy feels", "weight loss is not a physical challenge, it's a mental one", "three months from now you will thank yourself", "you are what you eat. So don't be fast, cheap, easy or fake", "if it was easy, everyone would do it", "eat for the body you want", "you don't get what you wish for, you get what you work for", "your stomach should not be a waste basket", "once you see results, it becomes an addiction"};
+		int  n = rand.nextInt(msgs.length);
+		return (inputUser.getName()+", "+msgs[n]);
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
 //	public String setMenu(String m) {menu=m; return menu; }
 //	public float setCal(float c) {cal=c;  return cal; }
 //	
