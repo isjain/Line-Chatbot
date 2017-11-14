@@ -46,6 +46,7 @@ public class RecommendationDatabaseEngine extends DatabaseEngine {
 					ResultSet rs = smt.executeQuery();
 					double k = 0;
 					String l = "";
+					double wt=0;
 					int min_words=10;
 					while(rs.next()) {
 						String tempo = rs.getString("Description");
@@ -54,11 +55,13 @@ public class RecommendationDatabaseEngine extends DatabaseEngine {
 						if(tempo_arr.length<min_words) {
 						 k = Double.parseDouble(rs.getString("energy"));
 						 l = rs.getString("ndb_no");
+						 wt = Double.parseDouble(rs.getString("weight"));
 						 min_words = tempo_arr.length;
 						}
 					}
 					d.setCalories(k);
 					d.setDishId(l);
+					d.setWeight(wt);
 					rs.close();
 					smt.close();
 					

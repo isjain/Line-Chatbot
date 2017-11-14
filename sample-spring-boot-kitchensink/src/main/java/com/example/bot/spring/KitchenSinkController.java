@@ -336,7 +336,7 @@ public class KitchenSinkController {
         	String reply_msg = "Recommended dishes in best to least:\n";
         	for(Dish d: recommended_dishes)
         	{
-        		reply_msg = reply_msg + d.getName() + "  " + d.getCalories() + "\n";
+        		reply_msg = reply_msg + d.getName() + "  " + d.getpropCalories() + "\n";
         	}
         	this.replyText(replyToken, reply_msg + "User reqcalday:"+ curr_user.getCalDay() + "\n\n" + translator.translate(fromLang, toLang, reply_msg));
         	break;

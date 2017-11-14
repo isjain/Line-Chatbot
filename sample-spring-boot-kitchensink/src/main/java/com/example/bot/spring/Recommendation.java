@@ -34,15 +34,16 @@ public class Recommendation{
 //			rDishes = inputDishes.clone();
 
 			double reqcal  = Double.parseDouble(inputUser.getCalDay());
+			double mealcal = reqcal/3;
 		    // Below lines are similar to insertion sort
 		    for (int i = 1; i < rDishes.length; i++) {
-		        double diff = Math.abs(rDishes[i].getCalories() - reqcal);
+		        double diff = Math.abs(rDishes[i].getpropCalories() - mealcal);
 		 
 		        // Insert arr[i] at correct place
 		        int j = i - 1;
-		        if (Math.abs(rDishes[j].getCalories() - reqcal) > diff) {
+		        if (Math.abs(rDishes[j].getpropCalories() - mealcal) > diff) {
 		            Dish temp = new Dish(rDishes[i]);
-		            while (j >= 0 && Math.abs(rDishes[j].getCalories() - reqcal) > diff) {
+		            while (j >= 0 && Math.abs(rDishes[j].getpropCalories() - mealcal) > diff) {
 		                rDishes[j + 1] = rDishes[j];
 		                j--;
 		            }
