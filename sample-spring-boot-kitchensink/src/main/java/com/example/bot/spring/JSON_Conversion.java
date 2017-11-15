@@ -42,6 +42,7 @@ public String ResultJSON(String jsonStr) throws JSONException {
 		            //Need to store each dish and its values in an array
 		            Dishes[i]= name + " " + JSONingredients + " " + price ;   
 		            System.out.println(); //To get the next dish on next line
+		            System.out.println(); //To get the next dish on next line
 		            
 		        }
 	      
