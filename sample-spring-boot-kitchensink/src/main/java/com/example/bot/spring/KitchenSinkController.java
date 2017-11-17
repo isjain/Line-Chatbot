@@ -406,9 +406,10 @@ public class KitchenSinkController {
         
         case "friend": {
     	 	String userId = event.getSource().getUserId();
+         	this.replyText(replyToken,inputData + " received");
+
      	icedb.saveCouponCode(userId);
      	// hopefully it works
-     	this.replyText(replyToken,inputData + " received");
  		break;
     }
 
