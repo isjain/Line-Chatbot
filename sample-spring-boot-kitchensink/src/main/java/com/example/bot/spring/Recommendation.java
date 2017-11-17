@@ -1,16 +1,16 @@
 //package testing;
-
 package com.example.bot.spring;
 
 import java.util.Random;
 import java.net.URI;
+import java.lang.*;
+//import java.math;
 import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 
 public class Recommendation{
    
@@ -21,12 +21,44 @@ public class Recommendation{
 	public Recommendation(User user, Dish[] dishes) {  
 		inputDishes = dishes;
 		inputUser = user;
-		findRecommendation();
-		
+		findRecommendation();	
 	}
-	
+	public Dish[] getInputDishes() {
+		return inputDishes;
+	}
 	public void findRecommendation()
 	{
+			rDishes = new Dish[inputDishes.length];
+			for( int i=0; i<inputDishes.length; i++ )
+				rDishes[i] = new Dish(inputDishes[i]);
+//			rDishes = inputDishes.clone();
+
+			double reqcal  = Double.parseDouble(inputUser.getCalDay());
+		    // Below lines are similar to insertion sort
+		    for (int i = 1; i < rDishes.length; i++) {
+		        double diff = Math.abs(rDishes[i].getCalories() - reqcal);
+		 
+		        // Insert arr[i] at correct place
+		        int j = i - 1;
+		        if (Math.abs(inputDishes[j].getCalories() - reqcal) > diff) {
+		            Dish temp = new Dish(rDishes[i]);
+		            while (j >= 0 && Math.abs(rDishes[j].getCalories() - reqcal) > diff) {
+		                rDishes[j + 1] = rDishes[j];
+		                j--;
+		            }
+		            rDishes[j + 1] = temp;
+		            
+		        }
+		    }
+		    //keep only the first 5 elements of rDishes
+		    if (rDishes.length>5)
+		    {
+			    Dish[] tempp = new Dish[5];
+			    for(int i=0; i<5; i++) {
+			    		tempp[i] = rDishes[i];
+			    }
+			    rDishes = tempp.clone();	   
+		    }
 		
 	}
 	
@@ -35,7 +67,6 @@ public class Recommendation{
 		return rDishes;
 	}
 }
-	
 //	public String setMenu(String m) {menu=m; return menu; }
 //	public float setCal(float c) {cal=c;  return cal; }
 //	

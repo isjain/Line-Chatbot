@@ -22,32 +22,40 @@ public class RecommendationDatabaseEngine extends DatabaseEngine {
 				
 				Connection con = getConnection();
 				
-				for(Dish d: dishes) {
-					String st = "select * from nutrienttable where  ";
+				for(Dish d: dishes) { 
+
+					String st = "select * from nutrienttable where ";
 					String[] key = d.getKeywords();
 					for (int j=0;j<key.length;j++)
 					{
-						st = st + "lower(Description) like '%?%'";
+						st = st + "lower(Description) like ?";
 						if(j!=key.length-1)
 						{
 							st = st + " and ";
 						}
 					}
 					PreparedStatement smt = con.prepareStatement(st);
-					System.out.println("Statement: "+st);
-					System.out.println("Keywords: "+ key[0] + key[1]);
 
-					for(int i=1;i<=key.length;i++) {
-						smt.setString(i,key[i-1]);
+
+					for(int i=1;i<=key.length;i++)
+					{
+						smt.setString(i, "%"+key[i-1]+"%");
 					}
-					System.out.println("Statement: "+st);
+					
+					System.out.println("Statement: "+smt);
 					ResultSet rs = smt.executeQuery();
 					double k = 0;
 					String l = "";
+					int min_words=10;
 					while(rs.next()) {
+						String tempo = rs.getString("Description");
+						String[] tempo_arr = tempo.toLowerCase().split(",");
+						//Check if the new record is a better match by encapsulating dish in less keywords
+						if(tempo_arr.length<min_words) {
 						 k = Double.parseDouble(rs.getString("energy"));
 						 l = rs.getString("ndb_no");
-						
+						 min_words = tempo_arr.length;
+						}
 					}
 					d.setCalories(k);
 					d.setDishId(l);

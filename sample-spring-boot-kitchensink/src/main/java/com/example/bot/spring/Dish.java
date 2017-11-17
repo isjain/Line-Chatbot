@@ -1,5 +1,11 @@
 package com.example.bot.spring;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Arrays;  
+import java.util.*;
+
+
 public class Dish {
 
 	private String dishId;
@@ -12,10 +18,39 @@ public class Dish {
 	public Dish(String name) {
 		this.dishId = null;
 		this.name = name;
-		this.keywords = name.split(" ");
+    		this.keywords = name.toLowerCase().split(" ");
+  
+    		
+    		cleanKWORDS();
+    		
 		this.calories = 0;
 		
+	}	
+	public Dish(Dish dishes) {
+		this.dishId = dishes.dishId;
+		this.name = dishes.name;
+    		this.keywords = dishes.keywords;    		
+		this.calories = dishes.calories;
+		
+	}	
+	public void cleanKWORDS() {	
+		ArrayList<String> words = new ArrayList<String>();
+		words.add("the");
+		words.add("and");
+		words.add("with");
+		words.add("or");
+		words.add("of");
+		words.add("a");
+		words.add("an");
+		words.add("&");
+		words.add(" ");
+		List<String> kwords = new ArrayList<String>();  
+        Collections.addAll(kwords, keywords); 
+		kwords.removeAll(words);
+		keywords = kwords.toArray(new String[kwords.size()]);
+      	System.out.println("keywords 2: "+Arrays.toString(keywords));
 	}
+
 	public String getDishId() {
 		return dishId;
 	}
