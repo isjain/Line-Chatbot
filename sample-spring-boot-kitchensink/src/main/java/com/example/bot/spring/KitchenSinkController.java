@@ -106,6 +106,8 @@ public class KitchenSinkController {
 	@Autowired
 	private LineMessagingClient lineMessagingClient;
 	private UserInputDatabaseEngine database;
+	private CouponDatabaseEngine icedb;
+
 
 	@EventMapping
 	public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) throws Exception {
@@ -396,13 +398,19 @@ public class KitchenSinkController {
         
         case "json": {
         	JSON_Conversion obj1= new JSON_Conversion();
-        	String jsonStr = inputData;
-//        	String jsonStr = "{\"userInput\": [{\r\n\t\"name\":\"Spicy Bean curd with Minced Pork served with Rice\",\r\n\t\"price\":35,\r\n\t\"ingredients\":[\"Pork\",\"Bean curd\",\"Rice\"]\r\n},\r\n{\r\n\t\"name\":\"Sweet and Sour Pork served with Rice\",\r\n\t\"price\":36,\r\n\t\"ingredients\":[\"Pork\",\"Sweet and Sour Sauce\",\"Pork\"]\r\n},\r\n{\r\n\t\"name\":\"Chili Chicken on Rice\",\r\n\t\"price\":28,\r\n\t\"ingredients\":[\"Chili\",\"Chicken\",\"Rice\"]\r\n}]}";
-        String reply = obj1.ResultJSON(jsonStr);
-        	this.replyText(replyToken, "Please work : " + reply);
+//        	String jsonStr = inputData;
+        	String jsonStr = "{\"userInput\": [{\r\n\t\"name\":\"Spicy Bean curd with Minced Pork served with Rice\",\r\n\t\"price\":35,\r\n\t\"ingredients\":[\"Pork\",\"Bean curd\",\"Rice\"]\r\n},\r\n{\r\n\t\"name\":\"Sweet and Sour Pork served with Rice\",\r\n\t\"price\":36,\r\n\t\"ingredients\":[\"Pork\",\"Sweet and Sour Sauce\",\"Pork\"]\r\n},\r\n{\r\n\t\"name\":\"Chili Chicken on Rice\",\r\n\t\"price\":28,\r\n\t\"ingredients\":[\"Chili\",\"Chicken\",\"Rice\"]\r\n}]}";
+        	this.replyText(replyToken, obj1.ResultJSON(jsonStr));
         	break;
-
         }
+        
+        case "friend": {
+    	 	String userId = event.getSource().getUserId();
+     	icedb.saveCouponCode(userId);
+     	// hopefully it works
+     	this.replyText(replyToken,inputData + " received");
+ 		break;
+    }
 
             default:
             	String reply = null;
