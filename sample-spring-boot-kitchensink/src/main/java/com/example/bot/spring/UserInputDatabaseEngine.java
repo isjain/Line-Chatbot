@@ -166,7 +166,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 //				}
 //				totalCalList = String.join(delimiter, partsOfCal);
 //				totalDates = String.join(delimiter, partsOfDate);
-				return partsOfDate[0];
+				return "hi";
 
 			}
 
