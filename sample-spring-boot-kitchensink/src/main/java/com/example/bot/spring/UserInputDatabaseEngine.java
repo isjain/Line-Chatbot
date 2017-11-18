@@ -180,6 +180,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 			smt2.setString(1,"50");
 			smt2.setString(2,"12-12-2012");
 			smt2.setString(3,UserId);
+			System.out.println(smt2);
 			ResultSet rs2 = smt2.executeQuery();
 			rs.close();
 			rs2.close();
