@@ -12,27 +12,36 @@ import java.lang.Object;
 import java.util.Random;
 public class CouponDatabaseEngine extends DatabaseEngine {
 	
-	public boolean exerciseCode(int code)
+	public boolean exerciseCode(float code, String UserId)
 	{
 		try {
+			// should check if the coupon code exists
 			Connection con = getConnection();
-			PreparedStatement smt = con.prepareStatement("SELECT * FROM usertablelist WHERE couponcode=?");
-			smt.setInt(1,code);
+//			PreparedStatement smt = con.prepareStatement("SELECT * FROM usertablelist WHERE couponcode=?");
+//			PreparedStatement smt = con.prepareStatement("UPDATE usertablelist SET claimuser = ? WHERE couponcode = ?");
+			PreparedStatement smt = con.prepareStatement("SELECT * FROM usertablelist WHERE couponcode= ?");
+			smt.setFloat(2,code);
+//			smt.setString(1, UserId);
 			ResultSet rs = smt.executeQuery();
 			rs.last();
 			int rowCount = rs.getRow();
 			if (rowCount==0)
-			{
+			{// coupon code doesn't exist
 				rs.close();
 				smt.close();
 				con.close();
 				return false;
 			}
-			else
+			else {// coupon exists
+				PreparedStatement smt2 = con.prepareStatement("UPDATE usertablelist SET claimuser = ? WHERE couponcode = ?");
+				smt2.setString(1, UserId);
+				smt2.setFloat(2, code);
 				rs.close();
-				smt.close();
+				smt2.close();
 				con.close();
+				smt.close();
 				return true;
+			}
 			
 		}
 		catch (Exception e) {
@@ -48,11 +57,7 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 			float code = generateNewCode();
 			Connection con = getConnection();
 			PreparedStatement smt = con.prepareStatement("INSERT INTO usertablelist VALUES (?,?,'none')");
-
-//			INSERT INTO usertablelist VALUES ('1','Ishan','none')
-			
-//			PreparedStatement smt = con.prepareStatement("INSERT INTO usertablelist (couponcode, issueuser, claimuser) VALUES (0,0,'fuckoffmaite')");
-			smt.setFloat(1,code);
+	smt.setFloat(1,code);
 			smt.setString(2,UserId);
 			ResultSet rs = smt.executeQuery();
 			rs.close();
@@ -65,19 +70,12 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 		
 	}
 	
-//	float generateNewCode() {
-//
-//		return 248493;
-//	}
 	float generateNewCode() throws Exception{
 		try {
 				Connection con = getConnection();
 				PreparedStatement smt = con.prepareStatement("SELECT couponcode FROM usertablelist");
 				ResultSet rs = smt.executeQuery();
 				int code=0;
-//				Random ran = new Random();
-//				code= (100000 + ran.nextInt(899999));
-				
 				int couponFound = 1;
 				while (couponFound==1)
 				{
