@@ -57,8 +57,9 @@ public class Recommendation{
 		    }
 		    
 		    //Diet Restrictions
-		    ArrayList<Dish> restricted_dishes = new ArrayList<Dish>();
-			String[] restric= inputUser.getRestrictions().split(",");
+		    List<Dish> restricted_dishes = new ArrayList<Dish>();
+			String restr= inputUser.getRestrictions();
+			String[] restric = restr.split(",");
 			for(Dish d: rDishes)
 			{	int skt=0;
 				String[] kwrds = d.getKeywords();
@@ -120,7 +121,6 @@ public class Recommendation{
 					if(st.toLowerCase()==st2)
 					{
 						s=1;
-						System.out.println(st + "compared with" + st2);
 						
 					}
 					
