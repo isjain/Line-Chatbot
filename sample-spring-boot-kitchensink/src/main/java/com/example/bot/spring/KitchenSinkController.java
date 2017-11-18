@@ -492,6 +492,7 @@ public class KitchenSinkController {
 
 	public KitchenSinkController() {
 		database = new UserInputDatabaseEngine();
+		icedb = new CouponDatabaseEngine();
 		itscLOGIN = System.getenv("ITSC_LOGIN");
 	}
 
