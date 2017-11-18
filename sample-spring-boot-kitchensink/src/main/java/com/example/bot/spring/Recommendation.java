@@ -70,7 +70,7 @@ public class Recommendation{
 					{
 						if(st.toLowerCase()==st2.toLowerCase())
 						{
-							skt=1;
+							skt++;
 							break;
 							
 						}
@@ -79,7 +79,7 @@ public class Recommendation{
 					
 				}
 				
-				if(skt==0)
+				if(skt!=0)
 				{	
 					restricted_dishes.add(new Dish(d));
 					
@@ -88,11 +88,7 @@ public class Recommendation{
 			
 			rDishes = restricted_dishes.toArray(new Dish[restricted_dishes.size()]);
 		    
-		    
-		    
-		    
-		    
-		    
+		    		    
 		    //keep only the first 5 elements of rDishes
 		    if (rDishes.length>5)
 		    {

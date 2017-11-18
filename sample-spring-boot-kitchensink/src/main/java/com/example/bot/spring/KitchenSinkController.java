@@ -341,10 +341,7 @@ public class KitchenSinkController {
         	Dish[] dishes2 = dishes.toArray(new Dish[dishes.size()]);
         	Dish[] final_dishes = recomDB.findCaloricContent(dishes2);
         	User curr_user = database.getUserRecord(userId);
-        	String[] a = curr_user.getRestrictions().split(",");
-        	
-        	for(String str: a)
-        	{System.out.println(str +"\t");}
+//        	String[] a = curr_user.getRestrictions().split(",");
         	
         	Recommendation recommend = new Recommendation(curr_user, final_dishes);
 //        	log.info("inputted dishes: "+recommend.getInputDishes());

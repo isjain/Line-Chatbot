@@ -26,11 +26,11 @@ public class Dish {
 		
 	}	
 	public Dish(Dish dishes) {
-		this.dishId = dishes.dishId;
-		this.name = dishes.name;
-    		this.keywords = dishes.keywords;    		
-		this.calories = dishes.calories;
-		this.weight = dishes.weight;	
+		this.dishId = dishes.getDishId();
+		this.name = dishes.getName();
+    		this.keywords = dishes.getKeywords();    		
+		this.calories = dishes.getCalories();
+//		this.weight = dishes.getWeight();	
 	}	
 	public void cleanKWORDS() {	
 		ArrayList<String> words = new ArrayList<String>();
