@@ -68,9 +68,9 @@ public class Recommendation{
 				{	
 					for(String st2: restric )
 					{
-						if(st.toLowerCase()==st2.toLowerCase())
+						if(st.toLowerCase().equals(st2.toLowerCase()))
 						{
-							skt++;
+							skt=1;
 							break;
 							
 						}
@@ -79,15 +79,16 @@ public class Recommendation{
 					
 				}
 				
-				if(skt!=0)
+				if(skt==0)
 				{	
 					restricted_dishes.add(new Dish(d));
 					
 				}
 			}
 			
-			rDishes = restricted_dishes.toArray(new Dish[restricted_dishes.size()]);
-		    
+			Dish[] temp_rDishes = restricted_dishes.toArray(new Dish[restricted_dishes.size()]);
+		   
+			rDishes = temp_rDishes;
 		    		    
 		    //keep only the first 5 elements of rDishes
 		    if (rDishes.length>5)

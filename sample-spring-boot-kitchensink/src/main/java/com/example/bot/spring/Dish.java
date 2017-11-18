@@ -26,11 +26,17 @@ public class Dish {
 		
 	}	
 	public Dish(Dish dishes) {
-		this.dishId = dishes.getDishId();
-		this.name = dishes.getName();
-    		this.keywords = dishes.getKeywords();    		
-		this.calories = dishes.getCalories();
-//		this.weight = dishes.getWeight();	
+		this.dishId = dishes.dishId;
+		this.name = dishes.name;
+    		this.keywords = new String[dishes.keywords.length];
+    		int i=0;
+    		for(String str: dishes.keywords)
+    		{
+    			this.keywords[i]=str;
+    			i++;
+    		}
+		this.calories = dishes.calories;
+		this.weight = dishes.weight;	
 	}	
 	public void cleanKWORDS() {	
 		ArrayList<String> words = new ArrayList<String>();
