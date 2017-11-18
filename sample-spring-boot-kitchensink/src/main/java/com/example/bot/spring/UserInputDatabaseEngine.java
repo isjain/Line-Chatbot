@@ -127,8 +127,8 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 	public void updateCalperDay(String UserId, String calpermeal)
 	{
 		try {
-			String totalCalList = null;
-			String totalDates = null;
+			String totalCalList = "";
+			String totalDates = "";
 			boolean found=false;
 			String delimiter = ";";
 			String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());  // current date 
@@ -141,13 +141,13 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 				totalCalList = rs.getString("calperday");
 				totalDates = rs.getString("dates");	
 			}
-			if(totalDates!=null)
+			if(totalDates!="")
 			{
 			String[] partsOfCal = totalCalList.split(";");
 			String[] partsOfDate = totalDates.split(";");
 			
 			for (int i=0;i<partsOfDate.length;i++)
-			{
+			{	
 				if(partsOfDate[i].equals(date))
 				{
 				float changeCal = Float.parseFloat(partsOfCal[i]);
@@ -162,10 +162,10 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 			}
 			if(found==false)
 			{
-				if(totalCalList==null)
+				if(totalCalList=="")
 				{
 				totalCalList=calpermeal;
-				totalDates=date;		
+				totalDates=date;
 				}
 				else
 				{
@@ -176,8 +176,8 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 
 			PreparedStatement smt2 = con.prepareStatement("UPDATE userdatatable SET calperday=?, dates=? WHERE user_id='?'");
 //			smt2.setString(1,totalCalList);
-			smt2.setString(1,totalCalList);
-			smt2.setString(2,totalDates);
+			smt2.setString(1,"50");
+			smt2.setString(2,"12-12-2012");
 			smt2.setString(3,UserId);
 			ResultSet rs2 = smt2.executeQuery();
 			rs.close();
