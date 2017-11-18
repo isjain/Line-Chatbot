@@ -386,7 +386,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 
 
 
-	public void updateReqCalDay(String UserId, double reqcal)
+	public void updateReqCalDay(String UserId)
 	{
 		try {
 			String weight = null;

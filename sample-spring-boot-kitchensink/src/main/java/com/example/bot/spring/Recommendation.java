@@ -76,7 +76,7 @@ public class Recommendation{
 					
 				}
 				if(s!=1)
-				{restricted_dishes.add(d);}
+				{restricted_dishes.add(new Dish(d.getName()));}
 			}
 			
 			rDishes = restricted_dishes.toArray(new Dish[restricted_dishes.size()]);
@@ -124,7 +124,7 @@ public class Recommendation{
 				
 			}
 			if(s!=1)
-			{veg_dishes.add(d);}
+			{veg_dishes.add(new Dish(d.getName()));}
 		}
 		
 		Dish[] veg_dishes2 = veg_dishes.toArray(new Dish[veg_dishes.size()]);

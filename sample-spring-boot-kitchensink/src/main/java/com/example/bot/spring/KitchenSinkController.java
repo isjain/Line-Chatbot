@@ -282,7 +282,8 @@ public class KitchenSinkController {
         	database.updateHeight(userId, Float.parseFloat(inputData));
         	this.replyText(replyToken,inputData + " received");
         	database.setBMR(userId);
-        database.setBMI(userId);
+        	database.setBMI(userId);
+        	database.updateReqCalDay(userId);
 
     		break;
         }
@@ -398,20 +399,20 @@ public class KitchenSinkController {
 //           break;
 //          }
 
-            default:
-            	String reply = null;
-            	try {
-            		reply = database.search(text);
-            	} catch (Exception e) {
-            		reply = text;
-            	}
-                log.info("Returns echo message {}: {}", replyToken, reply);
+            default:{
+//            	String reply = null;
+//            	try {
+//            		reply = database.search(text);
+//            	} catch (Exception e) {
+//            		reply = text;
+//            	}
+//                log.info("Returns echo message {}: {}", replyToken, reply);
                 this.replyText(
                         replyToken,
-                        text
+                        "this is default"
                 );
                 break;
-               
+            }
         }
     }
 	
