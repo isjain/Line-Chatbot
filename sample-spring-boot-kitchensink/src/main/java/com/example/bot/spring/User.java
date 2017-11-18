@@ -47,7 +47,7 @@ public class User {
 //		this.name= name;
 //		this.gender= gender;
 //		this.goal= goal;
-		
+		this.restrictions="";
 	}
 	
 	public void setRestrictions(String r) {
