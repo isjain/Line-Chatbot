@@ -359,7 +359,7 @@ public class KitchenSinkController {
   	//ok
         
         case "rec":{
-    			String imageUrl = null;
+    			String imageUrl = createUri("/static/buttons/1040.jpg");
           CarouselTemplate carouselTemplate = new CarouselTemplate(
           Arrays.asList(
       				new CarouselColumn(imageUrl,"Chicken with rice","", Arrays.asList(
