@@ -172,7 +172,7 @@ public class KitchenSinkController {
 		String replyToken = event.getReplyToken();
 		System.out.println(event.getSource().getUserId());
 		String cal = (event.getPostbackContent().getData()).substring(event.getPostbackContent().getData().lastIndexOf(" ")+1);
-		this.replyText(replyToken, (event.getPostbackContent().getData()).substring(0, (event.getPostbackContent().getData()).lastIndexOf(" ")));
+		this.replyText(replyToken, (event.getPostbackContent().getData()).substring(0, (event.getPostbackContent().getData()).lastIndexOf(" "))+" lolol "+cal);
 	}
 
 	@EventMapping
