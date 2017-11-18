@@ -174,9 +174,9 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 				}
 			}
 
-			PreparedStatement smt2 = con.prepareStatement("UPDATE userdatatable SET calperday=?,SET dates=? WHERE user_id='?'");
+			PreparedStatement smt2 = con.prepareStatement("UPDATE userdatatable SET calperday=?, dates=? WHERE user_id='?'");
 //			smt2.setString(1,totalCalList);
-			smt2.setString(1,"100");
+			smt2.setString(1,totalCalList);
 			smt2.setString(2,totalDates);
 			smt2.setString(3,UserId);
 			ResultSet rs2 = smt2.executeQuery();
