@@ -287,7 +287,14 @@ public class KitchenSinkController {
     		break;
         }
         
-        
+        case "restrictions": {
+        	String userId = event.getSource().getUserId();
+        	User u = database.getUserRecord(userId);
+        	u.setRestrictions(inputData);
+        	database.updateRestrictions(userId, u.getRestrictions());
+        	this.replyText(replyToken,inputData + " received");
+        	break;
+        }
         case "age": {
         	String userId = event.getSource().getUserId();
     		database.updateAge(userId, Integer.parseInt(inputData));
@@ -337,7 +344,7 @@ public class KitchenSinkController {
 //        	log.info("inputted dishes: "+recommend.getInputDishes());
         	Dish[] recommended_dishes;
         	//vege function
-        	if(command=="vegge") {
+        	if(command=="vege") {
         		
         		recommended_dishes = recommend.getVegRecommendedDishes();
         		
