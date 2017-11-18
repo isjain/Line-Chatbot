@@ -289,9 +289,9 @@ public class KitchenSinkController {
         
         case "restrictions": {
         	String userId = event.getSource().getUserId();
-        	User u = database.getUserRecord(userId);
-        	u.setRestrictions(inputData);
-        	database.updateRestrictions(userId, u.getRestrictions());
+//        	User u = database.getUserRecord(userId);
+//        	u.setRestrictions(inputData);
+        	database.updateRestrictions(userId, inputData);
         	this.replyText(replyToken,inputData + " received");
         	break;
         }
