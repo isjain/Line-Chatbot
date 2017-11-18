@@ -124,7 +124,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		}
 	}
 
-	public void updateCalperDay(String UserId, float calpermeal )
+	public void updateCalperDay(String UserId, String calpermeal)
 	{
 		try {
 			String totalCalList = null;
@@ -143,7 +143,8 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 				totalCalList = rs.getString("calperday");
 				totalDates = rs.getString("dates");	
 			}
-
+			if(totalDates!=null)
+			{
 			String[] partsOfCal = totalCalList.split(";");
 			String[] partsOfDate = totalDates.split(";");
 			
@@ -152,7 +153,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 				if(partsOfDate[i]==date)
 				{
 				float changeCal = Float.parseFloat(partsOfCal[i]);
-				changeCal+=calpermeal;
+				changeCal+=Float.parseFloat(calpermeal);
 				partsOfCal[i]=Float.toString(changeCal);
 				found=true;
 				break;
@@ -160,23 +161,26 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 			}
 			totalCalList = String.join(delimiter, partsOfCal);
 			totalDates = String.join(delimiter, partsOfDate);
+			}
 			if(found==false)
 			{
 				if(totalCalList==null)
 				{
-				totalCalList=Float.toString(calpermeal);
+				totalCalList=calpermeal;
 				totalDates=date;		
 				}
 				else
 				{
-				totalCalList=totalCalList+delimiter+Float.toString(calpermeal);
+				totalCalList=totalCalList+delimiter+calpermeal;
 				totalDates=totalCalList+delimiter+date;
 				}
 			}
 
 
 			PreparedStatement smt2 = con.prepareStatement("UPDATE userdatatable SET calperday=?,SET dates=? WHERE user_id='?'");
-			smt2.setString(1,totalCalList);
+//			smt2.setString(1,totalCalList);
+			smt2.setString(1,"100");
+
 			smt2.setString(2,totalDates);
 			smt2.setString(3,UserId);
 			ResultSet rs2 = smt2.executeQuery();

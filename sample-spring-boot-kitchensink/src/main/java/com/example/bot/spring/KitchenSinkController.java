@@ -172,7 +172,7 @@ public class KitchenSinkController {
 		String replyToken = event.getReplyToken();
 		System.out.println(event.getSource().getUserId());
 		String cal = (event.getPostbackContent().getData()).substring(event.getPostbackContent().getData().lastIndexOf(" ")+1);
-		database.updateCalperDay(event.getSource().getUserId(), Float.parseFloat(cal));
+		database.updateCalperDay(event.getSource().getUserId(), cal);
 		this.replyText(replyToken, (event.getPostbackContent().getData()).substring(0, (event.getPostbackContent().getData()).lastIndexOf(" ")));
 	}
 
