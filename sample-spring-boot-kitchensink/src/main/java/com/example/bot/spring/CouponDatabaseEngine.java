@@ -51,10 +51,12 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 		
 	}
 	
-	public void saveCouponCode(String UserId)
+	public float saveCouponCode(String UserId)
 	{
+		float code = 404;
+
 		try {
-			float code = generateNewCode();
+			code = generateNewCode();
 			Connection con = getConnection();
 			PreparedStatement smt = con.prepareStatement("INSERT INTO usertablelist VALUES (?,?,'none')");
 	smt.setFloat(1,code);
@@ -67,7 +69,7 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 		catch (Exception e) {
 			System.out.println(e);
 		}
-		
+		return code;
 	}
 	
 	float generateNewCode() throws Exception{
