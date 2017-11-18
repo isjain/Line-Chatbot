@@ -355,34 +355,31 @@ public class KitchenSinkController {
         }
         
         case "rec":{
-        		String imageUrl = null;
+//        		String imageUrl = null;
+//            CarouselTemplate carouselTemplate = new CarouselTemplate(
+//            Arrays.asList(
+//        				new CarouselColumn(imageUrl,"Chicken with rice","", Arrays.asList(
+//	                  new PostbackAction("Choose", "Dish confirmed"))),
+//	                  new CarouselColumn(imageUrl,"Noodles and soup", "",Arrays.asList(
+//	                  new PostbackAction("Choose", "Dish confirmed")))));
+//	             TemplateMessage templateMessage = new TemplateMessage("Carousel alt text", carouselTemplate);
+//                 this.reply(replyToken, templateMessage);
+//                 break;
+       
+            String imageUrl = createUri("/static/buttons/1040.jpg");
             CarouselTemplate carouselTemplate = new CarouselTemplate(
             Arrays.asList(
-        				new CarouselColumn(imageUrl,"Chicken with rice","", Arrays.asList(
-	                  new PostbackAction("Choose", "Dish confirmed"))),
-	                  new CarouselColumn(imageUrl,"Noodles and soup", "",Arrays.asList(
-	                  new PostbackAction("Choose", "Dish confirmed")))));
-	             TemplateMessage templateMessage = new TemplateMessage("Carousel alt text", carouselTemplate);
+               new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
+                      new URIAction("Go to line.me","https://line.me"),
+                      new PostbackAction("Say hello1", "hello ã�“ã‚“ã�«ã�¡ã�¯"))),
+                      new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
+                      new PostbackAction("è¨€ hello2", "hello ã�“ã‚“ã�«ã�¡ã�¯", "hello ã�“ã‚“ã�«ã�¡ã�¯"),
+                      new MessageAction("Say message","Rice=ç±³")))));
+                 TemplateMessage templateMessage = new TemplateMessage("Carousel alt text", carouselTemplate);
                  this.reply(replyToken, templateMessage);
                  break;
+             
             
-//    		"type": "template",
-//    		"altText": "this is a carousel template",
-//    		"template": {
-//    			"type": "carousel",
-//    			"columns": [
-//    			            {
-//    			            	"text": "chicken rice",
-//    			            	"actions":[
-//    			            	           {
-//        			                     "type": "postback",
-//        			                     "label": "Yes",
-//        			                     "data": "action=putintodatabase"
-//        			                    	 "text":"Dish confirmed."
-//    			            	           }
-//    			            	           ]
-//    			            }]
-//    	  			}	
         	}		
         case "carousel": {
            String imageUrl = createUri("/static/buttons/1040.jpg");
