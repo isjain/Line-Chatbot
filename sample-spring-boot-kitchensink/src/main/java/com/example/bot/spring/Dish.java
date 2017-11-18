@@ -15,6 +15,7 @@ public class Dish {
 	private String sodium;
 	private String fatty_acids;
 	private double weight;
+	private double portion;
 
 	public Dish(String name) {
 		this.dishId = null;
@@ -23,6 +24,8 @@ public class Dish {
     		cleanKWORDS();    		
 		this.calories = 0;
 		this.weight = 0;
+		this.portion = 1;
+
 		
 	}	
 	public Dish(Dish dishes) {
@@ -31,6 +34,8 @@ public class Dish {
     		this.keywords = dishes.keywords;    		
 		this.calories = dishes.calories;
 		this.weight = dishes.weight;	
+		this.portion = dishes.portion;	
+
 	}	
 	public void cleanKWORDS() {	
 		ArrayList<String> words = new ArrayList<String>();
@@ -56,6 +61,9 @@ public class Dish {
 	public double getCalories() {
 		return calories;
 	}
+	public double getWeight() {
+		return weight;
+	}
 	//return calories per 600 gms of the food item
 	public double getpropCalories() {
 		return ((calories/weight)*600);
@@ -63,12 +71,19 @@ public class Dish {
 	public String getName() {
 		return name;
 	}
+	public double getPortion() {
+		return portion;
+	}
 	public String[] getKeywords() {
 		return keywords;
 	}
 	
+	
 	public void setDishId(String id) {
 		this.dishId = id;
+	}
+	public void setPortion(double portion) {
+		this.portion = portion;
 	}
 	public void setCalories(double cal) {
 		this.calories = cal;
