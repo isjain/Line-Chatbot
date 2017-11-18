@@ -123,6 +123,11 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 			return 0;
 		}
 	}
+	public String updateAns(String ans)
+	{
+		ans += "hihi";
+		return ans;
+	}
 
 	public void updateCalperDay(String UserId, String calpermeal)
 	{
