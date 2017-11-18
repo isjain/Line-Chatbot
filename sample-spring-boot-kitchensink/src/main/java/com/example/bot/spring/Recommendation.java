@@ -63,6 +63,7 @@ public class Recommendation{
 			for(Dish d: rDishes)
 			{	int skt=0;
 				String[] kwrds = d.getKeywords();
+				
 				for(String st: kwrds)
 				{	
 					for(String st2: restric )
@@ -70,13 +71,15 @@ public class Recommendation{
 						if(st.toLowerCase()==st2.toLowerCase())
 						{
 							skt=1;
+							break;
 							
 						}
 						
 					}
 					
 				}
-				if(skt!=1)
+				
+				if(skt==0)
 				{	
 					restricted_dishes.add(new Dish(d));
 					
