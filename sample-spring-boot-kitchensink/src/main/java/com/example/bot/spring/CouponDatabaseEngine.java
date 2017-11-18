@@ -65,46 +65,46 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 		
 	}
 	
-	float generateNewCode() {
-
-		return 248493;
-	}
-//	int generateNewCode() throws Exception{
-//		try {
-//				Connection con = getConnection();
-//				PreparedStatement smt = con.prepareStatement("SELECT couponcode FROM usertablelist");
-//				ResultSet rs = smt.executeQuery();
-//				int code=0;
-////				Random ran = new Random();
-////				code= (100000 + ran.nextInt(899999));
-//				
-//				int couponFound = 1;
-//				while (couponFound==1)
-//				{
-//					Random ran = new Random();
-//					code= (100000 + ran.nextInt(899999));
-//					couponFound=0;
-//					while(rs.next())
-//					{
-//						int result = rs.getInt("couponcode");
-//						if (code==result)
-//						{
-//							couponFound=1;
-//						}
-//					}
-//					
-//					rs.close();
-//					smt.close();
-//					con.close();
-//					return code;	
-//				}
-//				return code;
-////			
-//		} catch (Exception e) {
-//			System.out.println(e);
-//		}
-//		return 0;
+//	float generateNewCode() {
+//
+//		return 248493;
 //	}
+	float generateNewCode() throws Exception{
+		try {
+				Connection con = getConnection();
+				PreparedStatement smt = con.prepareStatement("SELECT couponcode FROM usertablelist");
+				ResultSet rs = smt.executeQuery();
+				int code=0;
+//				Random ran = new Random();
+//				code= (100000 + ran.nextInt(899999));
+				
+				int couponFound = 1;
+				while (couponFound==1)
+				{
+					Random ran = new Random();
+					code= (100000 + ran.nextInt(899999));
+					couponFound=0;
+					while(rs.next())
+					{
+						int result = rs.getInt("couponcode");
+						if (code==result)
+						{
+							couponFound=1;
+						}
+					}
+					
+					rs.close();
+					smt.close();
+					con.close();
+					return code;	
+				}
+				return code;
+//			
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return 0;
+	}
 	
 	private Connection getConnection() throws URISyntaxException, SQLException {
 		Connection connection;
