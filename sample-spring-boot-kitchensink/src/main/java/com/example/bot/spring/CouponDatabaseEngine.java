@@ -19,7 +19,7 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 			Connection con = getConnection();
 //			PreparedStatement smt = con.prepareStatement("SELECT * FROM usertablelist WHERE couponcode=?");
 //			PreparedStatement smt = con.prepareStatement("UPDATE usertablelist SET claimuser = ? WHERE couponcode = ?");
-			PreparedStatement smt = con.prepareStatement("SELECT * FROM usertablelist WHERE couponcode= ?", ResultSet.TYPE_SCROLL_SENSITIVE);
+			PreparedStatement smt = con.prepareStatement("SELECT * FROM usertablelist WHERE couponcode= ?");
 			smt.setFloat(1,code);
 //			smt.setString(1, UserId);
 			ResultSet rs = smt.executeQuery();
@@ -35,7 +35,8 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 			else {// coupon exists
 				PreparedStatement smt2 = con.prepareStatement("UPDATE usertablelist SET claimuser = ? WHERE couponcode = ?");
 				smt2.setString(1, UserId);
-				smt2.setFloat(2, code);
+				int code2 = Integer.parseInt(code);
+				smt2.setInt(2, code2);
 				rs.close();
 				smt2.close();
 				con.close();
