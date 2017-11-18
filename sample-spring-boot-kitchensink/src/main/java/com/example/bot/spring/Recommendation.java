@@ -60,7 +60,7 @@ public class Recommendation{
 		    ArrayList<Dish> restricted_dishes = new ArrayList<Dish>();
 			String[] restric= inputUser.getRestrictions().split(",");
 			for(Dish d: rDishes)
-			{	int s=0;
+			{	int skt=0;
 				String[] kwrds = d.getKeywords();
 				for(String st: kwrds)
 				{	
@@ -68,18 +68,16 @@ public class Recommendation{
 					{
 						if(st.toLowerCase()==st2.toLowerCase())
 						{
-							s=1;
-							break;
+							skt=1;
+							
 						}
 						
 					}
 					
 				}
-				if(s!=1)
+				if(skt!=1)
 				{	
-					Dish new_dish = new Dish(d);
-					
-					restricted_dishes.add(new_dish);
+					restricted_dishes.add(new Dish(d));
 					
 				}
 			}
@@ -122,7 +120,7 @@ public class Recommendation{
 					if(st.toLowerCase()==st2)
 					{
 						s=1;
-						break;
+						
 					}
 					
 				}
