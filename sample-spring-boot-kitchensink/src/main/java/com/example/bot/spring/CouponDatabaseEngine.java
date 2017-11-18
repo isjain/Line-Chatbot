@@ -19,7 +19,7 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 		Connection con = getConnection();
 		PreparedStatement smt = con.prepareStatement("UPDATE usertablelist SET claimuser=? WHERE couponcode=?");
 		smt.setString(1, UserId);
-		smt.setDouble(2, code);
+		smt.setDouble(2, Math.round(code));
 		System.out.println(smt);
 		smt.close();
 		con.close();
@@ -41,7 +41,7 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 			code = generateNewCode();
 			Connection con = getConnection();
 			PreparedStatement smt = con.prepareStatement("INSERT INTO usertablelist VALUES (?,'none',?)");
-	smt.setDouble(2,code);
+			smt.setDouble(2,code);
 			smt.setString(1,UserId);
 			ResultSet rs = smt.executeQuery();
 			rs.close();
