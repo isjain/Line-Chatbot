@@ -23,6 +23,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -94,6 +95,7 @@ public class KitchenSinkController {
 	@Autowired
 	private LineMessagingClient lineMessagingClient;
 	private UserInputDatabaseEngine database;
+	private RecommendationDatabaseEngine recomDB;
 
 	@EventMapping
 	public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) throws Exception {
@@ -208,7 +210,8 @@ public class KitchenSinkController {
 	private void handleSticker(String replyToken, StickerMessageContent content) {
 		reply(replyToken, new StickerMessage(content.getPackageId(), content.getStickerId()));
 	}
-
+	
+	@SuppressWarnings("fallthrough")
 	private void handleTextContent(String replyToken, Event event, TextMessageContent content)
             throws Exception {
         String text = content.getText();
@@ -222,11 +225,11 @@ public class KitchenSinkController {
             case "profile": {
                 String userId = event.getSource().getUserId();
                 if (userId != null) {
-                    lineMessagingClient
-                            .getProfile(userId)
-                            .whenComplete(new ProfileGetter (this, replyToken));
+                    User u = database.getUserRecord(userId);
+                    String reply_msg = "Name:" + u.getName() + "\n" + "Weight:"+ u.getWeight().toString() +"\n"+ "Height:" + u.getHeight().toString() + "\n" + "Restrictions:" + u.getRestrictions() + "\n" + "Age:" + u.getAge().toString() + "\n" ;
+                    this.replyText(replyToken, reply_msg);
                 } else {
-                    this.replyText(replyToken, "Bot can't use profile API without user ID");
+                    this.replyText(replyToken, "User not found, type Start:x to begin!");
                 }
                 break;
             }
@@ -279,11 +282,20 @@ public class KitchenSinkController {
         	database.updateHeight(userId, Float.parseFloat(inputData));
         	this.replyText(replyToken,inputData + " received");
         	database.setBMR(userId);
-        database.setBMI(userId);
+        	database.setBMI(userId);
+        	database.updateReqCalDay(userId);
+
     		break;
         }
         
-        
+        case "restrictions": {
+        	String userId = event.getSource().getUserId();
+//        	User u = database.getUserRecord(userId);
+//        	u.setRestrictions(inputData);
+        	database.updateRestrictions(userId, inputData);
+        	this.replyText(replyToken,inputData + " received");
+        	break;
+        }
         case "age": {
         	String userId = event.getSource().getUserId();
     		database.updateAge(userId, Integer.parseInt(inputData));
@@ -310,14 +322,49 @@ public class KitchenSinkController {
     		this.replyText(replyToken,"Thank you, you will be alerted");
     		break;
         }
-        
+        case "vege": {	
+        	
+        }
         case "recommend" : {
     		//this.replyText(replyToken,"We recommend a corn soup with salad and cheese, and croutons.");
         	String userId = event.getSource().getUserId();
             String fromLang = "en";
             String toLang = "zh-CN";
         	Translator translator = new Translator();
-        	this.replyText(replyToken,inputData + " " + translator.translate(fromLang, toLang, inputData));
+        	//Recommendation
+        	String[] menu = inputData.split(",");
+        	List<Dish> dishes = new ArrayList<Dish>();
+        	for (String str: menu)
+        	{
+        		dishes.add(new Dish(str));
+        	}
+        	Dish[] dishes2 = dishes.toArray(new Dish[dishes.size()]);
+        	Dish[] final_dishes = recomDB.findCaloricContent(dishes2);
+        	User curr_user = database.getUserRecord(userId);
+//        	String[] a = curr_user.getRestrictions().split(",");
+        	
+        	Recommendation recommend = new Recommendation(curr_user, final_dishes);
+//        	log.info("inputted dishes: "+recommend.getInputDishes());
+        	Dish[] recommended_dishes;
+        	//vege function
+        	if(command.equals("vege")) {
+        		
+        		recommended_dishes = recommend.getVegRecommendedDishes();
+        		
+        	}
+        	else {
+        		
+            	recommended_dishes = recommend.getRecommendedDishes();
+
+        	}
+        	
+        	String motivation = recommend.motivationMessage();
+        	String reply_msg = "Recommended dishes in best to least:\n";
+        	for(Dish d: recommended_dishes)
+        	{
+        		reply_msg = reply_msg + d.getName() + "  " + d.getpropCalories() + "\n";
+        	}
+        	this.replyText(replyToken, reply_msg + "User reqcalday:"+ curr_user.getCalDay() + "\n\n" + translator.translate(fromLang, toLang, reply_msg) + "\n\n"+ motivation);
         	break;
         }
         
@@ -330,7 +377,7 @@ public class KitchenSinkController {
         	break;
         }
         
-        
+
         case "carousel": {
            String imageUrl = createUri("/static/buttons/1040.jpg");
            CarouselTemplate carouselTemplate = new CarouselTemplate(
@@ -346,30 +393,31 @@ public class KitchenSinkController {
                 break;
             }
         
-        case "Motivation" : {
-          	 Random rand = new Random();
-           String[] msgs = {"Good progress! One more step towards a healthier lifestyle", "Add oil!", "Strive for progress, not perfection", "The struggle you're in today is developing the strength you need for tomorrow", "Yes, you can! The road may be bumpy, but stay committed to the process.", "Making excuses burns 0 calories per hour."};
-           int  n = rand.nextInt(6);
-           this.replyText(replyToken,msgs[n]);    
-           break;
-          }
+//        case "Motivation" : {
+//          	 Random rand = new Random();
+//           String[] msgs = {"Good progress! One more step towards a healthier lifestyle", "Add oil!", "Strive for progress, not perfection", "The struggle you're in today is developing the strength you need for tomorrow", "Yes, you can! The road may be bumpy, but stay committed to the process.", "Making excuses burns 0 calories per hour."};
+//           int  n = rand.nextInt(6);
+//           this.replyText(replyToken,msgs[n]);    
+//           break;
+//          }
 
-            default:
-            	String reply = null;
-            	try {
-            		reply = database.search(text);
-            	} catch (Exception e) {
-            		reply = text;
-            	}
-                log.info("Returns echo message {}: {}", replyToken, reply);
+            default:{
+//            	String reply = null;
+//            	try {
+//            		reply = database.search(text);
+//            	} catch (Exception e) {
+//            		reply = text;
+//            	}
+//                log.info("Returns echo message {}: {}", replyToken, reply);
                 this.replyText(
                         replyToken,
-                        itscLOGIN + " says " + reply
+                        "this is default"
                 );
                 break;
-               
+            }
         }
     }
+	
 
 	static String createUri(String path) {
 		return ServletUriComponentsBuilder.fromCurrentContextPath().path(path).build().toUriString();
@@ -416,6 +464,7 @@ public class KitchenSinkController {
 	public KitchenSinkController() {
 		database = new UserInputDatabaseEngine();
 		itscLOGIN = System.getenv("ITSC_LOGIN");
+		recomDB = new RecommendationDatabaseEngine();
 	}
 
 	private String itscLOGIN;

@@ -1,57 +1,174 @@
-////package testing;
-//
-//package com.example.bot.spring;
-//
-//import java.util.Random;
-//import java.net.URI;
-//import java.net.URISyntaxException;
-//import java.sql.Connection;
-//import java.sql.DriverManager;
-//import java.sql.PreparedStatement;
-//import java.sql.ResultSet;
-//import java.sql.SQLException;
-//
-//
-//public class Recommendation extends DatabaseEngine{
-//	
-//    
-//    String search_calday(String userId) throws Exception {
-//        //Write your code here
-//        String result = null;
-//        try {
-//            Connection con = getConnection();
-//            PreparedStatement smt = con.prepareStatement("select reqcalday from userdatatable where user_id = ?");
-//            smt.setString(1,userId);
-//            ResultSet rs = smt.executeQuery();
-//            while(rs.next())
-//            {
-//                result = rs.getString("reqcalday");
-//            }
-//            rs.close();
-//            smt.close();
-//            con.close();
-//        }catch (Exception e) {
-//            System.out.println(e);
-//        }
-//        
-//        if(result!=null)
-//            return result;
-//        throw new Exception("NOT FOUND");
-//        
-//    }
-//    
-//    private String menu;
-//	private float cal;
-//	
-//    
-//    
-//	public Recommendation(String string, int i) {   menu=string; cal=i;}
+//package testing;
+package com.example.bot.spring;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+import java.net.URI;
+import java.lang.*;
+//import java.math;
+import java.net.URISyntaxException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class Recommendation{
+   
+	private Dish[] inputDishes;
+	private User inputUser;
+	private Dish[] rDishes;
+    
+	public Recommendation(User user, Dish[] dishes) {  
+		inputDishes = dishes;
+		inputUser = user;
+		findRecommendation();	
+	}
+	public Dish[] getInputDishes() {
+		return inputDishes;
+	}
+		
+	public void findRecommendation()
+	{
+			rDishes = new Dish[inputDishes.length];
+			for( int i=0; i<inputDishes.length; i++ )
+				rDishes[i] = new Dish(inputDishes[i]);
+//			rDishes = inputDishes.clone();
+
+			double reqcal  = Double.parseDouble(inputUser.getCalDay());
+			double mealcal = reqcal/3;
+		    // Below lines are similar to insertion sort
+		    for (int i = 1; i < rDishes.length; i++) {
+		        double diff = Math.abs(rDishes[i].getpropCalories() - mealcal);
+		 
+		        // Insert arr[i] at correct place
+		        int j = i - 1;
+		        if (Math.abs(rDishes[j].getpropCalories() - mealcal) > diff) {
+		            Dish temp = new Dish(rDishes[i]);
+		            while (j >= 0 && Math.abs(rDishes[j].getpropCalories() - mealcal) > diff) {
+		                rDishes[j + 1] = rDishes[j];
+		                j--;
+		            }
+		            rDishes[j + 1] = temp;
+		            
+		        }
+		    }
+		    
+		    //Diet Restrictions
+		    List<Dish> restricted_dishes = new ArrayList<Dish>();
+			String restr= inputUser.getRestrictions();
+			String[] restric = restr.split(",");
+			for(Dish d: rDishes)
+			{	int skt=0;
+				String[] kwrds = d.getKeywords();
+				
+				for(String st: kwrds)
+				{	
+					for(String st2: restric )
+					{
+						if(st.toLowerCase().equals(st2.toLowerCase()))
+						{
+							skt=1;
+							break;
+							
+						}
+						
+					}
+					
+				}
+				
+				if(skt==0)
+				{	
+					restricted_dishes.add(new Dish(d));
+					
+				}
+			}
+			
+			Dish[] temp_rDishes = restricted_dishes.toArray(new Dish[restricted_dishes.size()]);
+		   
+			rDishes = temp_rDishes;
+		    		    
+		    //keep only the first 5 elements of rDishes
+		    if (rDishes.length>5)
+		    {
+			    Dish[] tempp = new Dish[5];
+			    for(int i=0; i<5; i++) {
+			    		tempp[i] = rDishes[i];
+			    }
+			    rDishes = tempp.clone();	   
+		    }
+		
+	}
+	
+	public Dish[] getRecommendedDishes() 
+	{
+		return rDishes;
+	}
+	
+	public Dish[] getVegRecommendedDishes() {
+		
+		ArrayList<Dish> veg_dishes = new ArrayList<Dish>();
+		String[] non_veg= {"chicken","pork","beef","fish","ham","sausage","sushi","hotdog","tuna","duck","lamb","pig","turkey","dog","goat","buffalo","cow","deer"};
+		for(Dish d: rDishes)
+		{	int s=0;
+			String[] kwrds = d.getKeywords();
+			for(String st: kwrds)
+			{	
+				for(String st2: non_veg )
+				{
+					if(st.toLowerCase().equals(st2))
+					{
+						s=1;
+						
+					}
+					
+				}
+				
+			}
+			if(s!=1)
+			{veg_dishes.add(new Dish(d));}
+		}
+		
+		Dish[] veg_dishes2 = veg_dishes.toArray(new Dish[veg_dishes.size()]);
+		
+		return veg_dishes2;
+		
+
+		
+	}
+
+
+//------------motivational messages------------------
+
+	public String motivationMessage(){
+		Random rand = new Random();
+		String[] msgs = {"good progress! One more step towards a healthier lifestyle", "add oil!", "strive for progress not perfection", "you can do it! The road may be bumpy, but stay committed to the process", "making excuses burns 0 calories per hour", "a little progress each day adds up to big results", "when you feel like stopping think about why you started", "the best project you will ever work on is you", "you're not there yet but you're closer than you were yesterday", "be stronger than your excuse", "nothing tastes as good as being healthy feels", "weight loss is not a physical challenge, it's a mental one", "three months from now you will thank yourself", "you are what you eat. So don't be fast, cheap, easy or fake", "if it was easy, everyone would do it", "eat for the body you want", "you don't get what you wish for, you get what you work for", "your stomach should not be a waste basket", "once you see results, it becomes an addiction"};
+		int  n = rand.nextInt(msgs.length);
+		return (inputUser.getName()+", "+msgs[n]);
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
 //	public String setMenu(String m) {menu=m; return menu; }
 //	public float setCal(float c) {cal=c;  return cal; }
 //	
 //	public String getMenu() {return menu; }
 //	public float getCal() {return cal; }
-//
+	
+	
+
 //	public static Recommendation[] sortedMenu(Recommendation [] r, String userId, int n ){
 //			try {
 //				String reply = database.search_calday();
@@ -77,6 +194,8 @@
 //        return r;
 //	} 
 //
+
+
 //    public static void input_into_database(Recommendation r, String userId) throws Exception {
 //        boolean success = false;
 //        try {
@@ -93,56 +212,7 @@
 //        }
 //        
 //    }
-// 
-//// this is not the actual data we'll use, this just shows how to work with recommendation
-//	//objects and push them as a value to the sortedmenu function.
-// /*  public static void main(String[] args) throws Exception {
-//        Recommendation[] r = new Recommendation[] {
-//            new Recommendation("COMP3111", 1100),
-//            new Recommendation("COMP3311", 400),
-//            new Recommendation("COMP3311", 280),
-//        };
-//        
-//        String fromLang = "en";
-//        String toLang = "zh-CN";
-//        
-//
-//        
-//        Recommendation[] Arr = new Recommendation[3];
-//        Arr=sortedMenu(r);
-//        for(int i=0;i<3;i++)
-//        { System.out.println(Arr[i].getMenu() + Arr[i].getCal());
-//            Translator.translate(fromLang, toLang, Arr[i].getMenu());}
-//    }  */
-//    private Connection getConnection() throws URISyntaxException, SQLException {
-//    	Connection connection;
-//    	URI dbUri = new URI(System.getenv("DATABASE_URL"));
-//
-//    	String username = dbUri.getUserInfo().split(":")[0];
-//    	String password = dbUri.getUserInfo().split(":")[1];
-//    	String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath() +  "?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory";
-//
-////    	log.info("Username: {} Password: {}", username, password);
-////    	log.info ("dbUrl: {}", dbUrl);
-//
-//    	connection = DriverManager.getConnection(dbUrl, username, password);
-//
-//    	return connection;
-//    	}
-//}
-//
-//
-//
-//
-//
-////------------motivational messages------------------
-////public class motivation{
-////
-////public static String motivationMessage(){
-////    Random rand = new Random();
-////    String[] msgs = {"Good progress! One more step towards a healthier lifestyle", "Add oil!", "Strive for progress, not perfection", "The struggle you're in today is developing the strength you need for tomorrow", "Yes, you can! The road may be bumpy, but stay committed to the process.", "Making excuses burns 0 calories per hour."};
-////    int  n = rand.nextInt(6);
-////    return msgs[n];
-////}
-////}
-//
+
+ 
+// this is not the actual data we'll use, this just shows how to work with recommendation
+	//objects and push them as a value to the sortedmenu function.

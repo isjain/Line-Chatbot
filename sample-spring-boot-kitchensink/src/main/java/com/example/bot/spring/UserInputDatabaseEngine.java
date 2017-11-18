@@ -234,6 +234,25 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		}
 	}
 	
+	public void updateRestrictions(String UserId,String rest)
+	{
+		try {
+			Connection con = getConnection();
+			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET restrictions=? WHERE user_id=?");
+
+			smt.setString(1,rest);
+			smt.setString(2,UserId);
+			ResultSet rs = smt.executeQuery();
+			rs.close();
+			smt.close();
+			con.close();
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
+		
+	}
+	
 
 	public void updateAge(String UserId, int age)
 	{
@@ -321,6 +340,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		String name="";
 		String gender="";
 		double calDay=0;
+		String res = "";
 		User user = new User(id);
 		
 		try {
@@ -341,6 +361,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 				name = rs.getString("name");
 				gender = rs.getString("gender");
 				calDay = Double.parseDouble(rs.getString("reqcalday"));
+				res = rs.getString("restrictions");
 			}
 			rs.close();
 			smt.close();
@@ -354,6 +375,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 			user.setHeight(height);
 			user.setWaterReminder(waterReminder);
 			user.setCalDay(calDay);
+			user.setRestrictions(res);
 
 			return user;
 			}catch (Exception e) {
@@ -364,7 +386,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 
 
 
-	public void updateReqCalDay(String UserId, double reqcal)
+	public void updateReqCalDay(String UserId)
 	{
 		try {
 			String weight = null;
@@ -391,7 +413,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 			int losegainperweek1= Integer.parseInt(losegainperweek);
 			int gymfrequency1 = Integer.parseInt(gymfrequency);
 			double calDayReq = setCalDay(gender, weight1, height1, age1, losegainperweek1, gymfrequency1);
-			PreparedStatement smt2 = con.prepareStatement("UPDATE userdatatable SET reqcalday=? WHERE user_id='?'");
+			PreparedStatement smt2 = con.prepareStatement("UPDATE userdatatable SET reqcalday=? WHERE user_id=?");
 			smt2.setDouble(1,calDayReq);
 			smt2.setString(2,UserId);
 			ResultSet rs2 = smt2.executeQuery();
