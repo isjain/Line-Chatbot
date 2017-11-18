@@ -67,7 +67,7 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 	
 	float generateNewCode() {
 
-		return 000000;
+		return 248493;
 	}
 //	int generateNewCode() throws Exception{
 //		try {
