@@ -149,29 +149,30 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 				totalCalList = rs.getString("calperday");
 				totalDates = rs.getString("dates");	
 			}
-		
-			if(totalDates!="")
-			{
+			return totalDates;
 
-				String[] partsOfCal = totalCalList.split(",");
-				String[] partsOfDate = totalDates.split(",");
-	//			
-//				for (int i=0;i<partsOfDate.length;i++)
-//				{	
-//					if(partsOfDate[i].equals(date))
-//					{
-//					float changeCal = Float.parseFloat(partsOfCal[i]);
-//					changeCal+=Float.parseFloat(calpermeal);
-//					partsOfCal[i]=Float.toString(changeCal);
-//					found=true;
-//					break;
-//					}
-//				}
-//				totalCalList = String.join(delimiter, partsOfCal);
-//				totalDates = String.join(delimiter, partsOfDate);
-				return partsOfDate[0];
-
-			}
+//			if(totalDates!="")
+//			{
+//
+//				String[] partsOfCal = totalCalList.split(",");
+//				String[] partsOfDate = totalDates.split(",");
+//	//			
+////				for (int i=0;i<partsOfDate.length;i++)
+////				{	
+////					if(partsOfDate[i].equals(date))
+////					{
+////					float changeCal = Float.parseFloat(partsOfCal[i]);
+////					changeCal+=Float.parseFloat(calpermeal);
+////					partsOfCal[i]=Float.toString(changeCal);
+////					found=true;
+////					break;
+////					}
+////				}
+////				totalCalList = String.join(delimiter, partsOfCal);
+////				totalDates = String.join(delimiter, partsOfDate);
+//				//return partsOfDate[0];
+//
+//			}
 
 		}
 //			if(found==false)
