@@ -152,10 +152,9 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		
 			if(totalDates!="")
 			{
-				return "hi";
 
-				//String[] partsOfCal = totalCalList.split(";");
-				//String[] partsOfDate = totalDates.split(";");
+				String[] partsOfCal = totalCalList.split(",");
+				String[] partsOfDate = totalDates.split(",");
 	//			
 //				for (int i=0;i<partsOfDate.length;i++)
 //				{	
@@ -170,6 +169,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 //				}
 //				totalCalList = String.join(delimiter, partsOfCal);
 //				totalDates = String.join(delimiter, partsOfDate);
+				return partsOfDate[0];
 
 			}
 
