@@ -132,8 +132,6 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 			boolean found=false;
 			String delimiter = ";";
 			String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());  // current date 
-
-
 			Connection con = getConnection();
 			PreparedStatement smt1 = con.prepareStatement("SELECT * FROM userdatatable WHERE user_id=?");
 			smt1.setString(1,UserId);
@@ -150,7 +148,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 			
 			for (int i=0;i<partsOfDate.length;i++)
 			{
-				if(partsOfDate[i]==date)
+				if(partsOfDate[i].equals(date))
 				{
 				float changeCal = Float.parseFloat(partsOfCal[i]);
 				changeCal+=Float.parseFloat(calpermeal);
@@ -172,15 +170,13 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 				else
 				{
 				totalCalList=totalCalList+delimiter+calpermeal;
-				totalDates=totalCalList+delimiter+date;
+				totalDates=totalDates+delimiter+date;
 				}
 			}
-
 
 			PreparedStatement smt2 = con.prepareStatement("UPDATE userdatatable SET calperday=?,SET dates=? WHERE user_id='?'");
 //			smt2.setString(1,totalCalList);
 			smt2.setString(1,"100");
-
 			smt2.setString(2,totalDates);
 			smt2.setString(3,UserId);
 			ResultSet rs2 = smt2.executeQuery();
