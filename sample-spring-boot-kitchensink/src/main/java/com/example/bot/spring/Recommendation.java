@@ -110,7 +110,7 @@ public class Recommendation{
 	public Dish[] getVegRecommendedDishes() {
 		
 		ArrayList<Dish> veg_dishes = new ArrayList<Dish>();
-		String[] non_veg= {"chicken","pork","beef","fish","ham","sausage"};
+		String[] non_veg= {"chicken","pork","beef","fish","ham","sausage","sushi","hotdog","tuna"};
 		for(Dish d: rDishes)
 		{	int s=0;
 			String[] kwrds = d.getKeywords();
@@ -118,7 +118,7 @@ public class Recommendation{
 			{	
 				for(String st2: non_veg )
 				{
-					if(st.toLowerCase()==st2)
+					if(st.toLowerCase().equals(st2))
 					{
 						s=1;
 						

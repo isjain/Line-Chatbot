@@ -347,7 +347,7 @@ public class KitchenSinkController {
 //        	log.info("inputted dishes: "+recommend.getInputDishes());
         	Dish[] recommended_dishes;
         	//vege function
-        	if(command=="vege") {
+        	if(command.equals("vege")) {
         		
         		recommended_dishes = recommend.getVegRecommendedDishes();
         		
