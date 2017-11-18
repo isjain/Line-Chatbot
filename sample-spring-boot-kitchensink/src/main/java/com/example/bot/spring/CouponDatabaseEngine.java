@@ -49,9 +49,11 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 			Connection con = getConnection();
 			PreparedStatement smt = con.prepareStatement("INSERT INTO usertablelist VALUES (?,?,'none')");
 
+//			INSERT INTO usertablelist VALUES ('1','Ishan','none')
+			
 //			PreparedStatement smt = con.prepareStatement("INSERT INTO usertablelist (couponcode, issueuser, claimuser) VALUES (0,0,'fuckoffmaite')");
-//			smt.setFloat(1,code);
-//			smt.setString(2,UserId);
+			smt.setFloat(1,code);
+			smt.setString(2,UserId);
 			ResultSet rs = smt.executeQuery();
 			rs.close();
 			smt.close();
