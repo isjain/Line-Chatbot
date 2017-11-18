@@ -406,11 +406,11 @@ public class KitchenSinkController {
         
         case "friend": {
     	 	String userId = event.getSource().getUserId();
-    	 	int code = Integer.parseInt(icedb.saveCouponCode(userId));
+    	 	float code = icedb.saveCouponCode(userId);
     	 	if (code == 404)
     	     	this.replyText(replyToken,"We cannot currently generate a code, please try again later." );
     	 	else 
-     	this.replyText(replyToken,"Your code is " + code);
+     	this.replyText(replyToken,"Your code is " + Math.round(code));
 
      	// hopefully it works
  		break;
