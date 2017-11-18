@@ -386,7 +386,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 
 
 
-	public void updateReqCalDay(String UserId, double reqcal)
+	public void updateReqCalDay(String UserId)
 	{
 		try {
 			String weight = null;
@@ -413,7 +413,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 			int losegainperweek1= Integer.parseInt(losegainperweek);
 			int gymfrequency1 = Integer.parseInt(gymfrequency);
 			double calDayReq = setCalDay(gender, weight1, height1, age1, losegainperweek1, gymfrequency1);
-			PreparedStatement smt2 = con.prepareStatement("UPDATE userdatatable SET reqcalday=? WHERE user_id='?'");
+			PreparedStatement smt2 = con.prepareStatement("UPDATE userdatatable SET reqcalday=? WHERE user_id=?");
 			smt2.setDouble(1,calDayReq);
 			smt2.setString(2,UserId);
 			ResultSet rs2 = smt2.executeQuery();

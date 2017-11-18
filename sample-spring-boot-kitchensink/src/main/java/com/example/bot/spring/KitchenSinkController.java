@@ -283,7 +283,7 @@ public class KitchenSinkController {
         	this.replyText(replyToken,inputData + " received");
         	database.setBMR(userId);
         	database.setBMI(userId);
-//        	database.updateReqCalDay(userId);
+        	database.updateReqCalDay(userId);
 
     		break;
         }
