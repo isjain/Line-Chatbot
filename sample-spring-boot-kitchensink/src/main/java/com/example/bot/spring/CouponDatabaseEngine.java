@@ -12,47 +12,25 @@ import java.lang.Object;
 import java.util.Random;
 public class CouponDatabaseEngine extends DatabaseEngine {
 	
-	public boolean redeemCode(double code, String UserId) {
-//		boolean couponExists = false;
+	public void redeemCode(double code, String UserId) {
 		
 		try {
-			// should check if the coupon code exists
-			Connection con = getConnection();
-//			PreparedStatement smt = con.prepareStatement("SELECT * FROM usertablelist WHERE couponcode=?");
-//			PreparedStatement smt = con.prepareStatement("UPDATE usertablelist SET claimuser = ? WHERE couponcode = ?");
-			PreparedStatement smt = con.prepareStatement("SELECT * FROM usertablelist WHERE couponcode= ?");
-			smt.setDouble(1,code);
-//			smt.setString(1, UserId);
-			ResultSet rs = smt.executeQuery();
-
-			while(rs.next()) {
-				updateRedeemed(code, UserId);
-			
-			}
-			rs.close();
-			smt.close();
-			con.close();
-		}
-		catch (Exception e) {
-			System.out.println(e);
-		}
-		return false;
-		
-	}
-	
-	public void updateRedeemed(double code, String UserId) {
-		try {
+			// check if the coupon code works
 		Connection con = getConnection();
-		PreparedStatement smt2 = con.prepareStatement("UPDATE usertablelist SET claimuser = ? WHERE couponcode = ?");
-		smt2.setString(1, UserId);
-		smt2.setDouble(2, code);
-		smt2.close();
+		PreparedStatement smt = con.prepareStatement("UPDATE usertablelist SET claimuser = ? WHERE couponcode = ?");
+		smt.setString(1, UserId);
+		smt.setDouble(2, code);
+		smt.close();
 		con.close();
 		}
 		catch (Exception e) {
 			System.out.println(e);
 		}
 	}
+	
+	
+	
+	
 	
 	public double saveCouponCode(String UserId)
 	{
