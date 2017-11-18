@@ -123,13 +123,9 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 			return 0;
 		}
 	}
-	public String updateAns(String ans)
-	{
-		ans += "hihi";
-		return ans;
-	}
+	
 
-	public void updateCalperDay(String UserId, String calpermeal)
+	public String updateCalperDay(String UserId, String calpermeal)
 	{
 		try {
 			String totalCalList = "";
@@ -190,11 +186,12 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 			smt2.close();
 			smt1.close();
 			con.close();
-
+			return totalCalList;
 		}
 		catch (Exception e) {
 			System.out.println(e);
 		}
+		return " ";
 	}
 
 

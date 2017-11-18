@@ -172,10 +172,9 @@ public class KitchenSinkController {
 		String replyToken = event.getReplyToken();
 		System.out.println(event.getSource().getUserId());
 		String cal = (event.getPostbackContent().getData()).substring(event.getPostbackContent().getData().lastIndexOf(" ")+1);
-		String ans = "rnadom text";
-		ans = database.updateAns(ans);
+		String temp=database.updateCalperDay(event.getSource().getUserId(), cal);
+		this.replyText(replyToken, temp);
 //		this.replyText(replyToken, (event.getPostbackContent().getData()).substring(0, (event.getPostbackContent().getData()).lastIndexOf(" ")));
-		this.replyText(replyToken, ans);
 
 	}
 
