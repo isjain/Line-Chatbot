@@ -110,7 +110,7 @@ public class Recommendation{
 	public Dish[] getVegRecommendedDishes() {
 		
 		ArrayList<Dish> veg_dishes = new ArrayList<Dish>();
-		String[] non_veg= {"chicken","pork","beef","fish","ham","sausage","sushi","hotdog","tuna"};
+		String[] non_veg= {"chicken","pork","beef","fish","ham","sausage","sushi","hotdog","tuna","duck","lamb","pig","turkey","dog","goat","buffalo","cow","deer"};
 		for(Dish d: rDishes)
 		{	int s=0;
 			String[] kwrds = d.getKeywords();
