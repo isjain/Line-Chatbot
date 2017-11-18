@@ -133,20 +133,22 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		boolean found=false;
 		String delimiter = ";";
 		String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());  // current date 
-		return date;
 
 		
-//		try {
-//			
-//			Connection con = getConnection();
-//			PreparedStatement smt1 = con.prepareStatement("SELECT * FROM userdatatable WHERE user_id=?");
-//			smt1.setString(1,UserId);
-//			ResultSet rs = smt1.executeQuery();
-//			while(rs.next())
-//			{
-//				totalCalList = rs.getString("calperday");
-//				totalDates = rs.getString("dates");	
-//			}
+		try {
+			
+			Connection con = getConnection();
+			PreparedStatement smt1 = con.prepareStatement("SELECT * FROM userdatatable WHERE user_id=?");
+			smt1.setString(1,UserId);
+		
+			ResultSet rs = smt1.executeQuery();
+			while(rs.next())
+			{
+				totalCalList = rs.getString("calperday");
+				totalDates = rs.getString("dates");	
+			}
+			return totalDates;
+		}
 //			if(totalDates!="")
 //			{
 //			String[] partsOfCal = totalCalList.split(";");
@@ -195,10 +197,10 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 //
 //
 //		}
-//		catch (Exception e) {
-//			System.out.println(e);
-//		}
-//		return null;
+		catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
 //		
 	}
 
