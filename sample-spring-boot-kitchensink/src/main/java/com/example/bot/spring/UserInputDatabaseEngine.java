@@ -125,14 +125,17 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 	}
 	
 
-	public void updateCalperDay(String UserId, String calpermeal)
+	public String updateCalperDay(String UserId, String calpermeal)
 	{
+		
+		String totalCalList = "";
+		String totalDates = "";
+		boolean found=false;
+		String delimiter = ";";
+		String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());  // current date 
+		
 		try {
-			String totalCalList = "";
-			String totalDates = "";
-			boolean found=false;
-			String delimiter = ";";
-			String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());  // current date 
+			
 			Connection con = getConnection();
 			PreparedStatement smt1 = con.prepareStatement("SELECT * FROM userdatatable WHERE user_id=?");
 			smt1.setString(1,UserId);
@@ -187,12 +190,14 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 			smt2.close();
 			smt1.close();
 			con.close();
-		
+			return totalCalList;
+
 
 		}
 		catch (Exception e) {
 			System.out.println(e);
 		}
+		return null;
 		
 	}
 
