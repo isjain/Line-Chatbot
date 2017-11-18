@@ -15,7 +15,7 @@ public class Dish {
 	private String sodium;
 	private String fatty_acids;
 	private double weight;
-	private double portion;
+	private int portion;
 
 	public Dish(String name) {
 		this.dishId = null;
@@ -71,7 +71,7 @@ public class Dish {
 	public String getName() {
 		return name;
 	}
-	public double getPortion() {
+	public int getPortion() {
 		return portion;
 	}
 	public String[] getKeywords() {
@@ -82,7 +82,7 @@ public class Dish {
 	public void setDishId(String id) {
 		this.dishId = id;
 	}
-	public void setPortion(double portion) {
+	public void setPortion(int portion) {
 		this.portion = portion;
 	}
 	public void setCalories(double cal) {

@@ -61,7 +61,8 @@ public class Recommendation{
 		    }
 		    
 		    for (int i = 0; i < rDishes.length; i++) {
-		        rDishes[i].setPortion((reqcal/3)/rDishes[i].getCalories());
+		    		int portion = (int)Math.round((reqcal/3)/rDishes[i].getCalories());
+		        rDishes[i].setPortion(portion);
 		    }
 		
 	}
