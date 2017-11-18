@@ -170,7 +170,7 @@ public class KitchenSinkController {
 	@EventMapping
 	public void handlePostbackEvent(PostbackEvent event) {
 		String replyToken = event.getReplyToken();
-		this.replyText(replyToken, "Got postback " + event.getPostbackContent().getData());
+		this.replyText(replyToken, event.getPostbackContent().getData());
 	}
 
 	@EventMapping
@@ -341,9 +341,9 @@ public class KitchenSinkController {
         	
         	String imageUrl = createUri("/static/buttons/1040.jpg");
         	List<CarouselColumn> dishlist = new ArrayList<CarouselColumn>();
-        	for(int i=0; i<recommended_dishes.length; i++) {
-        		dishlist.add(new CarouselColumn(imageUrl,recommended_dishes[i].getName(),"xx", Arrays.asList(
-                        new PostbackAction("Choose", "Dish confirmed"))));
+        	for(Dish d: recommended_dishes) {
+        		dishlist.add(new CarouselColumn(imageUrl,d.getName(),d.getpropCalories()+" "+d.getCalories()+" "+d.getPortion(), Arrays.asList(
+                        new PostbackAction("Choose", d.getName()+" confirmed"))));
         	}
         CarouselTemplate carouselTemplate = new CarouselTemplate(dishlist);
         TemplateMessage templateMessage = new TemplateMessage("Carousel alt text", carouselTemplate);
