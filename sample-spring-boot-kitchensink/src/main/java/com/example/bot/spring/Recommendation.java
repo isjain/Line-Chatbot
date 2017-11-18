@@ -57,29 +57,34 @@ public class Recommendation{
 		    }
 		    
 		    //Diet Restrictions
-//		    ArrayList<Dish> restricted_dishes = new ArrayList<Dish>();
-//			String[] restric= inputUser.getRestrictions().split(",");
-//			for(Dish d: rDishes)
-//			{	int s=0;
-//				String[] kwrds = d.getKeywords();
-//				for(String st: kwrds)
-//				{	
-//					for(String st2: restric )
-//					{
-//						if(st.toLowerCase()==st2.toLowerCase())
-//						{
-//							s=1;
-//							break;
-//						}
-//						
-//					}
-//					
-//				}
-//				if(s!=1)
-//				{restricted_dishes.add(new Dish(d.getName()));}
-//			}
+		    ArrayList<Dish> restricted_dishes = new ArrayList<Dish>();
+			String[] restric= inputUser.getRestrictions().split(",");
+			for(Dish d: rDishes)
+			{	int s=0;
+				String[] kwrds = d.getKeywords();
+				for(String st: kwrds)
+				{	
+					for(String st2: restric )
+					{
+						if(st.toLowerCase()==st2.toLowerCase())
+						{
+							s=1;
+							break;
+						}
+						
+					}
+					
+				}
+				if(s!=1)
+				{	
+					Dish new_dish = new Dish(d);
+					
+					restricted_dishes.add(new_dish);
+					
+				}
+			}
 			
-//			rDishes = restricted_dishes.toArray(new Dish[restricted_dishes.size()]);
+			rDishes = restricted_dishes.toArray(new Dish[restricted_dishes.size()]);
 		    
 		    
 		    
@@ -124,7 +129,7 @@ public class Recommendation{
 				
 			}
 			if(s!=1)
-			{veg_dishes.add(new Dish(d.getName()));}
+			{veg_dishes.add(new Dish(d));}
 		}
 		
 		Dish[] veg_dishes2 = veg_dishes.toArray(new Dish[veg_dishes.size()]);
