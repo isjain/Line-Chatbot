@@ -413,6 +413,16 @@ public class KitchenSinkController {
      	// hopefully it works
  		break;
     }
+        
+        case "redeem": {
+    	 	String userId = event.getSource().getUserId();
+    	 	Float code = Float.parseFloat(inputData);
+     	icedb.redeemCode(code, userId);
+     	this.replyText(replyToken,inputData + " redeemed");
+
+     	// hopefully it works
+ 		break;
+    }
 
             default:
             	String reply = null;

@@ -12,7 +12,7 @@ import java.lang.Object;
 import java.util.Random;
 public class CouponDatabaseEngine extends DatabaseEngine {
 	
-	public boolean exerciseCode(float code, String UserId)
+	public boolean redeemCode(float code, String UserId)
 	{
 		try {
 			// should check if the coupon code exists
