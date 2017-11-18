@@ -28,6 +28,8 @@ public class User {
 	private String gender;
 	private String goal;
 	private double calDay;
+	
+	public boolean first= true;
 
 	// weight should be in kgs
 	//height should be in cms
@@ -51,8 +53,12 @@ public class User {
 	}
 	
 	public void setRestrictions(String r) {
-		if(this.restrictions!="")
+		if(first == false)
 			{this.restrictions = this.restrictions + r + ",";}
+		else {
+			this.restrictions = r +",";
+			first =false;
+		}
 	}
 	
 	public void setAge(int w) {

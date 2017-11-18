@@ -226,7 +226,7 @@ public class KitchenSinkController {
                 String userId = event.getSource().getUserId();
                 if (userId != null) {
                     User u = database.getUserRecord(userId);
-                    String reply_msg = "Name:" + u.getName() + "\n" + "Weight:"+ u.getWeight().toString() + "Height:" + u.getHeight().toString() + "\n" + "Restrictions:" + u.getRestrictions() + "\n" + "Age:" + u.getAge().toString() + "\n" ;
+                    String reply_msg = "Name:" + u.getName() + "\n" + "Weight:"+ u.getWeight().toString() +"\n"+ "Height:" + u.getHeight().toString() + "\n" + "Restrictions:" + u.getRestrictions() + "\n" + "Age:" + u.getAge().toString() + "\n" ;
                     this.replyText(replyToken, reply_msg);
                 } else {
                     this.replyText(replyToken, "User not found, type Start:x to begin!");
