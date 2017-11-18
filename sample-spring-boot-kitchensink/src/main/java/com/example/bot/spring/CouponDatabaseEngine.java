@@ -26,11 +26,8 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 			ResultSet rs = smt.executeQuery();
 
 			while(rs.next()) {
-				double result = rs.getDouble("couponcode");
-				PreparedStatement smt2 = con.prepareStatement("UPDATE usertablelist SET claimuser = ? WHERE couponcode = ?");
-				smt2.setString(1, UserId);
-				smt2.setDouble(2, code);
-				smt2.close();
+				updateRedeemed(code, UserId);
+			
 			}
 			rs.close();
 			smt.close();
@@ -41,6 +38,20 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 		}
 		return false;
 		
+	}
+	
+	public void updateRedeemed(double code, String UserId) {
+		try {
+		Connection con = getConnection();
+		PreparedStatement smt2 = con.prepareStatement("UPDATE usertablelist SET claimuser = ? WHERE couponcode = ?");
+		smt2.setString(1, UserId);
+		smt2.setDouble(2, code);
+		smt2.close();
+		con.close();
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
 	}
 	
 	public double saveCouponCode(String UserId)
