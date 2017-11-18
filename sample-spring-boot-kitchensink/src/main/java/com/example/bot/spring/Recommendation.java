@@ -120,6 +120,7 @@ public class Recommendation{
 					if(st.toLowerCase()==st2)
 					{
 						s=1;
+						System.out.println(st + "compared with" + st2);
 						
 					}
 					
