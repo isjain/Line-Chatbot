@@ -406,7 +406,7 @@ public class KitchenSinkController {
         
         case "friend": {
     	 	String userId = event.getSource().getUserId();
-    	 	float code = icedb.saveCouponCode(userId);
+    	 	int code = icedb.saveCouponCode(userId);
     	 	if (code == 404)
     	     	this.replyText(replyToken,"We cannot currently generate a code, please try again later." );
     	 	else 
