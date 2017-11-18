@@ -406,7 +406,7 @@ public class KitchenSinkController {
         
         case "friend": {
     	 	String userId = event.getSource().getUserId();
-    	 	float code = icedb.saveCouponCode(userId);
+    	 	double code = icedb.saveCouponCode(userId);
     	 	if (code == 404)
     	     	this.replyText(replyToken,"We cannot currently generate a code, please try again later." );
     	 	else 
@@ -418,7 +418,7 @@ public class KitchenSinkController {
         
         case "redeem": {
     	 	String userId = event.getSource().getUserId();
-    	 	Float code = Float.parseFloat(inputData);
+    	 	double code = Double.parseDouble(inputData);
      	icedb.redeemCode(code, userId);
      	this.replyText(replyToken,inputData + " redeemed");
 

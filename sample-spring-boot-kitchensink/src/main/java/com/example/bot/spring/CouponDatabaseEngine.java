@@ -12,7 +12,7 @@ import java.lang.Object;
 import java.util.Random;
 public class CouponDatabaseEngine extends DatabaseEngine {
 	
-	public boolean redeemCode(float code, String UserId)
+	public boolean redeemCode(double code, String UserId)
 	{
 		try {
 			// should check if the coupon code exists
@@ -20,7 +20,7 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 //			PreparedStatement smt = con.prepareStatement("SELECT * FROM usertablelist WHERE couponcode=?");
 //			PreparedStatement smt = con.prepareStatement("UPDATE usertablelist SET claimuser = ? WHERE couponcode = ?");
 			PreparedStatement smt = con.prepareStatement("SELECT * FROM usertablelist WHERE couponcode= ?");
-			smt.setFloat(1,code);
+			smt.setDouble(1,code);
 //			smt.setString(1, UserId);
 			ResultSet rs = smt.executeQuery();
 			rs.last();
@@ -35,8 +35,7 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 			else {// coupon exists
 				PreparedStatement smt2 = con.prepareStatement("UPDATE usertablelist SET claimuser = ? WHERE couponcode = ?");
 				smt2.setString(1, UserId);
-				int code2 = Integer.parseInt(code);
-				smt2.setInt(2, code2);
+				smt2.setDouble(2, code);
 				rs.close();
 				smt2.close();
 				con.close();
@@ -52,15 +51,15 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 		
 	}
 	
-	public float saveCouponCode(String UserId)
+	public double saveCouponCode(String UserId)
 	{
-		float code = 404;
+		double code = 404;
 
 		try {
 			code = generateNewCode();
 			Connection con = getConnection();
 			PreparedStatement smt = con.prepareStatement("INSERT INTO usertablelist VALUES (?,?,'none')");
-	smt.setFloat(1,code);
+	smt.setDouble(1,code);
 			smt.setString(2,UserId);
 			ResultSet rs = smt.executeQuery();
 			rs.close();
@@ -73,12 +72,12 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 		return code;
 	}
 	
-	float generateNewCode() throws Exception{
+	double generateNewCode() throws Exception{
 		try {
 				Connection con = getConnection();
 				PreparedStatement smt = con.prepareStatement("SELECT couponcode FROM usertablelist");
 				ResultSet rs = smt.executeQuery();
-				int code=0;
+				double code=0;
 				int couponFound = 1;
 				while (couponFound==1)
 				{
