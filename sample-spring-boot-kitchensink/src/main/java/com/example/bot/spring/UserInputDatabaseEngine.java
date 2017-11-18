@@ -133,7 +133,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		boolean found=false;
 		String delimiter = ";";
 		//String[] partsOfCal = new String[];
-		String[] partsOfDate = new String[2];
+		//String[] partsOfDate = new String[2];
 		String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());  // current date 
 
 		
@@ -152,8 +152,10 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		
 			if(totalDates!="")
 			{
-				String[] partsOfCal = totalCalList.split(";");
-				 partsOfDate = totalDates.split(";");
+				return "hi";
+
+				//String[] partsOfCal = totalCalList.split(";");
+				//String[] partsOfDate = totalDates.split(";");
 	//			
 //				for (int i=0;i<partsOfDate.length;i++)
 //				{	
@@ -168,7 +170,6 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 //				}
 //				totalCalList = String.join(delimiter, partsOfCal);
 //				totalDates = String.join(delimiter, partsOfDate);
-				return "hi";
 
 			}
 
