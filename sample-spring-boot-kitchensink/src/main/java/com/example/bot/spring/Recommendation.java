@@ -60,7 +60,7 @@ public class Recommendation{
 			    rDishes = tempp.clone();	   
 		    }
 		    
-		    for (int i = 1; i < rDishes.length; i++) {
+		    for (int i = 0; i < rDishes.length; i++) {
 		        rDishes[i].setPortion((reqcal/3)/rDishes[i].getCalories());
 		    }
 		
