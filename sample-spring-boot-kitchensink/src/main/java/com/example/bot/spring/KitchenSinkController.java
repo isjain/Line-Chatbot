@@ -362,9 +362,9 @@ public class KitchenSinkController {
     			String imageUrl = createUri("/static/buttons/1040.jpg");
           CarouselTemplate carouselTemplate = new CarouselTemplate(
           Arrays.asList(
-      				new CarouselColumn(imageUrl,"Chicken with rice","", Arrays.asList(
+      				new CarouselColumn(imageUrl,"Chicken with rice","xx", Arrays.asList(
                     new PostbackAction("Choose", "Dish confirmed"))),
-                    new CarouselColumn(imageUrl,"Noodles and soup", "",Arrays.asList(
+                    new CarouselColumn(imageUrl,"Noodles and soup", "xx",Arrays.asList(
                     new PostbackAction("Choose", "Dish confirmed")))));
                TemplateMessage templateMessage = new TemplateMessage("Carousel alt text", carouselTemplate);
                this.reply(replyToken, templateMessage);
@@ -385,14 +385,7 @@ public class KitchenSinkController {
                 this.reply(replyToken, templateMessage);
                 break;
             }
-        
-//        case "Motivation" : {
-//          	 Random rand = new Random();
-//           String[] msgs = {"Good progress! One more step towards a healthier lifestyle", "Add oil!", "Strive for progress, not perfection", "The struggle you're in today is developing the strength you need for tomorrow", "Yes, you can! The road may be bumpy, but stay committed to the process.", "Making excuses burns 0 calories per hour."};
-//           int  n = rand.nextInt(6);
-//           this.replyText(replyToken,msgs[n]);    
-//           break;
-//          }
+
 
             default:
             	String reply = null;
