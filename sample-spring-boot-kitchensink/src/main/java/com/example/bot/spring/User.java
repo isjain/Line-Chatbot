@@ -27,7 +27,9 @@ public class User {
 	private String name;
 	private String gender;
 	private String goal;
-	private double calDay;
+	private double calDay;   //required number of cals per day
+	private String calperday;  //actual consumption of cals
+	private String dates;
 
 	// weight should be in kgs
 	//height should be in cms
@@ -73,6 +75,12 @@ public class User {
 	}
 	public void setBMI() {
 		bmi= weight/((height)*height);
+	}
+	public void setCalperday(String n) {
+		this.calperday = calperday;
+	}
+	public void setdates(String n) {
+		this.dates = dates;
 	}
 	
 	public void setBMR() {
