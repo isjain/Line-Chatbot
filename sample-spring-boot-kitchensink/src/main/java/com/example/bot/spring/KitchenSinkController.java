@@ -38,6 +38,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.google.common.io.ByteStreams;
+import java.util.ArrayList;
 
 import com.linecorp.bot.client.LineMessagingClient;
 import com.linecorp.bot.client.MessageContentResponse;
@@ -335,12 +336,35 @@ public class KitchenSinkController {
         	Dish[] recommended_dishes = recommend.getRecommendedDishes();
         	String motivation = recommend.motivationMessage();
         	String reply_msg = "Recommended dishes in best to least:\n";
-        	for(Dish d: recommended_dishes)
-        	{
-        		reply_msg = reply_msg + d.getName() + "  " + d.getpropCalories() +  "  " + d.getCalories()+"  " + d.getPortion() + "\n";
+        	
+        	//*********************************************************************
+        	
+        	String imageUrl = createUri("/static/buttons/1040.jpg");
+        	List<CarouselColumn> dishlist = new ArrayList<CarouselColumn>();
+        	for(int i=0; i<recommended_dishes.length; i++) {
+        		dishlist.add(new CarouselColumn(imageUrl,recommended_dishes[i].getName(),"xx", Arrays.asList(
+                        new PostbackAction("Choose", "Dish confirmed"))));
         	}
-        	this.replyText(replyToken, reply_msg + "User reqcalday:"+ curr_user.getCalDay() + "\n\n" + translator.translate(fromLang, toLang, reply_msg) + "\n\n"+ motivation);
-        	break;
+        CarouselTemplate carouselTemplate = new CarouselTemplate(dishlist);
+        TemplateMessage templateMessage = new TemplateMessage("Carousel alt text", carouselTemplate);
+        this.reply(replyToken, templateMessage);
+        break;
+        	
+//        	
+//        CarouselTemplate carouselTemplate = new CarouselTemplate(
+//        Arrays.asList(
+//    				new CarouselColumn(imageUrl,"Chicken with rice","xx", Arrays.asList(
+//                  new PostbackAction("Choose", "Dish confirmed"))),
+//                  new CarouselColumn(imageUrl,"Noodles and soup", "xx",Arrays.asList(
+//                  new PostbackAction("Choose", "Dish confirmed")))));
+//             TemplateMessage templateMessage = new TemplateMessage("Carousel alt text", carouselTemplate);
+//             this.reply(replyToken, templateMessage);
+//         break;
+//        	for(Dish d: recommended_dishes)
+//        	{
+//        		reply_msg = reply_msg + d.getName() + "  " + d.getpropCalories() +  "  " + d.getCalories()+"  " + d.getPortion() + "\n";
+//        	}
+//        	this.replyText(replyToken, reply_msg + "User reqcalday:"+ curr_user.getCalDay() + "\n\n" + translator.translate(fromLang, toLang, reply_msg) + "\n\n"+ motivation);    	
         }
         
         
