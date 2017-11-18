@@ -20,30 +20,11 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 			Connection con = getConnection();
 //			PreparedStatement smt = con.prepareStatement("SELECT * FROM usertablelist WHERE couponcode=?");
 //			PreparedStatement smt = con.prepareStatement("UPDATE usertablelist SET claimuser = ? WHERE couponcode = ?");
-			PreparedStatement smt = con.prepareStatement("SELECT * FROM usertablelist WHERE couponcode= ?", ResultSet.TYPE_SCROLL_SENSITIVE);
+			PreparedStatement smt = con.prepareStatement("SELECT * FROM usertablelist WHERE couponcode= ?");
 			smt.setDouble(1,code);
 //			smt.setString(1, UserId);
 			ResultSet rs = smt.executeQuery();
-//			rs.last();
-//			int rowCount = rs.getRow();
-//			if (rowCount==0)
-//			{// coupon code doesn't exist
-//				rs.close();
-//				smt.close();
-//				con.close();
-//				return false;
-//			}
-//			else {// coupon exists
-//				PreparedStatement smt2 = con.prepareStatement("UPDATE usertablelist SET claimuser = ? WHERE couponcode = ?");
-//				smt2.setString(1, UserId);
-//				smt2.setDouble(2, code);
-//				rs.close();
-//				smt2.close();
-//				con.close();
-//				smt.close();
-//				return true;
-//			}
-			
+
 			while(rs.next()) {
 				double result = rs.getDouble("couponcode");
 				PreparedStatement smt2 = con.prepareStatement("UPDATE usertablelist SET claimuser = ? WHERE couponcode = ?");
