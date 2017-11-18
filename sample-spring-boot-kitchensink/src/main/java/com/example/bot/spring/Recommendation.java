@@ -1,6 +1,9 @@
 //package testing;
 package com.example.bot.spring;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 import java.net.URI;
 import java.lang.*;
@@ -26,6 +29,7 @@ public class Recommendation{
 	public Dish[] getInputDishes() {
 		return inputDishes;
 	}
+		
 	public void findRecommendation()
 	{
 			rDishes = new Dish[inputDishes.length];
@@ -51,6 +55,37 @@ public class Recommendation{
 		            
 		        }
 		    }
+		    
+		    //Diet Restrictions
+		    ArrayList<Dish> restricted_dishes = new ArrayList<Dish>();
+			String[] restric= inputUser.getRestrictions().split(",");
+			for(Dish d: rDishes)
+			{	int s=0;
+				String[] kwrds = d.getKeywords();
+				for(String st: kwrds)
+				{	
+					for(String st2: restric )
+					{
+						if(st.toLowerCase()==st2.toLowerCase())
+						{
+							s=1;
+							break;
+						}
+						
+					}
+					
+				}
+				if(s!=1)
+				{restricted_dishes.add(d);}
+			}
+			
+			rDishes = restricted_dishes.toArray(new Dish[restricted_dishes.size()]);
+		    
+		    
+		    
+		    
+		    
+		    
 		    //keep only the first 5 elements of rDishes
 		    if (rDishes.length>5)
 		    {
@@ -66,6 +101,38 @@ public class Recommendation{
 	public Dish[] getRecommendedDishes() 
 	{
 		return rDishes;
+	}
+	
+	public Dish[] getVegRecommendedDishes() {
+		
+		ArrayList<Dish> veg_dishes = new ArrayList<Dish>();
+		String[] non_veg= {"chicken","pork","beef","fish","ham","sausage"};
+		for(Dish d: rDishes)
+		{	int s=0;
+			String[] kwrds = d.getKeywords();
+			for(String st: kwrds)
+			{	
+				for(String st2: non_veg )
+				{
+					if(st.toLowerCase()==st2)
+					{
+						s=1;
+						break;
+					}
+					
+				}
+				
+			}
+			if(s!=1)
+			{veg_dishes.add(d);}
+		}
+		
+		Dish[] veg_dishes2 = veg_dishes.toArray(new Dish[veg_dishes.size()]);
+		
+		return veg_dishes2;
+		
+
+		
 	}
 
 

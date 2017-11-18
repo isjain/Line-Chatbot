@@ -210,7 +210,8 @@ public class KitchenSinkController {
 	private void handleSticker(String replyToken, StickerMessageContent content) {
 		reply(replyToken, new StickerMessage(content.getPackageId(), content.getStickerId()));
 	}
-
+	
+	@SuppressWarnings("fallthrough")
 	private void handleTextContent(String replyToken, Event event, TextMessageContent content)
             throws Exception {
         String text = content.getText();
@@ -313,7 +314,9 @@ public class KitchenSinkController {
     		this.replyText(replyToken,"Thank you, you will be alerted");
     		break;
         }
-        
+        case "vege": {	
+        	
+        }
         case "recommend" : {
     		//this.replyText(replyToken,"We recommend a corn soup with salad and cheese, and croutons.");
         	String userId = event.getSource().getUserId();
@@ -331,8 +334,20 @@ public class KitchenSinkController {
         	Dish[] final_dishes = recomDB.findCaloricContent(dishes2);
         	User curr_user = database.getUserRecord(userId);
         	Recommendation recommend = new Recommendation(curr_user, final_dishes);
-        	log.info("inputted dishes: "+recommend.getInputDishes());
-        	Dish[] recommended_dishes = recommend.getRecommendedDishes();
+//        	log.info("inputted dishes: "+recommend.getInputDishes());
+        	Dish[] recommended_dishes;
+        	//vege function
+        	if(command=="vegge") {
+        		
+        		recommended_dishes = recommend.getVegRecommendedDishes();
+        		
+        	}
+        	else {
+        		
+            	recommended_dishes = recommend.getRecommendedDishes();
+
+        	}
+        	
         	String motivation = recommend.motivationMessage();
         	String reply_msg = "Recommended dishes in best to least:\n";
         	for(Dish d: recommended_dishes)
@@ -352,7 +367,7 @@ public class KitchenSinkController {
         	break;
         }
         
-        
+
         case "carousel": {
            String imageUrl = createUri("/static/buttons/1040.jpg");
            CarouselTemplate carouselTemplate = new CarouselTemplate(
@@ -392,6 +407,7 @@ public class KitchenSinkController {
                
         }
     }
+	
 
 	static String createUri(String path) {
 		return ServletUriComponentsBuilder.fromCurrentContextPath().path(path).build().toUriString();

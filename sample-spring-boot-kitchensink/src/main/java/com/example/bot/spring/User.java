@@ -23,7 +23,7 @@ public class User {
 	private float loseGainPerWeek;
 	private int age;
 	private float waterReminder;
-	
+	private String restrictions;
 	private String name;
 	private String gender;
 	private String goal;
@@ -49,6 +49,11 @@ public class User {
 //		this.goal= goal;
 		
 	}
+	
+	public void setRestrictions(String r) {
+		this.restrictions = this.restrictions + r + ",";
+	}
+	
 	public void setAge(int w) {
 		this.age = w;
 	}
@@ -128,6 +133,10 @@ public class User {
 	public String getGymFrequency() {
 		return Integer.toString(gymFrequency);
 
+	}
+	
+	public String getRestrictions() {
+		return restrictions;
 	}
 	
 	public String getBMR() {
