@@ -354,34 +354,32 @@ public class KitchenSinkController {
         	break;
         }
         
+//		String imageUrl = null;
+//      CarouselTemplate carouselTemplate = new CarouselTemplate(
+//      Arrays.asList(
+//  				new CarouselColumn(imageUrl,"Chicken with rice","", Arrays.asList(
+//                new PostbackAction("Choose", "Dish confirmed"))),
+//                new CarouselColumn(imageUrl,"Noodles and soup", "",Arrays.asList(
+//                new PostbackAction("Choose", "Dish confirmed")))));
+//           TemplateMessage templateMessage = new TemplateMessage("Carousel alt text", carouselTemplate);
+//           this.reply(replyToken, templateMessage);
+//           break;
+  	//hi
+  	//ok
+        
         case "rec":{
-//        		String imageUrl = null;
-//            CarouselTemplate carouselTemplate = new CarouselTemplate(
-//            Arrays.asList(
-//        				new CarouselColumn(imageUrl,"Chicken with rice","", Arrays.asList(
-//	                  new PostbackAction("Choose", "Dish confirmed"))),
-//	                  new CarouselColumn(imageUrl,"Noodles and soup", "",Arrays.asList(
-//	                  new PostbackAction("Choose", "Dish confirmed")))));
-//	             TemplateMessage templateMessage = new TemplateMessage("Carousel alt text", carouselTemplate);
-//                 this.reply(replyToken, templateMessage);
-//                 break;
-        	//hi
-        	//ok
-       
             String imageUrl = createUri("/static/buttons/1040.jpg");
             CarouselTemplate carouselTemplate = new CarouselTemplate(
             Arrays.asList(
-               new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
+               new CarouselColumn(imageUrl, "word1", "fuga", Arrays.asList(
                       new URIAction("Go to line.me","https://line.me"),
                       new PostbackAction("Say hello1", "hello ã�“ã‚“ã�«ã�¡ã�¯"))),
-                      new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
+                      new CarouselColumn(imageUrl, "word2", "fuga", Arrays.asList(
                       new PostbackAction("è¨€ hello2", "hello ã�“ã‚“ã�«ã�¡ã�¯", "hello ã�“ã‚“ã�«ã�¡ã�¯"),
                       new MessageAction("Say message","Rice=ç±³")))));
                  TemplateMessage templateMessage = new TemplateMessage("Carousel alt text", carouselTemplate);
                  this.reply(replyToken, templateMessage);
-                 break;
-             
-            
+                 break;   
         	}		
         case "carousel": {
            String imageUrl = createUri("/static/buttons/1040.jpg");
