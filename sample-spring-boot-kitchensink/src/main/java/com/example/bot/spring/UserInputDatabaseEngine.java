@@ -127,14 +127,15 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 
 	public String updateCalperDay(String UserId, String calpermeal)
 	{			
-		return "hello";
 		
-//		String totalCalList = "";
-//		String totalDates = "";
-//		boolean found=false;
-//		String delimiter = ";";
-//		String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());  // current date 
-//		
+		String totalCalList = "";
+		String totalDates = "";
+		boolean found=false;
+		String delimiter = ";";
+		String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());  // current date 
+		return date;
+
+		
 //		try {
 //			
 //			Connection con = getConnection();
