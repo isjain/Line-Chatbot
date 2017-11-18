@@ -365,6 +365,8 @@ public class KitchenSinkController {
 //	             TemplateMessage templateMessage = new TemplateMessage("Carousel alt text", carouselTemplate);
 //                 this.reply(replyToken, templateMessage);
 //                 break;
+        	//hi
+        	//ok
        
             String imageUrl = createUri("/static/buttons/1040.jpg");
             CarouselTemplate carouselTemplate = new CarouselTemplate(
