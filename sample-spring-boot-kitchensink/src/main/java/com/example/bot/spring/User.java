@@ -51,7 +51,8 @@ public class User {
 	}
 	
 	public void setRestrictions(String r) {
-		this.restrictions = this.restrictions + r + ",";
+		if(this.restrictions!="")
+			{this.restrictions = this.restrictions + r + ",";}
 	}
 	
 	public void setAge(int w) {
