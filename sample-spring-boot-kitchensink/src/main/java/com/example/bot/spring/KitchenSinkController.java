@@ -225,11 +225,11 @@ public class KitchenSinkController {
             case "profile": {
                 String userId = event.getSource().getUserId();
                 if (userId != null) {
-                    lineMessagingClient
-                            .getProfile(userId)
-                            .whenComplete(new ProfileGetter (this, replyToken));
+                    User u = database.getUserRecord(userId);
+                    String reply_msg = "Name:" + u.getName() + "\n" + "Weight:"+ u.getWeight().toString() + "Height:" + u.getHeight().toString() + "\n" + "Restrictions:" + u.getRestrictions() + "\n" + "Age:" + u.getAge().toString() + "\n" ;
+                    this.replyText(replyToken, reply_msg);
                 } else {
-                    this.replyText(replyToken, "Bot can't use profile API without user ID");
+                    this.replyText(replyToken, "User not found, type Start:x to begin!");
                 }
                 break;
             }
