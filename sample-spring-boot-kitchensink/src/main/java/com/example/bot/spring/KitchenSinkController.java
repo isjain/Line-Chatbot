@@ -171,7 +171,8 @@ public class KitchenSinkController {
 	public void handlePostbackEvent(PostbackEvent event) {
 		String replyToken = event.getReplyToken();
 		System.out.println(event.getSource().getUserId());
-		this.replyText(replyToken, event.getPostbackContent().getData());
+		String cal = (event.getPostbackContent().getData()).substring(event.getPostbackContent().getData().lastIndexOf(" ")+1);
+		this.replyText(replyToken, (event.getPostbackContent().getData()).substring(0, (event.getPostbackContent().getData()).lastIndexOf(" ")));
 	}
 
 	@EventMapping
@@ -344,7 +345,7 @@ public class KitchenSinkController {
         	List<CarouselColumn> dishlist = new ArrayList<CarouselColumn>();
         	for(Dish d: recommended_dishes) {
         		dishlist.add(new CarouselColumn(imageUrl,d.getName(),d.getpropCalories()+" "+d.getCalories()+" "+d.getPortion(), Arrays.asList(
-                        new PostbackAction("Choose",String.valueOf(d.getCalories()), d.getName()+" confirmed"+ "\n\n" + translator.translate(fromLang, toLang, d.getName()) + "\n\n"+ motivation))));
+                        new PostbackAction("Choose", d.getName()+" confirmed"+ "\n\n" + translator.translate(fromLang, toLang, d.getName()) + "\n\n"+ motivation +" "+ String.valueOf(d.getCalories())))));
         	}
         CarouselTemplate carouselTemplate = new CarouselTemplate(dishlist);
         TemplateMessage templateMessage = new TemplateMessage("Carousel alt text", carouselTemplate);
@@ -379,23 +380,7 @@ public class KitchenSinkController {
         	break;
         }
         
-
-  	//hi
-  	//ok
-        
-//        case "rec":{
-//    			String imageUrl = createUri("/static/buttons/1040.jpg");
-//          CarouselTemplate carouselTemplate = new CarouselTemplate(
-//          Arrays.asList(
-//      				new CarouselColumn(imageUrl,"Chicken with rice","xx", Arrays.asList(
-//                    new PostbackAction("Choose", "Dish confirmed"))),
-//                    new CarouselColumn(imageUrl,"Noodles and soup", "xx",Arrays.asList(
-//                    new PostbackAction("Choose", "Dish confirmed")))));
-//               TemplateMessage templateMessage = new TemplateMessage("Carousel alt text", carouselTemplate);
-//               this.reply(replyToken, templateMessage);
-//               break;
-//            
-//        	}		
+	
         case "carousel": {
            String imageUrl = createUri("/static/buttons/1040.jpg");
            CarouselTemplate carouselTemplate = new CarouselTemplate(
