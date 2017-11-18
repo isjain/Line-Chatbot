@@ -125,7 +125,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 	}
 	
 
-	public String updateCalperDay(String UserId, String calpermeal)
+	public void updateCalperDay(String UserId, String calpermeal)
 	{
 		try {
 			String totalCalList = "";
@@ -175,7 +175,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 				}
 			}
 
-			PreparedStatement smt2 = con.prepareStatement("UPDATE userdatatable SET calperday=?, dates=? WHERE user_id='?'");
+			PreparedStatement smt2 = con.prepareStatement("UPDATE userdatatable SET calperday=?, dates=? WHERE user_id=?");
 //			smt2.setString(1,totalCalList);
 			smt2.setString(1,"50");
 			smt2.setString(2,"12-12-2012");
@@ -186,12 +186,13 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 			smt2.close();
 			smt1.close();
 			con.close();
-			return totalCalList;
+		
+
 		}
 		catch (Exception e) {
 			System.out.println(e);
 		}
-		return " ";
+		
 	}
 
 
