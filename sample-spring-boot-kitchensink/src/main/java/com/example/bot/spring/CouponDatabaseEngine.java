@@ -25,6 +25,7 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 		smt.setString(2, code);
 		ResultSet rs = smt.executeQuery();
 		count = smt.executeUpdate();
+		System.out.println("Shugan count : " + count);
 		rs.close();
 		System.out.println(smt);
 		smt.close();
@@ -34,8 +35,11 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 			System.out.println(e);
 		}
 		
-		if (count ==0) 
-			return false;
+		if (count ==0)  
+		{	
+			System.out.println("Shugan false : it's false");
+				return false;
+		}
 		
 		return true;
 
