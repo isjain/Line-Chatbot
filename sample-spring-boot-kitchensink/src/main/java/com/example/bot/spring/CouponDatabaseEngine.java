@@ -39,6 +39,29 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 		return isChecked;
 	}
 	
+	public boolean hasUserRedeemed(String userId) {
+		int count =0;
+		try {			
+		Connection con = getConnection();
+		PreparedStatement smt = con.prepareStatement("SELECT COUNT(*) FROM usertablelist WHERE claimuser=?");
+		smt.setString(1, userId);
+		ResultSet rs = smt.executeQuery();
+		if (rs.next())
+			count = rs.getInt("count");
+		rs.close();
+		smt.close();
+		con.close();
+	
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
+		if (count ==1)
+			return true;
+		
+		return false;
+	}
+	
 	public String getRecommenderUserID(String code) {
 		String recommender ="";
 		try {

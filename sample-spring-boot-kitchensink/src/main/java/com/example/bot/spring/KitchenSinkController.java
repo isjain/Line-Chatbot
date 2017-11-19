@@ -518,6 +518,10 @@ public class KitchenSinkController {
         
         case "code": {
 	    	 	String userId = event.getSource().getUserId();
+        		boolean userRedeemed = icedb.hasUserRedeemed(userId);
+        		if (userRedeemed) 
+        			this.replyText(replyToken, "Sorry, you have already redeemed a code.");
+
 	     	boolean valid = icedb.isValidCode(inputData);
 	     	
 	     	if (valid == false) {
@@ -526,8 +530,6 @@ public class KitchenSinkController {
 	     	}
 	     	
     	 		String recommendUserId = icedb.getRecommenderUserID(inputData);
-
-	     	
 	     	boolean redeemed = icedb.redeemCode(inputData, userId);
 
 	     	if (redeemed) {
@@ -553,10 +555,7 @@ public class KitchenSinkController {
 	                	catch (Exception e) {
 	                		e.printStackTrace();
 	                	}
-	           
-	                	
-	                	break;
-	                 
+	                	break;              
 	     	}
 	     	
 	     	else 
@@ -567,11 +566,8 @@ public class KitchenSinkController {
 
 
 
-            default:{
-                this.replyText(
-                        replyToken,
-                        "this is default"
-                );
+    default:{
+        this.replyText(replyToken, "this is default");
                 break;
             }
         }
