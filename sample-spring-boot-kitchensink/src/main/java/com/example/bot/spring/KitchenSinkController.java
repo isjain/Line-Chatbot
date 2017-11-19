@@ -410,7 +410,11 @@ public class KitchenSinkController {
     	 	if (code == "404")
     	     	this.replyText(replyToken,"We cannot currently generate a code, please try again later." );
     	 	else 
-     	this.replyText(replyToken,"Your code is " + code);
+    	 		if ( code.equals("Sorry, this promotion is no longer available!"))
+        	 		this.replyText(replyToken,"Sorry, this promotion is no longer available!");
+    	 	
+    	 	else 
+    	 		this.replyText(replyToken,"Your code is " + code);
 
      	// hopefully it works
  		break;

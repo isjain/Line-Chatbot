@@ -74,8 +74,13 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 	
 	public String saveCouponCode(String UserId)
 	{
+		int MAX_QUANT_COUPON = 30;
 		String code = "404";
 
+		int couponQuant = getCouponNumber();
+		if (couponQuant > MAX_QUANT_COUPON )
+			return "Sorry, this promotion is no longer available!";
+		// SELECT COUNT(*) FROM usertablelist; --> gets the amount of columns in a table
 		try {
 			int codeint = generateNewCode();
 			code = Integer.toString(codeint);
@@ -83,6 +88,7 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 			PreparedStatement smt = con.prepareStatement("INSERT INTO usertablelist VALUES (?,'none',?,0)");
 			smt.setString(2,code);
 			smt.setString(1,UserId);
+//			smt.setInt(3, couponnumber);
 			ResultSet rs = smt.executeQuery();
 			rs.close();
 			smt.close();
@@ -93,6 +99,24 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 		}
 		return code;
 	}
+	
+	int getCouponNumber() {
+		int quant = 0;
+		try {
+			Connection con = getConnection();
+			PreparedStatement smt = con.prepareStatement("SELECT COUNT(*) FROM usertablelist");
+			ResultSet rs = smt.executeQuery();
+			quant = rs.getInt("count");
+			rs.close();
+			smt.close();
+			con.close();
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
+		return quant;	
+	}
+	
 	
 	int generateNewCode() throws Exception{
 		try {
