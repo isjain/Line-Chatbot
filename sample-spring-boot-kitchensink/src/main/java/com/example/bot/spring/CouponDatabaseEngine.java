@@ -101,7 +101,7 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 		try {
 			Connection con = getConnection();
 			PreparedStatement smt = con.prepareStatement("SELECT COUNT(*) FROM usertablelist");
-			ResultSet rs = smt2.executeQuery();
+			ResultSet rs = smt.executeQuery();
 			if (rs.next())
 				quant = rs.getInt("count");
 			System.out.println("Shugan : getcouponnumber() : " + quant);
