@@ -13,12 +13,14 @@ import java.util.Random;
 public class CouponDatabaseEngine extends DatabaseEngine {
 	
 	
-	// thsi is not working properly, need to change to check whether it has been redeemed or not and the 5000 limit
+	// thsi is not working properly, need to change to check whether it has been redeemed or not and the 5000 limit and return static image
 	public boolean redeemCode(String code, String UserId) {
+		boolean isChecked = false;
 		// over here call a boolean to check if it has already been redeemed if it has been redeemed, then exit and return a string, saying "sorry this code has already been redeemed, otherwise execute""
 		try {
 			// check if the coupon code works
 		Connection con = getConnection();
+		isChecked = checkRedeemed(code);
 		PreparedStatement smt = con.prepareStatement("UPDATE usertablelist SET claimuser=?, redeemed=1 WHERE couponcode=? AND redeemed=0");
 		smt.setString(1, UserId);
 		smt.setString(2, code);
@@ -34,7 +36,7 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 		}
 		
 		
-		return checkRedeemed(code);
+		return isChecked;
 	}
 	
 	public boolean checkRedeemed(String code) {
