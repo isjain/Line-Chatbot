@@ -42,7 +42,7 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 		try {
 			// check if the coupon code works
 		Connection con = getConnection();
-		PreparedStatement smt = con.prepareStatement("SELECT couponcode FROM usertablelist WHERE couponcode=?");
+		PreparedStatement smt = con.prepareStatement("SELECT redeemed FROM usertablelist WHERE couponcode=?");
 //		smt.setString(1, UserId);
 		smt.setString(1, code);
 		ResultSet rs = smt.executeQuery();
