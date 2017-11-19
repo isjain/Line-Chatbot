@@ -352,6 +352,7 @@ public class KitchenSinkController {
         CarouselTemplate carouselTemplate = new CarouselTemplate(dishlist);
         TemplateMessage templateMessage = new TemplateMessage("Carousel alt text", carouselTemplate);
         this.reply(replyToken, templateMessage);
+        recomDB.useStoredCal(userId);
         break;
         	
 //        	

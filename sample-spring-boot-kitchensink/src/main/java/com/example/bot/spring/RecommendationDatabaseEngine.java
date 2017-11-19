@@ -73,6 +73,50 @@ public class RecommendationDatabaseEngine extends DatabaseEngine {
 			}
 			return dishes;
 		}
+	
+	public void useStoredCal(String UserId)
+	{
+		try {
+			String totalCalList = null;
+			double reqperday=0;
+			double total=0;
+			double avgcal=0;
+			double differCal=0;
+			Connection con = getConnection();
+			PreparedStatement smt1 = con.prepareStatement("SELECT calperday,reqcalday FROM userdatatable WHERE user_id=?");
+			smt1.setString(1,UserId);
+			ResultSet rs = smt1.executeQuery();
+			while(rs.next())
+			{
+				totalCalList = rs.getString("calperday");
+				reqperday=rs.getFloat("reqcalday");	
+			}
+			if(totalCalList!=null)
+			{	String[] partsOfCal = totalCalList.split(";");
+				for (int i=0;i<partsOfCal.length;i++)
+				{
+				total += Double.parseDouble(partsOfCal[i]);
+				}
+				
+				avgcal=total/(partsOfCal.length);
+				reqperday=reqperday-(avgcal-reqperday);		
+			}
+
+			PreparedStatement smt2 = con.prepareStatement("UPDATE userdatatable SET reqcalday=? WHERE user_id=?");
+			smt2.setDouble(1,reqperday);
+			smt2.setString(2,UserId);
+			ResultSet rs2 = smt2.executeQuery();
+			rs.close();
+			rs2.close();
+			smt2.close();
+			smt1.close();
+			con.close();
+
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
+	}
 
 	
 	
