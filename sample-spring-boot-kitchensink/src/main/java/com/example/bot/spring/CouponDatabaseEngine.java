@@ -46,7 +46,8 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 //		smt.setString(1, UserId);
 		smt.setString(1, code);
 		ResultSet rs = smt.executeQuery();
-		redeemed = rs.getInt("redeemed");
+		if (rs.next())
+			redeemed = rs.getInt("redeemed");
 //		System.out.println("Shugan count : " + count);
 		rs.close();
 		smt.close();
