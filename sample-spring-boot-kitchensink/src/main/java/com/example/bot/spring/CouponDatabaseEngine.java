@@ -21,14 +21,16 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 		smt.setString(1, UserId);
 		smt.setString(2, code);
 		ResultSet rs = smt.executeQuery();
+		int count = rs.execute();
 		rs.close();
 		System.out.println(smt);
 		smt.close();
 		con.close();
+		if (count ==0) 
+			return false;
 		}
 		catch (Exception e) {
 			System.out.println(e);
-			return false;
 		}
 		return true;
 
