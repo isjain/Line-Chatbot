@@ -39,6 +39,29 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 		return isChecked;
 	}
 	
+	public boolean isOldUser(String userId) {
+		int userStatus =0;
+		try {			
+		Connection con = getConnection();
+		PreparedStatement smt = con.prepareStatement("SELECT olduser from userdatatable where name=?");
+		smt.setString(1, userId);
+		ResultSet rs = smt.executeQuery();
+		if (rs.next())
+			userStatus = rs.getInt("olduser");
+		rs.close();
+		smt.close();
+		con.close();
+	
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
+		if (userStatus ==1)
+			return true;
+		
+		return false;	
+	}
+	
 	public boolean hasUserRedeemed(String userId) {
 		int count =0;
 		try {			
