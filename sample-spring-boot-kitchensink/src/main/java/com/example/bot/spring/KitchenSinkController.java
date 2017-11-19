@@ -95,7 +95,6 @@ import java.net.URI;
 public class KitchenSinkController {
 	
 
-
 	@Autowired
 	private LineMessagingClient lineMessagingClient;
 	private UserInputDatabaseEngine database;
