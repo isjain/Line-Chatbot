@@ -56,7 +56,7 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 		catch (Exception e) {
 			System.out.println(e);
 		}
-		if (count ==1)
+		if (count >0)
 			return true;
 		
 		return false;
