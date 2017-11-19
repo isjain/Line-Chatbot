@@ -168,25 +168,27 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 //				}
 //				totalCalList = String.join(delimiter, partsOfCal);
 //				totalDates = String.join(delimiter, partsOfDate);
-				return "hi";
 
 			}
 
+		
+			if(found==false)
+			{
+				if(totalCalList=="")
+				{
+				totalCalList=calpermeal;
+				totalDates=date;
+				}
+				else
+				{
+				totalCalList=totalCalList+delimiter+calpermeal;
+				totalDates=totalDates+delimiter+date;
+				}
+				return "hi";
+
+			}
 		}
-//			if(found==false)
-//			{
-//				if(totalCalList=="")
-//				{
-//				totalCalList=calpermeal;
-//				totalDates=date;
-//				}
-//				else
-//				{
-//				totalCalList=totalCalList+delimiter+calpermeal;
-//				totalDates=totalDates+delimiter+date;
-//				}
-//			}
-//
+
 //			PreparedStatement smt2 = con.prepareStatement("UPDATE userdatatable SET calperday=?, dates=? WHERE user_id=?");
 ////			smt2.setString(1,totalCalList);
 //			smt2.setString(1,"50");
