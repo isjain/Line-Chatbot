@@ -173,9 +173,8 @@ public class KitchenSinkController {
 		System.out.println(event.getSource().getUserId());
 		String cal = (event.getPostbackContent().getData()).substring(event.getPostbackContent().getData().lastIndexOf(" ")+1);
 		String userId = event.getSource().getUserId();
-		String a= database.updateCalperDay(userId, cal);
-//		this.replyText(replyToken, (event.getPostbackContent().getData()).substring(0, (event.getPostbackContent().getData()).lastIndexOf(" ")));
-		this.replyText(replyToken, a);
+		database.updateCalperDay(userId, cal);
+		this.replyText(replyToken, (event.getPostbackContent().getData()).substring(0, (event.getPostbackContent().getData()).lastIndexOf(" ")));
 	}
 
 	@EventMapping

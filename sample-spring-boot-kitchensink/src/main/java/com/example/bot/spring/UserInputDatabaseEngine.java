@@ -125,7 +125,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 	}
 	
 
-	public String updateCalperDay(String UserId, String calpermeal)
+	public void updateCalperDay(String UserId, String calpermeal)
 	{			
 		
 		String totalCalList=null;
@@ -205,7 +205,6 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 		catch (Exception e) {
 			System.out.println(e);
 		}
-		return null;
 //		
 	}
 
