@@ -149,7 +149,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 				totalCalList = rs.getString("calperday");
 				totalDates = rs.getString("dates");	
 			}
-			if(totalDates!="" && totalCalList!="")
+			if((totalDates!="" && totalCalList!="") || (totalCalList!=null && totalDates!=null))
 			{
 //ERROR HERE
 				String[] partsOfCal = totalCalList.split(",");
@@ -165,16 +165,16 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 //					found=true;
 //					break;
 //					}
-//				}
+//			}
+//			
+				
 //				totalCalList = String.join(delimiter, partsOfCal);
 //				totalDates = String.join(delimiter, partsOfDate);
 
-			}
-
-		
+			}		
 			if(found==false)
 			{
-				if(totalCalList=="")
+				if(totalCalList==null || totalCalList=="" )
 				{
 				totalCalList=calpermeal;
 				totalDates=date;
