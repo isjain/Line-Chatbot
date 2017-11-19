@@ -149,9 +149,9 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 				totalCalList = rs.getString("calperday");
 				totalDates = rs.getString("dates");	
 			}
-			if(totalDates!="")
+			if(totalDates!="" && totalCalList!="")
 			{
-
+//ERROR HERE
 				String[] partsOfCal = totalCalList.split(",");
 				String[] partsOfDate = totalDates.split(",");
 	//			
