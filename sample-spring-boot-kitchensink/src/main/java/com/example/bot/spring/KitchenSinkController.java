@@ -405,10 +405,12 @@ public class KitchenSinkController {
         }
         
         case "friend": {
-    		int MAX_QUANT_COUPON = 55;
+    		int MAX_QUANT_COUPON = 65;
     	 	int couponQuant = icedb.getCouponNumber();
-    		if (couponQuant > MAX_QUANT_COUPON )
+    		if (couponQuant > MAX_QUANT_COUPON ) {
     	 		this.replyText(replyToken,"Sorry, this promotion is no longer available!");
+    	 		break;
+    		}
 
     	 	String userId = event.getSource().getUserId();
     	 	String code = icedb.saveCouponCode(userId);
