@@ -23,11 +23,13 @@ public class User {
 	private float loseGainPerWeek;
 	private int age;
 	private float waterReminder;
-	
+	private String restrictions;
 	private String name;
 	private String gender;
 	private String goal;
 	private double calDay;
+	
+	public boolean first= true;
 
 	// weight should be in kgs
 	//height should be in cms
@@ -47,8 +49,14 @@ public class User {
 //		this.name= name;
 //		this.gender= gender;
 //		this.goal= goal;
-		
+		this.restrictions="";
 	}
+	
+	public void setRestrictions(String r) {
+		
+		this.restrictions = r;
+	}
+	
 	public void setAge(int w) {
 		this.age = w;
 	}
@@ -128,6 +136,10 @@ public class User {
 	public String getGymFrequency() {
 		return Integer.toString(gymFrequency);
 
+	}
+	
+	public String getRestrictions() {
+		return restrictions;
 	}
 	
 	public String getBMR() {
