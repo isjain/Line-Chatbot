@@ -13,6 +13,36 @@ import java.net.URI;
 public class RecommendationDatabaseEngine extends DatabaseEngine {
 	
 	
+	public String giveVegDishes(String input) {
+		
+		String msg = "The vegetarian dishes at"+ input + "are:\n";
+		String fragment= "";
+		
+		try {
+			
+				Connection con = getConnection();
+				PreparedStatement smt = con.prepareStatement("SELECT * FROM campusdishes WHERE location = ?");
+				smt.setString(1,input);
+				ResultSet rs = smt.executeQuery();
+				while(rs.next())
+				{
+					fragment = rs.getString("name");
+					msg = msg + fragment + "/n";
+					
+					
+				}
+				rs.close();
+				smt.close();
+				con.close();
+			
+		}catch(Exception e) {
+			System.out.println(e);
+		}
+		
+		return msg;
+		
+	}
+	
 	
 	public Dish[] findCaloricContent(Dish[] dishes) {
 		

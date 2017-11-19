@@ -327,6 +327,14 @@ public class KitchenSinkController {
         }
         case "recommend" : {
     		//this.replyText(replyToken,"We recommend a corn soup with salad and cheese, and croutons.");
+        	
+        	if( (inputData.equals("Cafe")) || (inputData.equals("Bistro")) || (inputData.equals("Subway")) || (inputData.equals("LSK")) || (inputData.equals("LG7")))
+			{
+				String location_dishes = recomDB.giveVegDishes(inputData);
+				this.replyText(replyToken, location_dishes);
+				break;
+			}
+        	
         	String userId = event.getSource().getUserId();
             String fromLang = "en";
             String toLang = "zh-CN";
