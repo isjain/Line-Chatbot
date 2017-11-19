@@ -418,9 +418,12 @@ public class KitchenSinkController {
         
         case "redeem": {
     	 	String userId = event.getSource().getUserId();
-     	icedb.redeemCode(inputData, userId);
-     	this.replyText(replyToken,inputData + " redeemed");
-
+     	boolean redeemed = icedb.redeemCode(inputData, userId);
+     	if (redeemed)
+     		this.replyText(replyToken," Congratulations, you have just redeemed the following code : " + inputData);
+     	
+     	else 
+     		this.replyText(replyToken, "Sorry, the code " + inputData + "is either invalid, or has already been redeemed!");
      	// hopefully it works
  		break;
     }
