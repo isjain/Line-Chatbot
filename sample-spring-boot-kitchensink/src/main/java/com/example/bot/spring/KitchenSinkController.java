@@ -430,7 +430,7 @@ public class KitchenSinkController {
         	//*********************************************************************
 		DecimalFormat df = new DecimalFormat("#.#");
 
-        	String imageUrl = createUri("/static/buttons/1040.jpg");
+        	String imageUrl = createUri("/static/buttons/final.jpg");
         	List<CarouselColumn> dishlist = new ArrayList<CarouselColumn>();
         	for(Dish d: recommended_dishes) {
         		dishlist.add(new CarouselColumn(imageUrl,d.getName(),d.getpropCalories()+" "+d.getCalories()+" "+df.format(d.getPortion()), Arrays.asList(
