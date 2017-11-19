@@ -12,6 +12,8 @@ import java.lang.Object;
 import java.util.Random;
 public class CouponDatabaseEngine extends DatabaseEngine {
 	
+	
+	// thsi is not working properly, need to change to check whether it has been redeemed or not and the 5000 limit
 	public boolean redeemCode(String code, String UserId) {
 		// over here call a boolean to check if it has already been redeemed if it has been redeemed, then exit and return a string, saying "sorry this code has already been redeemed, otherwise execute""
 		try {
