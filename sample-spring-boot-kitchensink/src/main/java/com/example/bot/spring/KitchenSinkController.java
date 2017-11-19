@@ -559,18 +559,17 @@ public class KitchenSinkController {
 //            String message = "https://i.pinimg.com/236x/75/5c/f7/755cf7fb222c21786eebec197b910cf8--desgin-qr-codes.jpg";
 //            		String userId = event.getSource().getUserId();
 //            		this.replyImage(replyToken, message);
-//        	
-//        
         	
-            String imageUrl = createUri("/static/buttons/1040.jpg");
+        	
+            String imageUrl = createUri("/static/buttons/ice.jpg");
             CarouselTemplate carouselTemplate = new CarouselTemplate(
             Arrays.asList(
-               new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
-                      new URIAction("Go to line.me","https://line.me"),
-                      new PostbackAction("Say hello1", "hello ã�“ã‚“ã�«ã�¡ã�¯"))),
-                      new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList())));
+               new CarouselColumn(imageUrl, "Congratulations, you have just redeemed your coupon", "", Arrays.asList(
+                      new MessageAction("Accept","Thank you!")))));
                  TemplateMessage templateMessage = new TemplateMessage("Carousel alt text", carouselTemplate);
-                 this.reply(replyToken, templateMessage);        	
+                 this.reply(replyToken, templateMessage);
+      	
+       	
         	break;
         }
     
