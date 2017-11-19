@@ -36,7 +36,6 @@ public class Recommendation{
 			for( int i=0; i<inputDishes.length; i++ )
 				rDishes[i] = new Dish(inputDishes[i]);
 //			rDishes = inputDishes.clone();
-
 			double reqcal  = Double.parseDouble(inputUser.getCalDay());
 			double mealcal = reqcal/3;
 		    // Below lines are similar to insertion sort
@@ -98,6 +97,11 @@ public class Recommendation{
 			    		tempp[i] = rDishes[i];
 			    }
 			    rDishes = tempp.clone();	   
+		    }
+		    
+		    for (int i = 0; i < rDishes.length; i++) {
+		    		int portion = (int)Math.round((reqcal/3)/rDishes[i].getCalories());
+		        rDishes[i].setPortion(portion);
 		    }
 		
 	}
