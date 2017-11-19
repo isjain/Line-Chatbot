@@ -15,6 +15,7 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 	
 	// thsi is not working properly, need to change to check whether it has been redeemed or not and the 5000 limit
 	public boolean redeemCode(String code, String UserId) {
+		int count =0;
 		// over here call a boolean to check if it has already been redeemed if it has been redeemed, then exit and return a string, saying "sorry this code has already been redeemed, otherwise execute""
 		try {
 			// check if the coupon code works
@@ -23,7 +24,7 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 		smt.setString(1, UserId);
 		smt.setString(2, code);
 		ResultSet rs = smt.executeQuery();
-		int count = smt.executeUpdate();
+		count = smt.executeUpdate();
 		rs.close();
 		System.out.println(smt);
 		smt.close();
