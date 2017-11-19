@@ -78,7 +78,7 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 		String code = "404";
 
 		int couponQuant = getCouponNumber();
-		System.outprintln("Shugan : savecouponcode() : " + couponQuant);
+		System.out.println("Shugan : savecouponcode() : " + couponQuant);
 
 		if (couponQuant > MAX_QUANT_COUPON )
 			return "Sorry, this promotion is no longer available!";
@@ -109,7 +109,7 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 			PreparedStatement smt = con.prepareStatement("SELECT COUNT(*) FROM usertablelist");
 			ResultSet rs = smt.executeQuery();
 			quant = rs.getInt("count");
-			System.outprintln("Shugan : getcouponnumber() : " + quant);
+			System.out.println("Shugan : getcouponnumber() : " + quant);
 			rs.close();
 			smt.close();
 			con.close();
