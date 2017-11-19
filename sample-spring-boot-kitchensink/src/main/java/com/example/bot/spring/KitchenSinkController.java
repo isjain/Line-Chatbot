@@ -564,7 +564,7 @@ public class KitchenSinkController {
             String imageUrl = createUri("/static/buttons/ice.jpg");
             CarouselTemplate carouselTemplate = new CarouselTemplate(
             Arrays.asList(
-               new CarouselColumn(imageUrl, "Congratulations, you have just redeemed your coupon", "", Arrays.asList(
+               new CarouselColumn(imageUrl, "Congratulations, coupon redeemed", "", Arrays.asList(
                       new MessageAction("Accept","Thank you!")))));
                  TemplateMessage templateMessage = new TemplateMessage("Carousel alt text", carouselTemplate);
                  this.reply(replyToken, templateMessage);
