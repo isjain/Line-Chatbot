@@ -99,8 +99,9 @@ public class Recommendation{
 			    rDishes = tempp.clone();	   
 		    }
 		    
+		    //portion size
 		    for (int i = 0; i < rDishes.length; i++) {
-		    		int portion = (int)Math.round((reqcal/3)/rDishes[i].getCalories());
+		    		float portion = Math.round((reqcal/3)/rDishes[i].getpropCalories());
 		        rDishes[i].setPortion(portion);
 		    }
 		
