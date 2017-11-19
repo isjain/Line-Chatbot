@@ -397,6 +397,7 @@ public class KitchenSinkController {
             String fromLang = "en";
             String toLang = "zh-CN";
         	Translator translator = new Translator();
+        	
         	//Recommendation
         	String[] menu = inputData.split(",");
         	List<Dish> dishes = new ArrayList<Dish>();
@@ -430,7 +431,7 @@ public class KitchenSinkController {
         	//*********************************************************************
 		DecimalFormat df = new DecimalFormat("#.#");
 
-        	String imageUrl = createUri("/static/buttons/final.jpg");
+        	String imageUrl = createUri("/static/buttons/final.png");
         	List<CarouselColumn> dishlist = new ArrayList<CarouselColumn>();
         	for(Dish d: recommended_dishes) {
         		dishlist.add(new CarouselColumn(imageUrl,d.getName(),d.getpropCalories()+" "+d.getCalories()+" "+df.format(d.getPortion()), Arrays.asList(

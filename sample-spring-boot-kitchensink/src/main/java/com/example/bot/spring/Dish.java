@@ -44,6 +44,9 @@ public class Dish {
 
 	}	
 	public void cleanKWORDS() {	
+		for(String str: keywords) {
+			str.trim();
+		}
 		ArrayList<String> words = new ArrayList<String>();
 		words.add("the");
 		words.add("and");
