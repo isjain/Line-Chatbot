@@ -103,6 +103,10 @@ public class Recommendation{
 		    //portion size
 		    for (int i = 0; i < rDishes.length; i++) {
 		    		double portion = (reqcal/3)/rDishes[i].getpropCalories();
+		    		if(portion>0.6)
+		    			portion = Math.round(portion);
+		    		else 
+		    			portion=0.5;
 		        rDishes[i].setPortion(portion);
 		    }	
 	}
