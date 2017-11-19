@@ -519,8 +519,11 @@ public class KitchenSinkController {
         case "code": {
 	    	 	String userId = event.getSource().getUserId();
         		boolean userRedeemed = icedb.hasUserRedeemed(userId);
-        		if (userRedeemed) 
+        		if (userRedeemed)  {
         			this.replyText(replyToken, "Sorry, you have already redeemed a code.");
+        			break;
+        		}
+        		
 
 	     	boolean valid = icedb.isValidCode(inputData);
 	     	
