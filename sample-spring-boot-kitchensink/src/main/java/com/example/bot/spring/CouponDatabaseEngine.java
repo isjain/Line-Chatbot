@@ -17,7 +17,7 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 		try {
 			// check if the coupon code works
 		Connection con = getConnection();
-		PreparedStatement smt = con.prepareStatement("UPDATE usertablelist SET claimuser=?, redeemed=1 WHERE couponcode=?, redeemed=0");
+		PreparedStatement smt = con.prepareStatement("UPDATE usertablelist SET claimuser=?, redeemed=1 WHERE couponcode=? AND redeemed=0");
 		smt.setString(1, UserId);
 		smt.setString(2, code);
 		ResultSet rs = smt.executeQuery();
