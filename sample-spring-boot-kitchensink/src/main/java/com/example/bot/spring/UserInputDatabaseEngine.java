@@ -184,24 +184,23 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 					totalDates=totalDates+delimiter+date;
 				}
 				
-				return totalCalList;
 			}
 		
 			
-//
-//			PreparedStatement smt2 = con.prepareStatement("UPDATE userdatatable SET calperday=?, dates=? WHERE user_id=?");
-////			smt2.setString(1,totalCalList);
-//			smt2.setString(1,"50");
-//			smt2.setString(2,"12-12-2012");
-//			smt2.setString(3,UserId);
-//			System.out.println("\n\n\n\n"+smt2+"\n\n\n\n");
-//			ResultSet rs2 = smt2.executeQuery();
-//			rs.close();
-//			rs2.close();
-//			smt2.close();
-//			smt1.close();
-//			con.close();
 
+			PreparedStatement smt2 = con.prepareStatement("UPDATE userdatatable SET calperday=?, dates=? WHERE user_id=?");
+//			smt2.setString(1,totalCalList);
+			smt2.setString(1,"50");
+			smt2.setString(2,"12-12-2012");
+			smt2.setString(3,UserId);
+			System.out.println("\n\n\n\n"+smt2+"\n\n\n\n");
+			ResultSet rs2 = smt2.executeQuery();
+			rs.close();
+			rs2.close();
+			smt2.close();
+			smt1.close();
+			con.close();
+			return totalCalList;
 
 		}
 		catch (Exception e) {
