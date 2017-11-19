@@ -39,6 +39,28 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 		return isChecked;
 	}
 	
+	public String getRecommenderUserID(String code) {
+		String recommender ="";
+		try {
+			// check if the coupon code works
+			
+		Connection con = getConnection();
+		PreparedStatement smt = con.prepareStatement("SELECT issueuser FROM usertablelist WHERE couponcode=?");
+		smt.setString(1, code);
+		ResultSet rs = smt.executeQuery();
+		if (rs.next())
+			recommender = rs.getString("issueuser");
+		rs.close();
+		smt.close();
+		con.close();
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
+		return recommender;
+		
+	}
+	
 	public boolean isValidCode(String code) {
 		int valid =0;
 		try {

@@ -525,6 +525,8 @@ public class KitchenSinkController {
 	     		break;
 	     	}
 	     	
+    	 		String recommendUserId = icedb.getRecommenderUserID(inputData);
+
 	     	
 	     	boolean redeemed = icedb.redeemCode(inputData, userId);
 
@@ -539,7 +541,7 @@ public class KitchenSinkController {
 
 	                 // try to push message to old user
 //	                	TextMessage textMessage = new TextMessage("Thank you for your recommendation, your friend has redeemed your code!");
-	                	PushMessage pushMessage = new PushMessage("Ue559cf2d95829441da8b8e661b5ffd97", templateMessage);
+	                	PushMessage pushMessage = new PushMessage(recommendUserId, templateMessage);
 	                	try {
 	                	Response<BotApiResponse> response =
 	                	        LineMessagingServiceBuilder
