@@ -405,7 +405,7 @@ public class KitchenSinkController {
         }
         
         case "friend": {
-    		int MAX_QUANT_COUPON = 40;
+    		int MAX_QUANT_COUPON = 50;
     	 	int couponQuant = icedb.getCouponNumber();
     		if (couponQuant > MAX_QUANT_COUPON )
     	 		this.replyText(replyToken,"Sorry, this promotion is no longer available!");
