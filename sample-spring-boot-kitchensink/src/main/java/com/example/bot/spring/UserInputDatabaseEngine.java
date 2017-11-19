@@ -128,8 +128,8 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 	public String updateCalperDay(String UserId, String calpermeal)
 	{			
 		
-		String totalCalList="";
-		String totalDates="";
+		String totalCalList=null;
+		String totalDates=null;
 		boolean found=false;
 		String delimiter = ";";
 		
@@ -148,7 +148,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 				totalCalList = rs.getString("calperday");
 				totalDates = rs.getString("dates");	
 			}
-			if( totalCalList!="" && totalDates!="")
+			if( totalCalList!=null && totalDates!=null)
 			{
 //ERROR HERE
 				String[] partsOfCal = totalCalList.split(";");
@@ -164,7 +164,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 					found=true;
 					break;
 					}
-			}
+				}
 			
 				
 				totalCalList = String.join(delimiter, partsOfCal);
@@ -173,7 +173,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 			}		
 			if(found==false)
 			{
-				if(totalCalList=="")
+				if(totalCalList==null)
 				{
 					totalCalList=calpermeal;
 					totalDates=date;
