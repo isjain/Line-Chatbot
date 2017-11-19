@@ -54,40 +54,42 @@ public class Recommendation{
 		            
 		        }
 		    }
-		    
-		    //Diet Restrictions
-		    List<Dish> restricted_dishes = new ArrayList<Dish>();
-			String restr= inputUser.getRestrictions();
-			String[] restric = restr.split(",");
-			for(Dish d: rDishes)
-			{	int skt=0;
-				String[] kwrds = d.getKeywords();
-				
-				for(String st: kwrds)
-				{	
-					for(String st2: restric )
-					{
-						if(st.toLowerCase().equals(st2.toLowerCase()))
+		    if(!(inputUser.getRestrictions().equals("")))
+		    {
+			    //Diet Restrictions
+			    List<Dish> restricted_dishes = new ArrayList<Dish>();
+				String restr= inputUser.getRestrictions();
+				String[] restric = restr.split(",");
+				for(Dish d: rDishes)
+				{	int skt=0;
+					String[] kwrds = d.getKeywords();
+					
+					for(String st: kwrds)
+					{	
+						for(String st2: restric )
 						{
-							skt=1;
-							break;
+							if(st.toLowerCase().equals(st2.toLowerCase()))
+							{
+								skt=1;
+								break;
+								
+							}
 							
 						}
 						
 					}
 					
+					if(skt==0)
+					{	
+						restricted_dishes.add(new Dish(d));
+						
+					}
 				}
 				
-				if(skt==0)
-				{	
-					restricted_dishes.add(new Dish(d));
-					
-				}
-			}
-			
-			Dish[] temp_rDishes = restricted_dishes.toArray(new Dish[restricted_dishes.size()]);
-		   
-			rDishes = temp_rDishes;
+				Dish[] temp_rDishes = restricted_dishes.toArray(new Dish[restricted_dishes.size()]);
+			   
+				rDishes = temp_rDishes;
+		    }
 		    		    
 		    //keep only the first 5 elements of rDishes
 		    if (rDishes.length>5)
