@@ -31,7 +31,13 @@ public class Dish {
 	public Dish(Dish dishes) {
 		this.dishId = dishes.dishId;
 		this.name = dishes.name;
-    		this.keywords = dishes.keywords;    		
+    		this.keywords = new String[dishes.keywords.length];
+    		int i=0;
+    		for(String str: dishes.keywords)
+    		{
+    			this.keywords[i]=str;
+    			i++;
+    		}
 		this.calories = dishes.calories;
 		this.weight = dishes.weight;	
 		this.portion = dishes.portion;	
