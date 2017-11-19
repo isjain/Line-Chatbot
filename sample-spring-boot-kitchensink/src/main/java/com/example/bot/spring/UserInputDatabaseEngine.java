@@ -8,84 +8,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.UncheckedIOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
-import java.util.concurrent.ExecutionException;
-import java.util.function.Consumer;
-import java.util.concurrent.CompletableFuture;
-import java.util.function.BiConsumer;
-import com.linecorp.bot.model.profile.UserProfileResponse;
-import java.util.Random;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import com.google.common.io.ByteStreams;
-
-import com.linecorp.bot.client.LineMessagingClient;
-import com.linecorp.bot.client.MessageContentResponse;
-import com.linecorp.bot.model.ReplyMessage;
-import com.linecorp.bot.model.action.MessageAction;
-import com.linecorp.bot.model.action.PostbackAction;
-import com.linecorp.bot.model.action.URIAction;
-import com.linecorp.bot.model.event.BeaconEvent;
-import com.linecorp.bot.model.event.Event;
-import com.linecorp.bot.model.event.FollowEvent;
-import com.linecorp.bot.model.event.JoinEvent;
-import com.linecorp.bot.model.event.MessageEvent;
-import com.linecorp.bot.model.event.PostbackEvent;
-import com.linecorp.bot.model.event.UnfollowEvent;
-import com.linecorp.bot.model.event.message.AudioMessageContent;
-import com.linecorp.bot.model.event.message.ImageMessageContent;
-import com.linecorp.bot.model.event.message.LocationMessageContent;
-import com.linecorp.bot.model.event.message.StickerMessageContent;
-import com.linecorp.bot.model.event.message.TextMessageContent;
-import com.linecorp.bot.model.event.source.GroupSource;
-import com.linecorp.bot.model.event.source.RoomSource;
-import com.linecorp.bot.model.event.source.Source;
-import com.linecorp.bot.model.message.AudioMessage;
-import com.linecorp.bot.model.message.ImageMessage;
-import com.linecorp.bot.model.message.ImagemapMessage;
-import com.linecorp.bot.model.message.LocationMessage;
-import com.linecorp.bot.model.message.Message;
-import com.linecorp.bot.model.message.StickerMessage;
-import com.linecorp.bot.model.message.TemplateMessage;
-import com.linecorp.bot.model.message.TextMessage;
-import com.linecorp.bot.model.message.imagemap.ImagemapArea;
-import com.linecorp.bot.model.message.imagemap.ImagemapBaseSize;
-import com.linecorp.bot.model.message.imagemap.MessageImagemapAction;
-import com.linecorp.bot.model.message.imagemap.URIImagemapAction;
-import com.linecorp.bot.model.message.template.ButtonsTemplate;
-import com.linecorp.bot.model.message.template.CarouselColumn;
-import com.linecorp.bot.model.message.template.CarouselTemplate;
-import com.linecorp.bot.model.message.template.ConfirmTemplate;
-import com.linecorp.bot.model.response.BotApiResponse;
-import com.linecorp.bot.spring.boot.annotation.EventMapping;
-import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
-import org.springframework.web.bind.annotation.*;
-import com.linecorp.bot.client.LineMessagingServiceBuilder;
-import com.linecorp.bot.model.response.BotApiResponse;
-import com.linecorp.bot.model.profile.UserProfileResponse;
-import retrofit2.Response;
-
-import com.linecorp.bot.client.LineMessagingClient;
-import com.linecorp.bot.model.*;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import lombok.NonNull;
-import lombok.Value;
-import lombok.extern.slf4j.Slf4j;
-
 public class UserInputDatabaseEngine extends DatabaseEngine {
 	
 	public void setBMR(String UserId)
@@ -636,66 +558,6 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 //	}
 //	
 	
-//	public void updateCalperDay(String UserId, float  )
-//	{
-//		try {
-//			String totalCalList = null;
-//			String totalDates = null;
-//			bool found=false;
-//			String delimiter = ";";
-//			String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());  // current date 
-//
-//
-//			Connection con = getConnection();
-//			PreparedStatement smt1 = con.prepareStatement("SELECT calperday,dates FROM userdatatable WHERE user_id=?");
-//			smt1.setString(1,UserId);
-//			ResultSet rs = smt1.executeQuery();
-//			while(rs.next())
-//			{
-//				totalCalList = rs.getString("calperday");
-//				totalDates = rs.getString("dates");	
-//			}
-//
-//			String[] partsOfCal = totalCalList.split(";");
-//			String[] partsOfDate = totalDates.split(";");
-//			
-//			for (int i=0;i<partsOfDate.length;i++)
-//			{
-//				if(partsofDate[i]==date)
-//				{
-//				float changeCal = Float.parseFloat(partsofCal[i]);
-//				changeCal+=calpermeal;
-//				partsofCal[i]=String.parseString(changeCal);
-//				found=true;
-//				break;
-//				}
-//			}
-//			totalCalList = String.join(delimiter, partsOfCal);
-//			totalDates = String.join(delimiter, partsofDate);
-//			if(found==false)
-//			{
-//			totalCalList=totalCalList+delimiter+String.parseString(calpermeal);
-//			totalDates=totalCalList+delimiter+date;
-//			}
-//
-//
-//			PreparedStatement smt2 = con.prepareStatement("UPDATE userdatatable SET calperday=?,SET dates=? WHERE user_id='?'");
-//			smt2.setString(1,totalCalList);
-//			smt2.setString(2,totalDates);
-//			smt2.setString(3,UserId);
-//			ResultSet rs2 = smt2.executeQuery();
-//			rs.close();
-//			rs2.close();
-//			smt2.close();
-//			smt1.close();
-//			con.close();
-//
-//		}
-//		catch (Exception e) {
-//			System.out.println(e);
-//		}
-//	}
-	
 	private Connection getConnection() throws URISyntaxException, SQLException {
 		Connection connection;
 		URI dbUri = new URI(System.getenv("DATABASE_URL"));
@@ -711,6 +573,6 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 
 		return connection;
 	}
-	
+
 }
 

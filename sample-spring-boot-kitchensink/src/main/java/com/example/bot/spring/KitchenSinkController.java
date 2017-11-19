@@ -79,40 +79,23 @@ import com.linecorp.bot.model.message.template.ConfirmTemplate;
 import com.linecorp.bot.model.response.BotApiResponse;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
-import org.springframework.web.bind.annotation.*;
-import com.linecorp.bot.client.LineMessagingServiceBuilder;
-import com.linecorp.bot.model.response.BotApiResponse;
-import com.linecorp.bot.model.profile.UserProfileResponse;
-import retrofit2.Response;
-
-
-
-import com.linecorp.bot.client.LineMessagingClient;
-import com.linecorp.bot.model.*;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import lombok.NonNull;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.URI;
-import org.json.JSONException;
 
 @Slf4j
 @LineMessageHandler
 public class KitchenSinkController {
 	
 
+
 	@Autowired
 	private LineMessagingClient lineMessagingClient;
 	private UserInputDatabaseEngine database;
-
-	private CouponDatabaseEngine icedb;
-
-
 	private RecommendationDatabaseEngine recomDB;
-
 
 	@EventMapping
 	public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) throws Exception {
@@ -305,43 +288,6 @@ public class KitchenSinkController {
     		break;
         }
         
-
-        case "waterMe" : {
-        	
-        	int hourGap = Integer.parseInt(inputData);
-        	
-        	Timer timer = new Timer ();
-        	TimerTask hourlyTask = new TimerTask () {
-        	    @Override
-        	    public void run () {
-        	        // your code here...
-                	String userId = event.getSource().getUserId();
-                	TextMessage textMessage = new TextMessage("It is time to drink your water :)");
-                	PushMessage pushMessage = new PushMessage(userId, textMessage);
-                	try {
-                	Response<BotApiResponse> response =
-                	        LineMessagingServiceBuilder
-                	                .create("CJo3Ka/VX7VW4fsG78i5dNDpP5qqYgr1PD7YUclFFc62ZtnrIpHiM/Muof6oLc/J/bPoaheiYdHNoUkg09kAt5VqnD+tMyzOCClGLwvJaR3+etoVOdsHo1DGXv2UqOljNgUIFR/zQWk1U4iFRPr4TQdB04t89/1O/w1cDnyilFU=") // channel access token
-                	                .build()
-                	                .pushMessage(pushMessage)
-                	                .execute();
-                	System.out.println(response.code() + " " + response.message());
-                	}
-                	catch (Exception e) {
-                		e.printStackTrace();
-                	}
-        	    }
-        	};
-
-        	// schedule the task to run starting now and then every hour...
-        	timer.schedule (hourlyTask, 0l, 1000*60*60*hourGap);
-//        	timer.schedule (hourlyTask, 0l, 1000*60*60);
-
-        	break;
-        }
-           
-        
-
         case "restrictions": {
         	String userId = event.getSource().getUserId();
 //        	User u = database.getUserRecord(userId);
@@ -350,7 +296,6 @@ public class KitchenSinkController {
         	this.replyText(replyToken,inputData + " received");
         	break;
         }
-
         case "age": {
         	String userId = event.getSource().getUserId();
     		database.updateAge(userId, Integer.parseInt(inputData));
@@ -371,11 +316,15 @@ public class KitchenSinkController {
     		this.replyText(replyToken,inputData + " received");
     		break;
         }
-
+        case "waterReminder": {
+        	String userId = event.getSource().getUserId();
+    		database.updateWaterReminder(userId, Integer.parseInt(inputData));
+    		this.replyText(replyToken,"Thank you, you will be alerted");
+    		break;
+        }
         case "vege": {	
         	
         }
-
         case "recommend" : {
     		//this.replyText(replyToken,"We recommend a corn soup with salad and cheese, and croutons.");
         	
@@ -453,66 +402,8 @@ public class KitchenSinkController {
             }
         
 
-        case "Motivation" : {
-        		Random rand = new Random();
-        		String[] msgs = {"Good progress! One more step towards a healthier lifestyle", "Add oil!", "Strive for progress, not perfection", "The struggle you're in today is developing the strength you need for tomorrow", "Yes, you can! The road may be bumpy, but stay committed to the process.", "Making excuses burns 0 calories per hour."};
-        		int  n = rand.nextInt(6);
-        		this.replyText(replyToken,msgs[n]);    
-        		break;
-          }
-        
-        
-        case "json": {
-	        	JSON_Conversion obj1= new JSON_Conversion();
-	        	String jsonStr = inputData;
-	//        	String jsonStr = "{\"userInput\": [{\r\n\t\"name\":\"Spicy Bean curd with Minced Pork served with Rice\",\r\n\t\"price\":35,\r\n\t\"ingredients\":[\"Pork\",\"Bean curd\",\"Rice\"]\r\n},\r\n{\r\n\t\"name\":\"Sweet and Sour Pork served with Rice\",\r\n\t\"price\":36,\r\n\t\"ingredients\":[\"Pork\",\"Sweet and Sour Sauce\",\"Pork\"]\r\n},\r\n{\r\n\t\"name\":\"Chili Chicken on Rice\",\r\n\t\"price\":28,\r\n\t\"ingredients\":[\"Chili\",\"Chicken\",\"Rice\"]\r\n}]}";
-	        	this.replyText(replyToken, obj1.ResultJSON(jsonStr));
-	        	break;
-        }
-        
-        case "friend": {
-	    		int MAX_QUANT_COUPON = 4999;
-	    	 	int couponQuant = icedb.getCouponNumber();
-		    		if (couponQuant > MAX_QUANT_COUPON ) {
-		    	 		this.replyText(replyToken,"Sorry, this promotion is no longer available!");
-		    	 		break;
-		    		}
-	    	 	String userId = event.getSource().getUserId();
-	    	 	String code = icedb.saveCouponCode(userId);
-	    	 	if (code == "404")
-	    	     	this.replyText(replyToken,"We cannot currently generate a code, please try again later.");    	 	
-	    	 	else 
-	    	 		this.replyText(replyToken,"Your code is " + code);
-	
-	 		break;
-    }
-        
-        case "code": {
-	    	 	String userId = event.getSource().getUserId();
-	     	boolean valid = icedb.isValidCode(inputData);
-	     	
-	     	if (valid == false) {
-	     		this.replyText(replyToken, "Sorry, the entered code " + inputData + " is invalid. Try again");
-	     		break;
-	     	}
-	     	
-	     	
-	     	boolean redeemed = icedb.redeemCode(inputData, userId);
-
-	     	if (redeemed) {
-	     		this.replyText(replyToken," Congratulations, you have just redeemed the following code : " + inputData);
-	     		break;
-	     	}
-	     	
-	     	else 
-	     		this.replyText(replyToken, "Sorry, the code " + inputData + " has already been redeemed!");
-	     	// hopefully it works
-	     	break;
-    }
-
-
-
             default:{
+
                 this.replyText(
                         replyToken,
                         "this is default"
@@ -561,30 +452,12 @@ public class KitchenSinkController {
 		return new DownloadedContent(tempFile, createUri("/downloaded/" + tempFile.getFileName()));
 	}
 
-	@RequestMapping("/")
-	public String index (@RequestParam(value="to", defaultValue="Ishan") String name) {
-		TextMessage textMessage = new TextMessage("hello" + name);
-		PushMessage pushMessage = new PushMessage(name, textMessage);
-		lineMessagingClient.pushMessage(pushMessage);
-		System.out.println("Message Pushed");
-		return "Greetings from Spring Boot";
-	}
-
-
-	@RequestMapping(value="/hi", method = RequestMethod.GET)
-		public Student sayHitoStudent(
-			@RequestParam(value = "parameter1", defaultValue= "Ishan") String name,
-			@RequestParam(value ="parameter2", defaultValue = "") String who
-			) {
-			return new Student(name + " " + who, 3);
-		}
 
 	
 
 
 	public KitchenSinkController() {
 		database = new UserInputDatabaseEngine();
-		icedb = new CouponDatabaseEngine();
 		itscLOGIN = System.getenv("ITSC_LOGIN");
 		recomDB = new RecommendationDatabaseEngine();
 	}
@@ -626,25 +499,6 @@ public class KitchenSinkController {
         	);
     	}
     }
-	
-	class Student {
-		private String name;
-		private int year;
-
-		public Student(String name, int year) {
-			this.name = name;
-			this.year = year;
-		}
-
-		public String getName() {
-			return name;
-		}
-
-		public int getYear() {
-			return year;	
-		}
-
-	}
 	
 	
 
