@@ -519,6 +519,10 @@ public class KitchenSinkController {
         case "code": {
 	    	 	String userId = event.getSource().getUserId();
 	    	 	boolean isOldUser = icedb.isOldUser(userId);
+	    	 	if (isOldUser) {
+        			this.replyText(replyToken, "Sorry, you are not eligible for this promotion.");
+        			break;
+	    	 	}
         		boolean userRedeemed = icedb.hasUserRedeemed(userId);
         		if (userRedeemed)  {
         			this.replyText(replyToken, "Sorry, you have already redeemed a code.");

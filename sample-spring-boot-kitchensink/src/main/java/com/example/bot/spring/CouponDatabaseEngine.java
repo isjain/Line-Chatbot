@@ -43,7 +43,7 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 		int userStatus =0;
 		try {			
 		Connection con = getConnection();
-		PreparedStatement smt = con.prepareStatement("SELECT olduser from userdatatable where name=?");
+		PreparedStatement smt = con.prepareStatement("SELECT olduser from userdatatable where user_id=?");
 		smt.setString(1, userId);
 		ResultSet rs = smt.executeQuery();
 		if (rs.next())
