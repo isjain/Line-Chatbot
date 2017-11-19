@@ -452,23 +452,7 @@ public class KitchenSinkController {
         TemplateMessage templateMessage = new TemplateMessage("Carousel alt text", carouselTemplate);
         this.reply(replyToken, templateMessage);
         recomDB.useStoredCal(userId);
-        break;
-        	
-//        	
-//        CarouselTemplate carouselTemplate = new CarouselTemplate(
-//        Arrays.asList(
-//    				new CarouselColumn(imageUrl,"Chicken with rice","xx", Arrays.asList(
-//                  new PostbackAction("Choose", "Dish confirmed"))),
-//                  new CarouselColumn(imageUrl,"Noodles and soup", "xx",Arrays.asList(
-//                  new PostbackAction("Choose", "Dish confirmed")))));
-//             TemplateMessage templateMessage = new TemplateMessage("Carousel alt text", carouselTemplate);
-//             this.reply(replyToken, templateMessage);
-//         break;
-//        	for(Dish d: recommended_dishes)
-//        	{
-//        		reply_msg = reply_msg + d.getName() + "  " + d.getpropCalories() +  "  " + d.getCalories()+"  " + d.getPortion() + "\n";
-//        	}
-//        	this.replyText(replyToken, reply_msg + "User reqcalday:"+ curr_user.getCalDay() + "\n\n" + translator.translate(fromLang, toLang, reply_msg) + "\n\n"+ motivation);    	
+        break; 	
         }
         
         
@@ -551,7 +535,26 @@ public class KitchenSinkController {
 	               new CarouselColumn(imageUrl, "Congratulations", "The coupon " + inputData + " has been redeemed!", Arrays.asList(
 	                      new MessageAction("Accept","Thank you!")))));
 	                 TemplateMessage templateMessage = new TemplateMessage("Carousel alt text", carouselTemplate);
-	                 this.reply(replyToken, templateMessage);	     		break;
+	                 this.reply(replyToken, templateMessage);	     	
+
+	                 // try to push message to old user
+//	                	TextMessage textMessage = new TextMessage("Thank you for your recommendation, your friend has redeemed your code!");
+	                	PushMessage pushMessage = new PushMessage("Ue559cf2d95829441da8b8e661b5ffd97", templateMessage);
+	                	try {
+	                	Response<BotApiResponse> response =
+	                	        LineMessagingServiceBuilder
+	                	                .create("CJo3Ka/VX7VW4fsG78i5dNDpP5qqYgr1PD7YUclFFc62ZtnrIpHiM/Muof6oLc/J/bPoaheiYdHNoUkg09kAt5VqnD+tMyzOCClGLwvJaR3+etoVOdsHo1DGXv2UqOljNgUIFR/zQWk1U4iFRPr4TQdB04t89/1O/w1cDnyilFU=") // channel access token
+	                	                .build()
+	                	                .pushMessage(pushMessage)
+	                	                .execute();
+	                	}
+	                	catch (Exception e) {
+	                		e.printStackTrace();
+	                	}
+	           
+	                	
+	                	break;
+	                 
 	     	}
 	     	
 	     	else 
@@ -560,24 +563,6 @@ public class KitchenSinkController {
 	     	break;
     }
 
-//        case "image": {
-////            String message = "https://i.pinimg.com/236x/75/5c/f7/755cf7fb222c21786eebec197b910cf8--desgin-qr-codes.jpg";
-////            		String userId = event.getSource().getUserId();
-////            		this.replyImage(replyToken, message);
-//        	
-//        	
-//            String imageUrl = createUri("/static/buttons/ice.jpg");
-//            CarouselTemplate carouselTemplate = new CarouselTemplate(
-//            Arrays.asList(
-//               new CarouselColumn(imageUrl, "Congratulations", "The coupon " + inputData + " has been redeemed!", Arrays.asList(
-//                      new MessageAction("Accept","Thank you!")))));
-//                 TemplateMessage templateMessage = new TemplateMessage("Carousel alt text", carouselTemplate);
-//                 this.reply(replyToken, templateMessage);
-//      	
-//       	
-//        	break;
-//        }
-    
 
 
             default:{
