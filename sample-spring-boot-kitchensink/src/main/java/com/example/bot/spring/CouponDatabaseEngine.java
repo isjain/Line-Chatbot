@@ -43,7 +43,7 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 		int valid =0;
 		try {
 		Connection con = getConnection();
-		PreparedStatement smt = con.prepareStatement("SSELECT COUNT(*) FROM usertablelist WHERE couponcode=?");
+		PreparedStatement smt = con.prepareStatement("SELECT COUNT(*) FROM usertablelist WHERE couponcode=?");
 		smt.setString(1, code);
 		ResultSet rs = smt.executeQuery();
 		if (rs.next())
@@ -55,7 +55,6 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 		catch (Exception e) {
 			System.out.println(e);
 		}
-		
 		if (valid == 0)
 			return false;
 		return true;
