@@ -297,7 +297,7 @@ public class KitchenSinkController {
         }
             
             case "image": {
-                String message = "http://www.pngall.com/wp-content/uploads/2016/04/Tomato-Free-Download-PNG.png";
+                String message = "https://l.facebook.com/l.php?u=https%3A%2F%2Fi.pinimg.com%2F236x%2F75%2F5c%2Ff7%2F755cf7fb222c21786eebec197b910cf8--desgin-qr-codes.jpg&h=ATPPHAb912WA_sHoVo5XBkfdMLooF84BZI9uWemSsuXKLGhlSNS3IRX59nB_5QVlk_Jjs7RnzSvL21ZFGb6hfI3828P2ZEERL7WeTNB4w3r2iHugMcOk8PwWePWbMB9md2JsrlR6Q4pxCOxw";
                 		String userId = event.getSource().getUserId();
                 		this.replyImage(replyToken, message);
             	
