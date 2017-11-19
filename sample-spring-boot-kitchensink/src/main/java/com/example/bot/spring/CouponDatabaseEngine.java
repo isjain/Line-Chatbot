@@ -57,7 +57,7 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 			System.out.println(e);
 		}
 		
-		if (redeemed == 0) {
+		if (redeemed == 1) {
 			return false;
 		}
 		
