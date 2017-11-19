@@ -21,7 +21,7 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 		smt.setString(1, UserId);
 		smt.setString(2, code);
 		ResultSet rs = smt.executeQuery();
-		int count = rs.execute();
+		int count = stmt.executeUpdate();
 		rs.close();
 		System.out.println(smt);
 		smt.close();
