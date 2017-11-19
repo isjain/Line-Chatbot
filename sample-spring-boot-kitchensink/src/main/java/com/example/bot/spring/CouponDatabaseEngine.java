@@ -57,7 +57,7 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 		}
 		
 		if (redeemed == 0) {
-			
+			return false;
 		}
 		
 		return true;
