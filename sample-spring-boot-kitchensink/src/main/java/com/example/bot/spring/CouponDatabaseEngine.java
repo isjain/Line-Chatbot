@@ -39,18 +39,38 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 		return isChecked;
 	}
 	
+	public boolean isValidCode(String code) {
+		int valid =0;
+		try {
+		Connection con = getConnection();
+		PreparedStatement smt = con.prepareStatement("SSELECT COUNT(*) FROM usertablelist WHERE couponcode=?");
+		smt.setString(1, code);
+		ResultSet rs = smt.executeQuery();
+		if (rs.next())
+			valid = rs.getInt("count");
+		rs.close();
+		smt.close();
+		con.close();
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
+		
+		if (valid == 0)
+			return false;
+		return true;
+	}
+	
 	public boolean checkRedeemed(String code) {
 		int redeemed =0;
 		try {
 			// check if the coupon code works
 		Connection con = getConnection();
 		PreparedStatement smt = con.prepareStatement("SELECT redeemed FROM usertablelist WHERE couponcode=?");
-//		smt.setString(1, UserId);
 		smt.setString(1, code);
 		ResultSet rs = smt.executeQuery();
 		if (rs.next())
 			redeemed = rs.getInt("redeemed");
-//		System.out.println("Shugan count : " + count);
 		rs.close();
 		smt.close();
 		con.close();
