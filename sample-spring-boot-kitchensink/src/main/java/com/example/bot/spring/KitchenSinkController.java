@@ -21,6 +21,7 @@ import java.io.OutputStream;
 import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.ArrayList;
@@ -33,6 +34,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 import com.linecorp.bot.model.profile.UserProfileResponse;
 import java.util.Random;
+import java.text.DecimalFormat;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -382,7 +385,6 @@ public class KitchenSinkController {
         }
 
         case "recommend" : {
-    		//this.replyText(replyToken,"We recommend a corn soup with salad and cheese, and croutons.");
         	
         	if( (inputData.equals("Cafe")) || (inputData.equals("Bistro")) || (inputData.equals("Subway")) || (inputData.equals("LSK")) || (inputData.equals("LG7")))
 			{
@@ -426,11 +428,12 @@ public class KitchenSinkController {
         	String reply_msg = "Recommended dishes in best to least:\n";
         	
         	//*********************************************************************
-        	
+		DecimalFormat df = new DecimalFormat("#.#");
+
         	String imageUrl = createUri("/static/buttons/1040.jpg");
         	List<CarouselColumn> dishlist = new ArrayList<CarouselColumn>();
         	for(Dish d: recommended_dishes) {
-        		dishlist.add(new CarouselColumn(imageUrl,d.getName(),d.getpropCalories()+" "+d.getCalories()+" "+d.getPortion(), Arrays.asList(
+        		dishlist.add(new CarouselColumn(imageUrl,d.getName(),d.getpropCalories()+" "+d.getCalories()+" "+df.format(d.getPortion()), Arrays.asList(
                         new PostbackAction("Choose", d.getName()+" confirmed"+ "\n\n" + translator.translate(fromLang, toLang, d.getName()) + "\n\n"+ motivation +" "+ String.valueOf(d.getCalories())))));
         	}
         CarouselTemplate carouselTemplate = new CarouselTemplate(dishlist);

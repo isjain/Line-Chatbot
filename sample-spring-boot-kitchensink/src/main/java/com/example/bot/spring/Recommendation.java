@@ -15,6 +15,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+
 public class Recommendation{
    
 	private Dish[] inputDishes;
@@ -101,10 +102,9 @@ public class Recommendation{
 		    
 		    //portion size
 		    for (int i = 0; i < rDishes.length; i++) {
-		    		float portion = Math.round((reqcal/3)/rDishes[i].getpropCalories());
+		    		double portion = (reqcal/3)/rDishes[i].getpropCalories();
 		        rDishes[i].setPortion(portion);
-		    }
-		
+		    }	
 	}
 	
 	public Dish[] getRecommendedDishes() 
