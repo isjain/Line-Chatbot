@@ -74,14 +74,8 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 	
 	public String saveCouponCode(String UserId)
 	{
-		int MAX_QUANT_COUPON = 30;
 		String code = "404";
-
-		int couponQuant = getCouponNumber();
-		System.out.println("Shugan : savecouponcode() : " + couponQuant);
-
-		if (couponQuant > MAX_QUANT_COUPON )
-			return "Sorry, this promotion is no longer available!";
+	
 		// SELECT COUNT(*) FROM usertablelist; --> gets the amount of columns in a table
 		try {
 			int codeint = generateNewCode();
@@ -105,15 +99,15 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 	int getCouponNumber() {
 		int quant = 0;
 		try {
-			Connection con2 = getConnection();
-			PreparedStatement smt2 = con2.prepareStatement("SELECT COUNT(*) FROM usertablelist");
-			ResultSet rs2 = smt2.executeQuery();
-			if (rs2.next())
-				quant = rs2.getInt("count");
+			Connection con = getConnection();
+			PreparedStatement smt = con.prepareStatement("SELECT COUNT(*) FROM usertablelist");
+			ResultSet rs = smt2.executeQuery();
+			if (rs.next())
+				quant = rs.getInt("count");
 			System.out.println("Shugan : getcouponnumber() : " + quant);
-			rs2.close();
-			smt2.close();
-			con2.close();
+			rs.close();
+			smt.close();
+			con.close();
 		}
 		catch (Exception e) {
 			System.out.println(e);

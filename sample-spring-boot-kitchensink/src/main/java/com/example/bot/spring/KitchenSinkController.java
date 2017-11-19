@@ -405,18 +405,18 @@ public class KitchenSinkController {
         }
         
         case "friend": {
+    		int MAX_QUANT_COUPON = 40;
+    	 	int quantCoupon = icedb.getCouponNumber();
+    		if (couponQuant > MAX_QUANT_COUPON )
+    	 		this.replyText(replyToken,"Sorry, this promotion is no longer available!");
+
     	 	String userId = event.getSource().getUserId();
     	 	String code = icedb.saveCouponCode(userId);
     	 	if (code == "404")
-    	     	this.replyText(replyToken,"We cannot currently generate a code, please try again later." );
-    	 	else 
-    	 		if ( code.equals("Sorry, this promotion is no longer available!"))
-        	 		this.replyText(replyToken,"Sorry, this promotion is no longer available!");
-    	 	
+    	     	this.replyText(replyToken,"We cannot currently generate a code, please try again later." );    	 	
     	 	else 
     	 		this.replyText(replyToken,"Your code is " + code);
 
-     	// hopefully it works
  		break;
     }
         
