@@ -406,11 +406,11 @@ public class KitchenSinkController {
         
         case "friend": {
     	 	String userId = event.getSource().getUserId();
-    	 	double code = icedb.saveCouponCode(userId);
-    	 	if (code == 404)
+    	 	String code = icedb.saveCouponCode(userId);
+    	 	if (code == "404")
     	     	this.replyText(replyToken,"We cannot currently generate a code, please try again later." );
     	 	else 
-     	this.replyText(replyToken,"Your code is " + Math.round(code));
+     	this.replyText(replyToken,"Your code is " + code);
 
      	// hopefully it works
  		break;
@@ -418,8 +418,7 @@ public class KitchenSinkController {
         
         case "redeem": {
     	 	String userId = event.getSource().getUserId();
-    	 	double code = Double.parseDouble(inputData);
-     	icedb.redeemCode(code, userId);
+     	icedb.redeemCode(inputData, userId);
      	this.replyText(replyToken,inputData + " redeemed");
 
      	// hopefully it works

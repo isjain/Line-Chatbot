@@ -12,14 +12,14 @@ import java.lang.Object;
 import java.util.Random;
 public class CouponDatabaseEngine extends DatabaseEngine {
 	
-	public void redeemCode(double code, String UserId) {
+	public void redeemCode(String code, String UserId) {
 		
 		try {
 			// check if the coupon code works
 		Connection con = getConnection();
 		PreparedStatement smt = con.prepareStatement("UPDATE usertablelist SET claimuser=? WHERE couponcode=?");
 		smt.setString(1, UserId);
-		smt.setDouble(2, Math.round(code));
+		smt.setString(2, code);
 		System.out.println(smt);
 		smt.close();
 		con.close();
@@ -33,15 +33,16 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 	
 	
 	
-	public double saveCouponCode(String UserId)
+	public String saveCouponCode(String UserId)
 	{
-		double code = 404;
+		String code = "404";
 
 		try {
-			code = generateNewCode();
+			int codeint = generateNewCode();
+			code = Integer.toString(codeint);
 			Connection con = getConnection();
 			PreparedStatement smt = con.prepareStatement("INSERT INTO usertablelist VALUES (?,'none',?)");
-			smt.setDouble(2,code);
+			smt.setString(2,code);
 			smt.setString(1,UserId);
 			ResultSet rs = smt.executeQuery();
 			rs.close();
@@ -54,12 +55,12 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 		return code;
 	}
 	
-	double generateNewCode() throws Exception{
+	int generateNewCode() throws Exception{
 		try {
 				Connection con = getConnection();
 				PreparedStatement smt = con.prepareStatement("SELECT couponcode FROM usertablelist");
 				ResultSet rs = smt.executeQuery();
-				double code=0;
+				int code =0;
 				int couponFound = 1;
 				while (couponFound==1)
 				{
@@ -68,8 +69,8 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 					couponFound=0;
 					while(rs.next())
 					{
-						int result = rs.getInt("couponcode");
-						if (code==result)
+						String result = rs.getString("couponcode");
+						if (code==Integer.parseInt(result))
 						{
 							couponFound=1;
 						}
