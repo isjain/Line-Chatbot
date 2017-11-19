@@ -545,8 +545,13 @@ public class KitchenSinkController {
 	     	boolean redeemed = icedb.redeemCode(inputData, userId);
 
 	     	if (redeemed) {
-	     		this.replyText(replyToken," Congratulations, you have just redeemed the following code : " + inputData);
-	     		break;
+	            String imageUrl = createUri("/static/buttons/ice.jpg");
+	            CarouselTemplate carouselTemplate = new CarouselTemplate(
+	            Arrays.asList(
+	               new CarouselColumn(imageUrl, "Congratulations", "The coupon " + inputData + " has been redeemed!", Arrays.asList(
+	                      new MessageAction("Accept","Thank you!")))));
+	                 TemplateMessage templateMessage = new TemplateMessage("Carousel alt text", carouselTemplate);
+	                 this.reply(replyToken, templateMessage);	     		break;
 	     	}
 	     	
 	     	else 
@@ -555,23 +560,23 @@ public class KitchenSinkController {
 	     	break;
     }
 
-        case "image": {
-//            String message = "https://i.pinimg.com/236x/75/5c/f7/755cf7fb222c21786eebec197b910cf8--desgin-qr-codes.jpg";
-//            		String userId = event.getSource().getUserId();
-//            		this.replyImage(replyToken, message);
-        	
-        	
-            String imageUrl = createUri("/static/buttons/ice.jpg");
-            CarouselTemplate carouselTemplate = new CarouselTemplate(
-            Arrays.asList(
-               new CarouselColumn(imageUrl, "Congratulations", "Your coupon has been redeemed!", Arrays.asList(
-                      new MessageAction("Accept","Thank you!")))));
-                 TemplateMessage templateMessage = new TemplateMessage("Carousel alt text", carouselTemplate);
-                 this.reply(replyToken, templateMessage);
-      	
-       	
-        	break;
-        }
+//        case "image": {
+////            String message = "https://i.pinimg.com/236x/75/5c/f7/755cf7fb222c21786eebec197b910cf8--desgin-qr-codes.jpg";
+////            		String userId = event.getSource().getUserId();
+////            		this.replyImage(replyToken, message);
+//        	
+//        	
+//            String imageUrl = createUri("/static/buttons/ice.jpg");
+//            CarouselTemplate carouselTemplate = new CarouselTemplate(
+//            Arrays.asList(
+//               new CarouselColumn(imageUrl, "Congratulations", "The coupon " + inputData + " has been redeemed!", Arrays.asList(
+//                      new MessageAction("Accept","Thank you!")))));
+//                 TemplateMessage templateMessage = new TemplateMessage("Carousel alt text", carouselTemplate);
+//                 this.reply(replyToken, templateMessage);
+//      	
+//       	
+//        	break;
+//        }
     
 
 
