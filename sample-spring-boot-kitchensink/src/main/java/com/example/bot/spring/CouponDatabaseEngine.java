@@ -20,6 +20,8 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 		PreparedStatement smt = con.prepareStatement("UPDATE usertablelist SET claimuser=? WHERE couponcode=?");
 		smt.setString(1, UserId);
 		smt.setString(2, code);
+		ResultSet rs = smt.executeQuery();
+		rs.close();
 		System.out.println(smt);
 		smt.close();
 		con.close();
