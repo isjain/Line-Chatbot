@@ -26,12 +26,14 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 		System.out.println(smt);
 		smt.close();
 		con.close();
-		if (count ==0) 
-			return false;
 		}
 		catch (Exception e) {
 			System.out.println(e);
 		}
+		
+		if (count ==0) 
+			return false;
+		
 		return true;
 
 	}
