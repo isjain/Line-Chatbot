@@ -85,6 +85,7 @@ import com.linecorp.bot.client.LineMessagingServiceBuilder;
 import com.linecorp.bot.model.response.BotApiResponse;
 import com.linecorp.bot.model.profile.UserProfileResponse;
 import retrofit2.Response;
+import com.linecorp.bot.model.message.ImageMessage;
 
 
 
@@ -148,7 +149,7 @@ public class KitchenSinkController {
 			throw new RuntimeException(e);
 		}
 		DownloadedContent jpg = saveContent("jpg", response);
-		reply(((MessageEvent) event).getReplyToken(), new ImageMessage(jpg.getUri(), jpg.getUri()));
+		reply(((MessageEvent) event).getReplyToken(), new ImageMessage(jpg.getUri()));
 
 	}
 
@@ -228,6 +229,17 @@ public class KitchenSinkController {
 		this.reply(replyToken, new TextMessage(message));
 	}
 
+	private void replyImage(@NonNull String replyToken, @NonNull String message) {
+		if (replyToken.isEmpty()) {
+			throw new IllegalArgumentException("replyToken must not be empty");
+		}
+//		if (message.length() > 1000) {
+//			message = message.substring(0, 1000 - 2) + "..";
+//		}
+		this.reply(replyToken, new ImageMessage(message));
+	}
+	
+	
 
 	private void handleSticker(String replyToken, StickerMessageContent content) {
 		reply(replyToken, new StickerMessage(content.getPackageId(), content.getStickerId()));
@@ -283,6 +295,17 @@ public class KitchenSinkController {
 
         		break;
         }
+            
+            case "image": {
+                String message = "http://www.pngall.com/wp-content/uploads/2016/04/Tomato-Free-Download-PNG.png";
+                		String userId = event.getSource().getUserId();
+                		this.replyImage(replyToken, message);
+            	
+            	
+            	break;
+            }
+        
+            
         case "gender": {
         	String userId = event.getSource().getUserId();
         	database.updateGender(userId, inputData);
