@@ -15,7 +15,7 @@ public class RecommendationDatabaseEngine extends DatabaseEngine {
 	
 	public String giveVegDishes(String input) {
 		
-		String msg = "The vegetarian dishes at"+ input + "are:\n";
+		String msg = "The vegetarian dishes at"+ input + "are:/n";
 		String fragment= "";
 		
 		try {
