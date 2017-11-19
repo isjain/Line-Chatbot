@@ -21,6 +21,7 @@ import java.io.OutputStream;
 import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.ArrayList;
@@ -33,11 +34,14 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 import com.linecorp.bot.model.profile.UserProfileResponse;
 import java.util.Random;
+import java.text.DecimalFormat;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.google.common.io.ByteStreams;
+import java.util.ArrayList;
 
 import com.linecorp.bot.client.LineMessagingClient;
 import com.linecorp.bot.client.MessageContentResponse;
@@ -90,7 +94,6 @@ import java.net.URI;
 @LineMessageHandler
 public class KitchenSinkController {
 	
-
 
 	@Autowired
 	private LineMessagingClient lineMessagingClient;
@@ -169,7 +172,11 @@ public class KitchenSinkController {
 	@EventMapping
 	public void handlePostbackEvent(PostbackEvent event) {
 		String replyToken = event.getReplyToken();
-		this.replyText(replyToken, "Got postback " + event.getPostbackContent().getData());
+		System.out.println(event.getSource().getUserId());
+		String cal = (event.getPostbackContent().getData()).substring(event.getPostbackContent().getData().lastIndexOf(" ")+1);
+		String userId = event.getSource().getUserId();
+		database.updateCalperDay(userId, cal);
+		this.replyText(replyToken, (event.getPostbackContent().getData()).substring(0, (event.getPostbackContent().getData()).lastIndexOf(" ")));
 	}
 
 	@EventMapping
@@ -326,7 +333,6 @@ public class KitchenSinkController {
         	
         }
         case "recommend" : {
-    		//this.replyText(replyToken,"We recommend a corn soup with salad and cheese, and croutons.");
         	
         	if( (inputData.equals("Cafe")) || (inputData.equals("Bistro")) || (inputData.equals("Subway")) || (inputData.equals("LSK")) || (inputData.equals("LG7")))
 			{
@@ -339,6 +345,7 @@ public class KitchenSinkController {
             String fromLang = "en";
             String toLang = "zh-CN";
         	Translator translator = new Translator();
+        	
         	//Recommendation
         	String[] menu = inputData.split(",");
         	List<Dish> dishes = new ArrayList<Dish>();
@@ -368,13 +375,40 @@ public class KitchenSinkController {
         	
         	String motivation = recommend.motivationMessage();
         	String reply_msg = "Recommended dishes in best to least:\n";
-        	for(Dish d: recommended_dishes)
-        	{
-        		reply_msg = reply_msg + d.getName() + "  " + d.getpropCalories() + "\n";
+        	
+        	//*********************************************************************
+		DecimalFormat df = new DecimalFormat("#.#");
+
+        	String imageUrl = createUri("/static/buttons/final.png");
+        	List<CarouselColumn> dishlist = new ArrayList<CarouselColumn>();
+        	for(Dish d: recommended_dishes) {
+        		dishlist.add(new CarouselColumn(imageUrl,d.getName(),d.getpropCalories()+" "+d.getCalories()+" "+df.format(d.getPortion()), Arrays.asList(
+                        new PostbackAction("Choose", d.getName()+" confirmed"+ "\n\n" + translator.translate(fromLang, toLang, d.getName()) + "\n\n"+ motivation +" "+ String.valueOf(d.getCalories())))));
         	}
-        	this.replyText(replyToken, reply_msg + "User reqcalday:"+ curr_user.getCalDay() + "\n\n" + translator.translate(fromLang, toLang, reply_msg) + "\n\n"+ motivation);
-        	break;
+        CarouselTemplate carouselTemplate = new CarouselTemplate(dishlist);
+        TemplateMessage templateMessage = new TemplateMessage("Carousel alt text", carouselTemplate);
+        this.reply(replyToken, templateMessage);
+        recomDB.useStoredCal(userId);
+        break;
+        	
+//        	
+//        CarouselTemplate carouselTemplate = new CarouselTemplate(
+//        Arrays.asList(
+//    				new CarouselColumn(imageUrl,"Chicken with rice","xx", Arrays.asList(
+//                  new PostbackAction("Choose", "Dish confirmed"))),
+//                  new CarouselColumn(imageUrl,"Noodles and soup", "xx",Arrays.asList(
+//                  new PostbackAction("Choose", "Dish confirmed")))));
+//             TemplateMessage templateMessage = new TemplateMessage("Carousel alt text", carouselTemplate);
+//             this.reply(replyToken, templateMessage);
+//         break;
+//        	for(Dish d: recommended_dishes)
+//        	{
+//        		reply_msg = reply_msg + d.getName() + "  " + d.getpropCalories() +  "  " + d.getCalories()+"  " + d.getPortion() + "\n";
+//        	}
+//        	this.replyText(replyToken, reply_msg + "User reqcalday:"+ curr_user.getCalDay() + "\n\n" + translator.translate(fromLang, toLang, reply_msg) + "\n\n"+ motivation);    	
         }
+        
+        
         
         case "translate": {
         	String userId = event.getSource().getUserId();
@@ -400,7 +434,6 @@ public class KitchenSinkController {
                 this.reply(replyToken, templateMessage);
                 break;
             }
-        
 
             default:{
 
