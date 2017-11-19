@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;  
 import java.util.*;
-
-
 public class Dish {
 
 	private String dishId;
@@ -24,9 +22,7 @@ public class Dish {
     		cleanKWORDS();    		
 		this.calories = 0;
 		this.weight = 0;
-		this.portion = 1;
-
-		
+		this.portion = 1;		
 	}	
 	public Dish(Dish dishes) {
 		this.dishId = dishes.dishId;
@@ -44,9 +40,7 @@ public class Dish {
 
 	}	
 	public void cleanKWORDS() {	
-		for(String str: keywords) {
-			str.trim();
-		}
+		
 		ArrayList<String> words = new ArrayList<String>();
 		words.add("the");
 		words.add("and");
@@ -86,8 +80,6 @@ public class Dish {
 	public String[] getKeywords() {
 		return keywords;
 	}
-	
-	
 	public void setDishId(String id) {
 		this.dishId = id;
 	}
