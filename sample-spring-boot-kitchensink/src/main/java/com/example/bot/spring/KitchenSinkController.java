@@ -388,50 +388,49 @@ public class KitchenSinkController {
             }
         
         case "Motivation" : {
-          	 Random rand = new Random();
-           String[] msgs = {"Good progress! One more step towards a healthier lifestyle", "Add oil!", "Strive for progress, not perfection", "The struggle you're in today is developing the strength you need for tomorrow", "Yes, you can! The road may be bumpy, but stay committed to the process.", "Making excuses burns 0 calories per hour."};
-           int  n = rand.nextInt(6);
-           this.replyText(replyToken,msgs[n]);    
-           break;
+        		Random rand = new Random();
+        		String[] msgs = {"Good progress! One more step towards a healthier lifestyle", "Add oil!", "Strive for progress, not perfection", "The struggle you're in today is developing the strength you need for tomorrow", "Yes, you can! The road may be bumpy, but stay committed to the process.", "Making excuses burns 0 calories per hour."};
+        		int  n = rand.nextInt(6);
+        		this.replyText(replyToken,msgs[n]);    
+        		break;
           }
         
         
         case "json": {
-        	JSON_Conversion obj1= new JSON_Conversion();
-        	String jsonStr = inputData;
-//        	String jsonStr = "{\"userInput\": [{\r\n\t\"name\":\"Spicy Bean curd with Minced Pork served with Rice\",\r\n\t\"price\":35,\r\n\t\"ingredients\":[\"Pork\",\"Bean curd\",\"Rice\"]\r\n},\r\n{\r\n\t\"name\":\"Sweet and Sour Pork served with Rice\",\r\n\t\"price\":36,\r\n\t\"ingredients\":[\"Pork\",\"Sweet and Sour Sauce\",\"Pork\"]\r\n},\r\n{\r\n\t\"name\":\"Chili Chicken on Rice\",\r\n\t\"price\":28,\r\n\t\"ingredients\":[\"Chili\",\"Chicken\",\"Rice\"]\r\n}]}";
-        	this.replyText(replyToken, obj1.ResultJSON(jsonStr));
-        	break;
+	        	JSON_Conversion obj1= new JSON_Conversion();
+	        	String jsonStr = inputData;
+	//        	String jsonStr = "{\"userInput\": [{\r\n\t\"name\":\"Spicy Bean curd with Minced Pork served with Rice\",\r\n\t\"price\":35,\r\n\t\"ingredients\":[\"Pork\",\"Bean curd\",\"Rice\"]\r\n},\r\n{\r\n\t\"name\":\"Sweet and Sour Pork served with Rice\",\r\n\t\"price\":36,\r\n\t\"ingredients\":[\"Pork\",\"Sweet and Sour Sauce\",\"Pork\"]\r\n},\r\n{\r\n\t\"name\":\"Chili Chicken on Rice\",\r\n\t\"price\":28,\r\n\t\"ingredients\":[\"Chili\",\"Chicken\",\"Rice\"]\r\n}]}";
+	        	this.replyText(replyToken, obj1.ResultJSON(jsonStr));
+	        	break;
         }
         
         case "friend": {
-    		int MAX_QUANT_COUPON = 4999;
-    	 	int couponQuant = icedb.getCouponNumber();
-    		if (couponQuant > MAX_QUANT_COUPON ) {
-    	 		this.replyText(replyToken,"Sorry, this promotion is no longer available!");
-    	 		break;
-    		}
-
-    	 	String userId = event.getSource().getUserId();
-    	 	String code = icedb.saveCouponCode(userId);
-    	 	if (code == "404")
-    	     	this.replyText(replyToken,"We cannot currently generate a code, please try again later." );    	 	
-    	 	else 
-    	 		this.replyText(replyToken,"Your code is " + code);
-
- 		break;
+	    		int MAX_QUANT_COUPON = 4999;
+	    	 	int couponQuant = icedb.getCouponNumber();
+		    		if (couponQuant > MAX_QUANT_COUPON ) {
+		    	 		this.replyText(replyToken,"Sorry, this promotion is no longer available!");
+		    	 		break;
+		    		}
+	    	 	String userId = event.getSource().getUserId();
+	    	 	String code = icedb.saveCouponCode(userId);
+	    	 	if (code == "404")
+	    	     	this.replyText(replyToken,"We cannot currently generate a code, please try again later.");    	 	
+	    	 	else 
+	    	 		this.replyText(replyToken,"Your code is " + code);
+	
+	 		break;
     }
         
         case "code": {
-    	 	String userId = event.getSource().getUserId();
-     	boolean redeemed = icedb.redeemCode(inputData, userId);
-     	if (redeemed)
-     		this.replyText(replyToken," Congratulations, you have just redeemed the following code : " + inputData);
-     	
-     	else 
-     		this.replyText(replyToken, "Sorry, the code " + inputData + " is either invalid, or has already been redeemed!");
-     	// hopefully it works
- 		break;
+	    	 	String userId = event.getSource().getUserId();
+	     	boolean redeemed = icedb.redeemCode(inputData, userId);
+	     	if (redeemed)
+	     		this.replyText(replyToken," Congratulations, you have just redeemed the following code : " + inputData);
+	     	
+	     	else 
+	     		this.replyText(replyToken, "Sorry, the code " + inputData + " is either invalid, or has already been redeemed!");
+	     	// hopefully it works
+	     	break;
     }
 
             default:
