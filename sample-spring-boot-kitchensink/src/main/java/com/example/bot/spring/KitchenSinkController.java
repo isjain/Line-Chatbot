@@ -416,7 +416,7 @@ public class KitchenSinkController {
  		break;
     }
         
-        case "redeem": {
+        case "code": {
     	 	String userId = event.getSource().getUserId();
      	boolean redeemed = icedb.redeemCode(inputData, userId);
      	if (redeemed)
