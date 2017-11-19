@@ -128,12 +128,11 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 	public String updateCalperDay(String UserId, String calpermeal)
 	{			
 		
-		String totalCalList=null;
-		String totalDates=null;
+		String totalCalList="";
+		String totalDates="";
 		boolean found=false;
 		String delimiter = ";";
-		//String[] partsOfCal = new String[];
-		//String[] partsOfDate = new String[2];
+		
 		String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());  // current date 
 
 		
@@ -149,61 +148,62 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 				totalCalList = rs.getString("calperday");
 				totalDates = rs.getString("dates");	
 			}
-			if( totalCalList!=null && totalDates!=null)
+			if( totalCalList!="" && totalDates!="")
 			{
 //ERROR HERE
-				String[] partsOfCal = totalCalList.split(",");
-				String[] partsOfDate = totalDates.split(",");
-	//			
-//				for (int i=0;i<partsOfDate.length;i++)
-//				{	
-//					if(partsOfDate[i].equals(date))
-//					{
-//					float changeCal = Float.parseFloat(partsOfCal[i]);
-//					changeCal+=Float.parseFloat(calpermeal);
-//					partsOfCal[i]=Float.toString(changeCal);
-//					found=true;
-//					break;
-//					}
-//			}
-//			
+				String[] partsOfCal = totalCalList.split(";");
+				String[] partsOfDate = totalDates.split(";");
 				
-//				totalCalList = String.join(delimiter, partsOfCal);
-//				totalDates = String.join(delimiter, partsOfDate);
+				for (int i=0;i<partsOfDate.length;i++)
+				{	
+					if(partsOfDate[i].equals(date))
+					{
+					float changeCal = Float.parseFloat(partsOfCal[i]);
+					changeCal+=Float.parseFloat(calpermeal);
+					partsOfCal[i]=Float.toString(changeCal);
+					found=true;
+					break;
+					}
+			}
+			
+				
+				totalCalList = String.join(delimiter, partsOfCal);
+				totalDates = String.join(delimiter, partsOfDate);
 
 			}		
 			if(found==false)
 			{
-				if(totalCalList==null )
+				if(totalCalList=="")
 				{
-				totalCalList=calpermeal;
-				totalDates=date;
+					totalCalList=calpermeal;
+					totalDates=date;
 				}
 				else
 				{
-				totalCalList=totalCalList+delimiter+calpermeal;
-				totalDates=totalDates+delimiter+date;
+					totalCalList=totalCalList+delimiter+calpermeal;
+					totalDates=totalDates+delimiter+date;
 				}
-				return "hi";
+				
 
 			}
-		}
+		
 
-//			PreparedStatement smt2 = con.prepareStatement("UPDATE userdatatable SET calperday=?, dates=? WHERE user_id=?");
-////			smt2.setString(1,totalCalList);
-//			smt2.setString(1,"50");
-//			smt2.setString(2,"12-12-2012");
-//			smt2.setString(3,UserId);
-//			System.out.println("\n\n\n\n"+smt2+"\n\n\n\n");
-//			ResultSet rs2 = smt2.executeQuery();
-//			rs.close();
-//			rs2.close();
-//			smt2.close();
-//			smt1.close();
-//			con.close();
-//
-//
-//		}
+			PreparedStatement smt2 = con.prepareStatement("UPDATE userdatatable SET calperday=?, dates=? WHERE user_id=?");
+//			smt2.setString(1,totalCalList);
+			smt2.setString(1,"50");
+			smt2.setString(2,"12-12-2012");
+			smt2.setString(3,UserId);
+			System.out.println("\n\n\n\n"+smt2+"\n\n\n\n");
+			ResultSet rs2 = smt2.executeQuery();
+			rs.close();
+			rs2.close();
+			smt2.close();
+			smt1.close();
+			con.close();
+			return "hi";
+
+
+		}
 		catch (Exception e) {
 			System.out.println(e);
 		}
