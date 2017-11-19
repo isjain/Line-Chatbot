@@ -15,13 +15,14 @@ public class RecommendationDatabaseEngine extends DatabaseEngine {
 	
 	public String giveVegDishes(String input) {
 		
-		String msg = "The vegetarian dishes at"+ input + "are:\n";
+		String msg = "The vegetarian dishes at "+ input + " are:\n\n";
 		String fragment= "";
+		
 		
 		try {
 			
 				Connection con = getConnection();
-				PreparedStatement smt = con.prepareStatement("SELECT * FROM campusdishes WHERE location = ?");
+				PreparedStatement smt = con.prepareStatement("SELECT * FROM campusdishes WHERE location = ? ORDER BY calories");
 				smt.setString(1,input);
 				ResultSet rs = smt.executeQuery();
 				while(rs.next())
