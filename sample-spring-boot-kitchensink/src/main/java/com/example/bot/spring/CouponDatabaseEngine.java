@@ -15,7 +15,6 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 	
 	// thsi is not working properly, need to change to check whether it has been redeemed or not and the 5000 limit
 	public boolean redeemCode(String code, String UserId) {
-		int count =0;
 		// over here call a boolean to check if it has already been redeemed if it has been redeemed, then exit and return a string, saying "sorry this code has already been redeemed, otherwise execute""
 		try {
 			// check if the coupon code works
@@ -24,8 +23,7 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 		smt.setString(1, UserId);
 		smt.setString(2, code);
 		ResultSet rs = smt.executeQuery();
-		count = smt.executeUpdate();
-		System.out.println("Shugan count : " + count);
+//		System.out.println("Shugan count : " + count);
 		rs.close();
 		System.out.println(smt);
 		smt.close();
@@ -35,16 +33,38 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 			System.out.println(e);
 		}
 		
-		if (count ==0)  
-		{	
-			System.out.println("Shugan false : it's false");
-				return false;
+		
+		return checkRedeemed(code);
+	}
+	
+	public boolean checkRedeemed(String code) {
+		int redeemed =0;
+		try {
+			// check if the coupon code works
+		Connection con = getConnection();
+		PreparedStatement smt = con.prepareStatement("SELECT couponcode FROM usertablelist WHERE couponcode=?");
+//		smt.setString(1, UserId);
+		smt.setString(1, code);
+		ResultSet rs = smt.executeQuery();
+		redeemed = rs.getInt("redeemed");
+//		System.out.println("Shugan count : " + count);
+		rs.close();
+		smt.close();
+		con.close();
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
+		
+		if (redeemed == 0) {
+			
 		}
 		
 		return true;
-
 	}
+		
 	
+
 	
 	
 	// check if setting to redeemed works
