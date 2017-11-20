@@ -530,7 +530,7 @@ public class KitchenSinkController {
         	List<CarouselColumn> dishlist = new ArrayList<CarouselColumn>();
         	for(Dish d: recommended_dishes) {
         		if(d.getCalories()!=0)
-        		{dishlist.add(new CarouselColumn(imageUrl,d.getName(), df.format(d.getPortion())+" portion", Arrays.asList(
+        		{dishlist.add(new CarouselColumn(imageUrl,d.getName(),df.format(d.getpropCalories())+" calories, "+ df.format(d.getPortion())+" portions", Arrays.asList(
                         new PostbackAction("Choose", d.getName()+" confirmed"+ "\n\n" + translator.translate(fromLang, toLang, d.getName()) + "\n\n"+ motivation +" "+ String.valueOf(d.getCalories())))));
         		}
         	}
@@ -603,7 +603,7 @@ public class KitchenSinkController {
         	List<CarouselColumn> dishlist = new ArrayList<CarouselColumn>();
         	for(Dish d: recommended_dishes) {
         		if(d.getCalories()!=0) {
-        		dishlist.add(new CarouselColumn(imageUrl,d.getName(),df.format(d.getPortion())+" portion", Arrays.asList(
+        		dishlist.add(new CarouselColumn(imageUrl,d.getName(),df.format(d.getpropCalories())+" calories, "+df.format(d.getPortion())+" portions", Arrays.asList(
                         new PostbackAction("Choose", d.getName()+" confirmed"+ "\n\n" + translator.translate(fromLang, toLang, d.getName()) + "\n\n"+ motivation +" "+ String.valueOf(d.getCalories())))));
         	}
         		}
