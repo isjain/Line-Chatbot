@@ -801,7 +801,7 @@ public class KitchenSinkController {
 		database = new UserInputDatabaseEngine();
 		itscLOGIN = System.getenv("ITSC_LOGIN");
 		recomDB = new RecommendationDatabaseEngine();
-		icedb = new CouponDatabaseEngine();
+		icedb = CouponDatabaseEngine.getSingletonInstance();
 	}
 
 	private String itscLOGIN;

@@ -11,7 +11,17 @@ import java.sql.SQLException;
 import java.lang.Object;
 import java.util.Random;
 public class CouponDatabaseEngine extends DatabaseEngine {
-	
+	private static CouponDatabaseEngine icedb;
+    // SingletonExample prevents any other class from instantiating
+    private CouponDatabaseEngine() {
+    }
+    // Providing Global point of access
+    public static CouponDatabaseEngine getSingletonInstance() {
+        if (null == icedb) {
+            icedb = new CouponDatabaseEngine();
+        }
+        return icedb;
+    }
 	
 	// thsi is not working properly, need to change to check whether it has been redeemed or not and the 5000 limit and return static image
 	public boolean redeemCode(String code, String UserId) {
