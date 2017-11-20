@@ -482,7 +482,7 @@ public class KitchenSinkController {
         	
         	User curr_user = database.getUserRecord(userId);
         	
-        	if(curr_user.getWeight().equals('0') || curr_user.getHeight().equals('0') || curr_user.getGender().equals('nogender') || curr_user.getAge().equals('0'))
+        	if(curr_user.getWeight().equals("0") || curr_user.getHeight().equals("0") || curr_user.getGender().equals("nogender") || curr_user.getAge().equals("0"))
         	{
         		this.replyText(replyToken, "Please make sure that weight, height, gender and age are accepted first!");
         		break;
