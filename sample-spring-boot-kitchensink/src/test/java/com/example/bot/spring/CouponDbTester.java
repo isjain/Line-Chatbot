@@ -57,16 +57,16 @@ public class CouponDbTester {
 	// not a CouponDb but still why not
 	@Test
 public void waterReminderCorrectInputtest() {  
-		KitchenSinkController ks = new KitchenSinkController();
-		ks.setWaterReminder("1", "Uc748ae75a91014989d8664a356ffab8d");
+		waterReminder ks = new waterReminder();
+		ks.setWaterReminder(1, "Uc748ae75a91014989d8664a356ffab8d");
 		assertThat(true);
 	}
 	
 	
 	@Test
 public void waterReminderLineClientTestWrongInputtest() {  
-		KitchenSinkController ks = new KitchenSinkController();
-		ks.setWaterReminder("0", "Uc748ae75a91014989d8664a356ffab8d");
+		waterReminder ks = new waterReminder();
+		ks.setWaterReminder(0, "Uc748ae75a91014989d8664a356ffab8d");
 		assertThat(true);
 	}
 	
@@ -82,12 +82,12 @@ public void isOldUsertest() {
 	
 	
 
-	@Test
-public void checkRedeemedtest() {  
-		KitchenSinkController ks = new KitchenSinkController();
-		ks.setWaterReminder("0", "Uc748ae75a91014989d8664a356ffab8d");
-		assertThat(true);
-	}
+//	@Test
+//public void checkRedeemedtest() {  
+//		KitchenSinkController ks = new KitchenSinkController();
+//		ks.setWaterReminder("0", "Uc748ae75a91014989d8664a356ffab8d");
+//		assertThat(true);
+//	}
 //	
 //	@Test
 //public void redeemnowtest() {  

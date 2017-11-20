@@ -53,14 +53,15 @@ public class JsonTest {
 	//    Quote[] quotes = restTemplate.getForObject("https://api.myjson.com/bins/1hhki3", Quote.class);
 	//    log.info(quote.toString());
 		Quote[] test=responseEntity.getBody();
-		ArrayList<Dish> dishes=new ArrayList<Dish>();
+//		ArrayList<Dish> dishes=new ArrayList<Dish>();
+		DishAdapter ds=new DishAdapter(test);
 //		Dish[] dishes=new Dish[100];
-		for (int i=0; i<test.length; i++)
-		{
-			dishes.add(new Dish((test[i].getName())));
-//			dishes[i]=new Dish((test[i].getName()));
-		}	
-		Dish[] dishes2 = dishes.toArray(new Dish[dishes.size()]);
+//		for (int i=0; i<test.length; i++)
+//		{
+//			dishes.add(new Dish((test[i].getName())));
+////			dishes[i]=new Dish((test[i].getName()));
+//		}	
+		Dish[] dishes2 = ds.dishes.toArray(new Dish[ds.dishes.size()]);
 //		Dish[] final = new Dish[dishes.size()];
 //		dishes.toArray(final);
 	    return dishes2;

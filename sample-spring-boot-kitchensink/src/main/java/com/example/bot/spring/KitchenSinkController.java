@@ -245,37 +245,36 @@ public class KitchenSinkController {
 		reply(replyToken, new StickerMessage(content.getPackageId(), content.getStickerId()));
 	}
 	
-	public void setWaterReminder(String inputData, String userID) {
-    	int hourGap = Integer.parseInt(inputData);
-    	if (hourGap ==0) 
-    		return;
-    	
-    	Timer timer = new Timer ();
-    	TimerTask hourlyTask = new TimerTask () {
-    	    @Override
-    	    public void run () {
-    	        // your code here...
-            	TextMessage textMessage = new TextMessage("It is time to drink your water :)");
-            	PushMessage pushMessage = new PushMessage(userID, textMessage);
-            	try {
-            	Response<BotApiResponse> response =
-            	        LineMessagingServiceBuilder
-            	                .create("CJo3Ka/VX7VW4fsG78i5dNDpP5qqYgr1PD7YUclFFc62ZtnrIpHiM/Muof6oLc/J/bPoaheiYdHNoUkg09kAt5VqnD+tMyzOCClGLwvJaR3+etoVOdsHo1DGXv2UqOljNgUIFR/zQWk1U4iFRPr4TQdB04t89/1O/w1cDnyilFU=") // channel access token
-            	                .build()
-            	                .pushMessage(pushMessage)
-            	                .execute();
-            	System.out.println(response.code() + " " + response.message());
-            	}
-            	catch (Exception e) {
-            		e.printStackTrace();
-            	}
-    	    }
-    	};
-
-    	// schedule the task to run starting now and then every hour...
-    	timer.schedule (hourlyTask, 0l, 1000*60*60*hourGap);
-
-	}
+//	public void setWaterReminder(int hourGap, String userID) {
+//    	if (hourGap ==0) 
+//    		return;
+//    	
+//    	Timer timer = new Timer ();
+//    	TimerTask hourlyTask = new TimerTask () {
+//    	    @Override
+//    	    public void run () {
+//    	        // your code here...
+//            	TextMessage textMessage = new TextMessage("It is time to drink your water :)");
+//            	PushMessage pushMessage = new PushMessage(userID, textMessage);
+//            	try {
+//            	Response<BotApiResponse> response =
+//            	        LineMessagingServiceBuilder
+//            	                .create("CJo3Ka/VX7VW4fsG78i5dNDpP5qqYgr1PD7YUclFFc62ZtnrIpHiM/Muof6oLc/J/bPoaheiYdHNoUkg09kAt5VqnD+tMyzOCClGLwvJaR3+etoVOdsHo1DGXv2UqOljNgUIFR/zQWk1U4iFRPr4TQdB04t89/1O/w1cDnyilFU=") // channel access token
+//            	                .build()
+//            	                .pushMessage(pushMessage)
+//            	                .execute();
+//            	System.out.println(response.code() + " " + response.message());
+//            	}
+//            	catch (Exception e) {
+//            		e.printStackTrace();
+//            	}
+//    	    }
+//    	};
+//
+//    	// schedule the task to run starting now and then every hour...
+//    	timer.schedule (hourlyTask, 0l, 1000*60*60*hourGap);
+//
+//	}
 	
 	@SuppressWarnings("fallthrough")
 	private void handleTextContent(String replyToken, Event event, TextMessageContent content)
@@ -284,9 +283,10 @@ public class KitchenSinkController {
 //        String[] arr = text.split(":");
         int ind = text.indexOf(":");
         String command= text.substring(0 , ind);
+        command=command.trim();
+        command=command.toLowerCase();
         String inputData = text.substring(ind+1);
-//        String command = arr[0];
-//        String inputData = arr[1];
+        inputData=inputData.trim();
         
         log.info("Got text message from {}: {}", replyToken, text);
         switch (command) {
@@ -295,7 +295,7 @@ public class KitchenSinkController {
                 String userId = event.getSource().getUserId();
                 if (userId != null) {
                     User u = database.getUserRecord(userId);
-                    String reply_msg = "Name:" + u.getName() + "\n" + "Weight:"+ u.getWeight().toString() +"\n"+ "Height:" + u.getHeight().toString() + "\n" + "Restrictions:" + u.getRestrictions() + "\n" + "Age:" + u.getAge().toString() + "\n" ;
+                    String reply_msg = "Name:" + u.getName() + "\n" + "Weight:"+ u.getWeight().toString() +"\n"+ "Height:" + u.getHeight().toString() + "\n" + "Restrictions:" + u.getRestrictions() + "\n" + "Age:" + u.getAge().toString() + "\n" + "GymFrequency:" + u.getGymFrequency() + "\n" + "LoseGainPerWeek:" + u.getLoseGainPerWeek() + "\n" + "WaterReminder:" + u.getWaterReminder();
                     this.replyText(replyToken, reply_msg);
                 } else {
                     this.replyText(replyToken, "User not found, type Start:x to begin!");
@@ -312,7 +312,7 @@ public class KitchenSinkController {
                 this.reply(replyToken, templateMessage);
                 break;
             }
-            case "Start": {
+            case "start": {
 
             		String userId = event.getSource().getUserId();
             		if(database.searchUser(userId)==false)
@@ -321,12 +321,16 @@ public class KitchenSinkController {
             		this.replyText(replyToken,"\t\t\t\t\t\t\t\t\tUser created!\n Please call the following:\nname,\ngender,\nweight(kg),\nheight(cm),\nage,\ngymFrequency(0 to 7 per week),\nloseGainPerWeek(No. of kgs to gain or lose. eg: -10 for losing 10 kgs per week),\nwaterReminder(Integer No. of reminders per day)");	
             		database.CreateNewUser(user);
             		}
+            		else {
+            			this.replyText(replyToken, "\t\t\t\t\t\t\t\t\tYou already have an existing account");
+            		}
             		break;
             }
             case "name": {
+            	
                 String userId = event.getSource().getUserId();
-            	database.updateUserName(userId, inputData);
-            	this.replyText(replyToken,inputData + " received");
+            		database.updateUserName(userId, inputData);
+            		this.replyText(replyToken,inputData + " received");
 
         		break;
         }
@@ -334,6 +338,15 @@ public class KitchenSinkController {
         
             
         case "gender": {
+        	inputData=inputData.toLowerCase();
+        	inputData=inputData.trim();
+        	if (inputData.equals("male")!=true && inputData.equals("female")!=true)
+        	{
+        		this.replyText(replyToken,"Please enter either male or female");
+        		break;
+        	}
+        	
+        	
         	String userId = event.getSource().getUserId();
         	database.updateGender(userId, inputData);
         	this.replyText(replyToken,inputData + " received");
@@ -342,16 +355,34 @@ public class KitchenSinkController {
     		break;
         }
         case "weight": {
+        	Float weight;
+        	
+        	try {
+        		weight = Float.parseFloat(inputData);
+        	}
+        	catch(NumberFormatException nb){
+        		this.replyText(replyToken,"Invalid input, please enter a number");
+        		break;
+        	}
         	String userId = event.getSource().getUserId();
-        	database.updateWeight(userId, Float.parseFloat(inputData));
+        	database.updateWeight(userId, weight);
         	this.replyText(replyToken,inputData + " received");
         	database.setBMR(userId);
         	database.setBMI(userId);
+        	database.updateReqCalDay(userId);
         	break;
         }
         case "height": {
+        	Float height;
+        	try {
+        		height = Float.parseFloat(inputData);
+        	}
+        	catch(NumberFormatException nb){
+        		this.replyText(replyToken,"Invalid input, please enter a number");
+        		break;
+        	}
         	String userId = event.getSource().getUserId();
-        	database.updateHeight(userId, Float.parseFloat(inputData));
+        	database.updateHeight(userId, height);
         	this.replyText(replyToken,inputData + " received");
         	database.setBMR(userId);
         	database.setBMI(userId);
@@ -362,11 +393,19 @@ public class KitchenSinkController {
         
 
 
-        case "waterMe" : {
+        case "waterme" : {
+        	Integer water;
+        	try {
+        		water = Integer.parseInt(inputData);
+        	}
+        	catch(NumberFormatException nb){
+        		this.replyText(replyToken,"Invalid input, please enter a number");
+        		break;
+        	}
         	String userId = event.getSource().getUserId();
         	
-
-        	setWaterReminder(inputData, userId);
+        	waterReminder  remind = new waterReminder();
+        	remind.setWaterReminder(water, userId);
         	break;
         }
            
@@ -377,27 +416,51 @@ public class KitchenSinkController {
         	String userId = event.getSource().getUserId();
 //        	User u = database.getUserRecord(userId);
 //        	u.setRestrictions(inputData);
-        	database.updateRestrictions(userId, inputData);
+        	database.updateRestrictions(userId, inputData.toLowerCase());
         	this.replyText(replyToken,inputData + " received");
         	break;
         }
         case "age": {
+        	Integer age;
+        	try {
+        		age = Integer.parseInt(inputData);
+        	}
+        	catch(NumberFormatException nb){
+        		this.replyText(replyToken,"Invalid input, please enter a number");
+        		break;
+        	}
         	String userId = event.getSource().getUserId();
-    		database.updateAge(userId, Integer.parseInt(inputData));
+    		database.updateAge(userId, age);
     		this.replyText(replyToken,inputData + " received");
     		database.setBMR(userId);
         	database.setBMI(userId);
     		break;
         }
-        case "gymFrequency": {
+        case "gymfrequency": {
+        	Integer gym;
+        	try {
+        		gym = Integer.parseInt(inputData);
+        	}
+        	catch(NumberFormatException nb){
+        		this.replyText(replyToken,"Invalid input, please enter a number");
+        		break;
+        	}
         	String userId = event.getSource().getUserId();
-    		database.updateGymFrequency(userId, Integer.parseInt(inputData));
+    		database.updateGymFrequency(userId, gym);
     		this.replyText(replyToken,inputData + " received");
     		break;
         }
-        case "loseGainPerWeek": {
+        case "losegainperweek": {
+        	Integer lg;
+        	try {
+        		lg = Integer.parseInt(inputData);
+        	}
+        	catch(NumberFormatException nb){
+        		this.replyText(replyToken,"Invalid input, please enter a number");
+        		break;
+        	}
         	String userId = event.getSource().getUserId();
-    		database.updateLoseGain(userId, Integer.parseInt(inputData));
+    		database.updateLoseGain(userId, lg);
     		this.replyText(replyToken,inputData + " received");
     		break;
         }
@@ -448,6 +511,7 @@ public class KitchenSinkController {
         	
         	String motivation = recommend.motivationMessage();
         	String reply_msg = "Recommended dishes in best to least:\n";
+
         	
         	//*********************************************************************
 		DecimalFormat df = new DecimalFormat("#.#");
@@ -455,8 +519,10 @@ public class KitchenSinkController {
         	String imageUrl = createUri("/static/buttons/final.png");
         	List<CarouselColumn> dishlist = new ArrayList<CarouselColumn>();
         	for(Dish d: recommended_dishes) {
-        		dishlist.add(new CarouselColumn(imageUrl,d.getName(),d.getpropCalories()+" "+d.getCalories()+" "+df.format(d.getPortion()), Arrays.asList(
+        		if(d.getCalories()!=0)
+        		{dishlist.add(new CarouselColumn(imageUrl,d.getName(),d.getpropCalories()+" "+d.getCalories()+" "+df.format(d.getPortion()), Arrays.asList(
                         new PostbackAction("Choose", d.getName()+" confirmed"+ "\n\n" + translator.translate(fromLang, toLang, d.getName()) + "\n\n"+ motivation +" "+ String.valueOf(d.getCalories())))));
+        		}
         	}
         CarouselTemplate carouselTemplate = new CarouselTemplate(dishlist);
         TemplateMessage templateMessage = new TemplateMessage("Carousel alt text", carouselTemplate);
@@ -526,9 +592,11 @@ public class KitchenSinkController {
         	String imageUrl = createUri("/static/buttons/final.png");
         	List<CarouselColumn> dishlist = new ArrayList<CarouselColumn>();
         	for(Dish d: recommended_dishes) {
+        		if(d.getCalories()!=0) {
         		dishlist.add(new CarouselColumn(imageUrl,d.getName(),d.getpropCalories()+" "+d.getCalories()+" "+df.format(d.getPortion()), Arrays.asList(
                         new PostbackAction("Choose", d.getName()+" confirmed"+ "\n\n" + translator.translate(fromLang, toLang, d.getName()) + "\n\n"+ motivation +" "+ String.valueOf(d.getCalories())))));
         	}
+        		}
         CarouselTemplate carouselTemplate = new CarouselTemplate(dishlist);
         TemplateMessage templateMessage = new TemplateMessage("Carousel alt text", carouselTemplate);
         this.reply(replyToken, templateMessage);
@@ -565,7 +633,7 @@ public class KitchenSinkController {
                 break;
             }
 
-        case "Motivation" : {
+        case "motivation" : {
         		Random rand = new Random();
         		String[] msgs = {"Good progress! One more step towards a healthier lifestyle", "Add oil!", "Strive for progress, not perfection", "The struggle you're in today is developing the strength you need for tomorrow", "Yes, you can! The road may be bumpy, but stay committed to the process.", "Making excuses burns 0 calories per hour."};
         		int  n = rand.nextInt(6);
@@ -658,15 +726,34 @@ public class KitchenSinkController {
 
 
 
-            default:{
+        default:{
+//    		String reply_text="this is default";
+    		String reply_text="Incorrect input! Please write your message in the following format:"+"\n"+
+    				"Start:<string>"+"\n"+
+    				"Profile:<string>"+"\n"+
+    				"Name:<string>"+"\n"+
+    				"Gender:<male/female>"+"\n"+
+    				"Weight:<float(kg)>"+"\n"+
+   				"Height:<float(cm)>"+"\n"+
+   				"Age:<int(years)>"+"\n"+
+   				"loseGainPerWeek:<(+/-)float>"+"\n"+
+   				"Restrictions:<ingredient,ingredient>"+"\n"+
+   				"waterMe:<integer>"+"\n"+
+   				"gymFrequency:<integer>"+"\n"+
+   				"vege:<Bistro/LSK/Cafe/LG7/Subway>"+"\n"+
+   				"vege:<dish name,dish name>"+"\n"+
+   				"recommend:<dish name,dish name>"+"\n"+
+   				"json:<url>"+"\n"+
+   				"friend:<string>"+"\n"+
+   				"code:<code>";
 
-                this.replyText(
-                        replyToken,
-                        "this is default"
-                );
+        this.replyText(
+                replyToken,
+                reply_text
+        );
 
-                break;
-            }
+        break;
+    }
         }
     }
 	
