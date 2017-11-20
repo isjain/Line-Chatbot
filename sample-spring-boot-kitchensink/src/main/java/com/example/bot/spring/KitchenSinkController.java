@@ -377,7 +377,7 @@ public class KitchenSinkController {
         	String userId = event.getSource().getUserId();
 //        	User u = database.getUserRecord(userId);
 //        	u.setRestrictions(inputData);
-        	database.updateRestrictions(userId, inputData);
+        	database.updateRestrictions(userId, inputData.toLowerCase());
         	this.replyText(replyToken,inputData + " received");
         	break;
         }
