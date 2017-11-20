@@ -60,7 +60,7 @@ public class Recommendation{
 		            
 		        }
 		    }
-		    if(!(inputUser.getRestrictions().equals("")))
+		    if(!(inputUser.getRestrictions().equals("none")))
 		    {
 			    //Diet Restrictions
 			    List<Dish> restricted_dishes = new ArrayList<Dish>();

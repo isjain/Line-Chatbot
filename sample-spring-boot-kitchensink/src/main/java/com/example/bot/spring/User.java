@@ -40,17 +40,17 @@ public class User {
 
 	public User(String userId) {
 		
-//		this.name= name;
+		this.name= null;
 		this.userId= userId;
-//		this.height= height;
-//		this.gymFrequency= gymFrequency;
-//		this.loseGainPerWeek= loseGainPerWeek;
-//		this.age= age;
-//		this.waterReminder= waterReminder;
-//		this.name= name;
-//		this.gender= gender;
+		this.height= 0;
+		this.gymFrequency= 0;
+		this.loseGainPerWeek= 0;
+		this.age= 0;
+		this.waterReminder= 0;
+		this.weight= 0;
+		this.gender= null;
 //		this.goal= goal;
-		this.restrictions="";
+		this.restrictions="none";
 	}
 	
 	public void setRestrictions(String r) {

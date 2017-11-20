@@ -477,7 +477,17 @@ public class KitchenSinkController {
 				break;
 			}
         	
+        	
         	String userId = event.getSource().getUserId();
+        	
+        	User curr_user = database.getUserRecord(userId);
+        	
+        	if(curr_user.getWeight().equals('0') || curr_user.getHeight().equals('0') || curr_user.getGender()==null || curr_user.getAge().equals('0'))
+        	{
+        		this.replyText(replyToken, "Please make sure that weight, height, gender and age are accepted first!");
+        		break;
+        	}
+        	
             String fromLang = "en";
             String toLang = "zh-CN";
         	Translator translator = new Translator();
@@ -491,7 +501,7 @@ public class KitchenSinkController {
         	}
         	Dish[] dishes2 = dishes.toArray(new Dish[dishes.size()]);
         	Dish[] final_dishes = recomDB.findCaloricContent(dishes2);
-        	User curr_user = database.getUserRecord(userId);
+        	
 //        	String[] a = curr_user.getRestrictions().split(",");
         	
         	Recommendation recommend = new Recommendation(curr_user, final_dishes);
