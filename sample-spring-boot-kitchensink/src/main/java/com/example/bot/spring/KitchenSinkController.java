@@ -409,8 +409,7 @@ public class KitchenSinkController {
 //        		reply_msg = reply_msg + d.getName() + "  " + d.getpropCalories() +  "  " + d.getCalories()+"  " + d.getPortion() + "\n";
 //        	}
 //        	this.replyText(replyToken, reply_msg + "User reqcalday:"+ curr_user.getCalDay() + "\n\n" + translator.translate(fromLang, toLang, reply_msg) + "\n\n"+ motivation);    	
-        }
-        
+        }        
         case "json": {
         	JsonTest jst = new JsonTest();
     		String userId = event.getSource().getUserId();
@@ -544,9 +543,6 @@ public class KitchenSinkController {
 		tempFile.toFile().deleteOnExit();
 		return new DownloadedContent(tempFile, createUri("/downloaded/" + tempFile.getFileName()));
 	}
-
-
-	
 
 
 	public KitchenSinkController() {
