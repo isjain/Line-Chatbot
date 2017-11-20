@@ -17,7 +17,10 @@ public class Dish {
 
 	public Dish(String name) {
 		this.dishId = null;
-		this.name = name;
+		if(name.length()<41)
+			this.name = name;
+		else
+			this.name = name.substring(0,40);
     		this.keywords = name.toLowerCase().split(" ");
     		cleanKWORDS();    		
 		this.calories = 0;
