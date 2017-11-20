@@ -229,22 +229,22 @@ public class KitchenSinkController {
 		this.reply(replyToken, new TextMessage(message));
 	}
 
-	private void replyImage(@NonNull String replyToken, @NonNull String message) {
-		if (replyToken.isEmpty()) {
-			throw new IllegalArgumentException("replyToken must not be empty");
-		}
-//		if (message.length() > 1000) {
-//			message = message.substring(0, 1000 - 2) + "..";
+//	private void replyImage(@NonNull String replyToken, @NonNull String message) {
+//		if (replyToken.isEmpty()) {
+//			throw new IllegalArgumentException("replyToken must not be empty");
 //		}
-		this.reply(replyToken, new ImageMessage(message));
-	}
+////		if (message.length() > 1000) {
+////			message = message.substring(0, 1000 - 2) + "..";
+////		}
+//		this.reply(replyToken, new ImageMessage(message));
+//	}
 	
 	
 
-	private void handleSticker(String replyToken, StickerMessageContent content) {
-		reply(replyToken, new StickerMessage(content.getPackageId(), content.getStickerId()));
-	}
-	
+//	private void handleSticker(String replyToken, StickerMessageContent content) {
+//		reply(replyToken, new StickerMessage(content.getPackageId(), content.getStickerId()));
+//	}
+//	
 //	public void setWaterReminder(int hourGap, String userID) {
 //    	if (hourGap ==0) 
 //    		return;
@@ -616,8 +616,8 @@ public class KitchenSinkController {
 //        
 //        
 //        }
-        
-
+//        
+//
 //        case "carousel": {
 //           String imageUrl = createUri("/static/buttons/1040.jpg");
 //           CarouselTemplate carouselTemplate = new CarouselTemplate(
@@ -632,7 +632,7 @@ public class KitchenSinkController {
 //                this.reply(replyToken, templateMessage);
 //                break;
 //            }
-
+//
 //        case "motivation" : {
 //        		Random rand = new Random();
 //        		String[] msgs = {"Good progress! One more step towards a healthier lifestyle", "Add oil!", "Strive for progress, not perfection", "The struggle you're in today is developing the strength you need for tomorrow", "Yes, you can! The road may be bumpy, but stay committed to the process.", "Making excuses burns 0 calories per hour."};
