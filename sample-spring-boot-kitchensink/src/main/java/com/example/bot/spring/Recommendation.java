@@ -15,6 +15,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+*Recommendation class sorts the inputted menu according to the recommended calories for the particular 
+*user. It also has the feature of recommending only vegetarian dishes. 
+*
+* @author Project Group 25
+* @version 1.0
+* @since 2017-11-20
+*/ 
 public class Recommendation{
    
 	private Dish[] inputDishes;
@@ -30,6 +38,12 @@ public class Recommendation{
 		return inputDishes;
 	}
 		
+	/**
+	*This is a method to sort the input dishes according
+	*to calories in each dish around the required calories 
+	*per day of the user and also filters out dishes
+	*which are against diet preferences.
+	*/
 	public void findRecommendation()
 	{
 //			rDishes = new Dish[inputDishes.length];
@@ -123,6 +137,11 @@ public class Recommendation{
 		return rDishes;
 	}
 	
+	/**
+	*This method is to remove any dishes which are not
+	*vegetarian
+	@return Dish[] returns an array of veg dishes
+	*/
 	public Dish[] getVegRecommendedDishes() {
 		
 		ArrayList<Dish> veg_dishes = new ArrayList<Dish>();
@@ -158,6 +177,10 @@ public class Recommendation{
 
 //------------motivational messages------------------
 
+	/**
+	*This method is to call for motivational messages
+	@return String return the motivational string msg
+	*/
 	public String motivationMessage(){
 		Random rand = new Random();
 		String[] msgs = {"good progress! One more step towards a healthier lifestyle", "add oil!", "strive for progress not perfection", "you can do it! The road may be bumpy, but stay committed to the process", "making excuses burns 0 calories per hour", "a little progress each day adds up to big results", "when you feel like stopping think about why you started", "the best project you will ever work on is you", "you're not there yet but you're closer than you were yesterday", "be stronger than your excuse", "nothing tastes as good as being healthy feels", "weight loss is not a physical challenge, it's a mental one", "three months from now you will thank yourself", "you are what you eat. So don't be fast, cheap, easy or fake", "if it was easy, everyone would do it", "eat for the body you want", "you don't get what you wish for, you get what you work for", "your stomach should not be a waste basket", "once you see results, it becomes an addiction"};

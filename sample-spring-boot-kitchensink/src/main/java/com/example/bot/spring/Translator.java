@@ -24,8 +24,12 @@ public class Translator {
   //   Translator.translate(fromLang, toLang, text);
   // }
 
-  /**
-   * Sends out a WhatsApp message via WhatsMate WA Gateway.
+	/**
+   * This is called to translate the recommended dishes to the user for their convenience into Chinese
+   * @param fromLang Sets the hours of gap between both
+   * @param toLang  Sets the user id to who to send the message ti
+   * @param text
+   * @return Returns the translated string
    */
   public String translate(String fromLang, String toLang, String text) throws Exception {
     // TODO: Should have used a 3rd party library to make a JSON string from an object

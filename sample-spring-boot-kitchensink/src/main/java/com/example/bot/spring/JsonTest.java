@@ -13,9 +13,20 @@ import org.springframework.http.ResponseEntity;
 import java.io.*;
 //import org.apache.http.client.utils.URIBuilder;
 
+/**
+* JsonTest is used to convert a url to a list of dish objects which will be used to give recommendations to the user
+*
+* @author Project Group 25
+* @version 1.0
+* @since 2017-11-20
+*/
 public class JsonTest {
 	
-
+	/**
+	*This method extracts the menu in json format from a url and returns an array of dish objects
+	* @param url This is the paramter to getJSONlistweb
+	* @return Dish[] This returns the array of dishes.
+	*/
 	public Dish[] getJSONlistweb(String url)
 	{
 		RestTemplate restTemplate = new RestTemplate();

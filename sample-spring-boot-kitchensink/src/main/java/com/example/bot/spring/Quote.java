@@ -4,6 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+/**
+ * Quote.java deserialises the json object
+* @author Project Group 25
+* @version 1.0
+* @since 2017-11-20
+*/
 public class Quote {
 	private String name;
 	private Float price;

@@ -11,7 +11,13 @@ import com.linecorp.bot.client.LineMessagingServiceBuilder;
 
 
 
-
+/**
+* User class is used to create new users and set their attributes.
+*
+* @author Project Group 25
+* @version 1.0
+* @since 2017-11-20
+*/
 public class User {
 
 	private float weight;

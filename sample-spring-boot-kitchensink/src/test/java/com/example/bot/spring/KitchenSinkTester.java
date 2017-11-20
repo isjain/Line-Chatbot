@@ -1,3 +1,4 @@
+
 package com.example.bot.spring;
 
 
@@ -47,81 +48,20 @@ import com.example.bot.spring.DatabaseEngine;
 
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = { KitchenSinkTester.class, UserInputDatabaseEngine.class })
+@SpringBootTest(classes = { KitchenSinkTester.class, UserInputDatabaseEngine.class, RecommendationDatabaseEngine.class })
 public class KitchenSinkTester {
 	@Autowired
 	private UserInputDatabaseEngine databaseEngine;
 
 	private RecommendationDatabaseEngine recomDB;
 
-//	@Test
-//	public void testNotFound() throws Exception {
-//		boolean thrown = false;
-//		try {
-//			
-//			this.databaseEngine.search("no");
-//		} catch (Exception e) {
-//			thrown = true;
-//		}
-//		assertThat(thrown).isEqualTo(true);
-//	}
 
-//	
-//	@Test
-//	public void testFound2() throws Exception {
-//		boolean thrown = false;
-//		String userID = "testing";
-//		User new_user = new User(userID);
-//		new_user.setWeight(62);
-//		new_user.setHeight(173);
-//		new_user.setAge(21);
-//		new_user.setRestrictions("chicken,beef");
-//		new_user.setGender("male");
-//		new_user.setLostGainPerWeek(0);
-//		new_user.setGymFrequency(2);
-//		new_user.setName("Gregor");
-////		new_user.setWaterReminder(2);
-//		String inputData = "noodles and soup,chicken with rice,beef buns,green salad,apples";
-//		Dish[] recommended_dishes = null;
-//		Dish[] dishes2 = null;
-//		Dish[] final_dishes= null;
-//		Recommendation recommend;
-//		try {
-////			result = this.databaseEngine.search("Hi");
-//			String[] menu = inputData.split(",");
-//        	List<Dish> dishes = new ArrayList<Dish>();
-//        	for (String str: menu)
-//        	{
-//        		dishes.add(new Dish(str));
-//        	}
-//        		dishes2 = dishes.toArray(new Dish[dishes.size()]);
-//        		final_dishes = recomDB.findCaloricContent(dishes2);
-//        	
-//        	recommend = new Recommendation(new_user, dishes2);
-//        	recommended_dishes = recommend.getRecommendedDishes();
-//			
-//		} catch (Exception e) {
-//			thrown = true;
-//		}
-//		assertThat(recommended_dishes.length).isEqualTo("3");
-////		assertThat(recommended_dishes[0].getName()).isEqualTo("apples");
-////		assertThat(recommended_dishes[1].getName()).isEqualTo("noodles and soup");
-////		assertThat(recommended_dishes[2].getName()).isEqualTo("green salad");
-//	}
+
 	
-//	@Test
-//	public void testFound2() throws Exception {
-//		boolean thrown = false;
-//		String result = null;
-//		try {
-//			result = this.databaseEngine.search("Hi");
-//		} catch (Exception e) {
-//			thrown = true;
-//		}
-//		assertThat(!thrown).isEqualTo(true);
 
-//		assertThat(result).isEqualTo("Hey, how things going?");
-//	}
+	
+	
+	
 	
 	@Test
 	public void testFound() throws Exception {
@@ -213,7 +153,7 @@ public class KitchenSinkTester {
 }
 	
 	@Test
-	public void testRecommendation() throws Exception 
+	public void testRecommendation2() throws Exception 
 	{	
 		RecommendationDatabaseEngine recomDB=new RecommendationDatabaseEngine();
 		boolean thrown = false;

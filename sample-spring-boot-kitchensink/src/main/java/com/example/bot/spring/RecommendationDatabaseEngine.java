@@ -10,9 +10,22 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
 
+/**
+* This class accesses the nutrienttable to find matches for the menu inputted by the user. it is also 
+* used to store the calories consumed by the user. 
+* @author Project Group 25
+* @version 1.0
+* @since 2017-11-20
+*/
 public class RecommendationDatabaseEngine extends DatabaseEngine {
 	
 	
+	/**
+	*This method is to retrieve veg dishes at a location
+	*from their menus present in our database
+	*@return String return a string of veg dishes 
+	*param input(String) location name
+	*/
 	public String giveVegDishes(String input) {
 		
 		String msg = "The vegetarian dishes at "+ input + " are:\n\n";
@@ -44,6 +57,12 @@ public class RecommendationDatabaseEngine extends DatabaseEngine {
 	}
 	
 	
+	/**
+	*This method retrieves the calories of the dish
+	*from our database
+	*@return Dish[] An array of dishes with their calories 
+	*param Dish[] dishes An array of input dishes
+	*/
 	public Dish[] findCaloricContent(Dish[] dishes) {
 		
 		
@@ -114,6 +133,10 @@ public class RecommendationDatabaseEngine extends DatabaseEngine {
 			return dishes;
 		}
 	
+	/**
+	*This method stores calories and dates in the database
+	*param String UserId The user ID whose data is stored
+	*/
 	public void useStoredCal(String UserId)
 	{
 		try {

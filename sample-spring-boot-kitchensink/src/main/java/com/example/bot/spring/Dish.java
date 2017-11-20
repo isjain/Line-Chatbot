@@ -4,6 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;  
 import java.util.*;
+
+/**
+* Dish class is used to create dish objects for each menu item inputted by the user.
+* @author Project Group 25
+* @version 1.0
+* @since 2017-11-20
+*/
 public class Dish {
 
 	private String dishId;
@@ -100,6 +107,9 @@ public class Dish {
 	}
 	public void setKeywords(String[] kwords) {
 		this.keywords = kwords;
+	}
+	public Dish getDishRecord() {
+		return this;
 	}
 
 }
