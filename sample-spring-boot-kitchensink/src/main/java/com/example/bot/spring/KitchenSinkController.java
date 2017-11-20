@@ -295,7 +295,7 @@ public class KitchenSinkController {
                 String userId = event.getSource().getUserId();
                 if (userId != null) {
                     User u = database.getUserRecord(userId);
-                    String reply_msg = "Name:" + u.getName() + "\n" + "Weight:"+ u.getWeight().toString() +"\n"+ "Height:" + u.getHeight().toString() + "\n" + "Restrictions:" + u.getRestrictions() + "\n" + "Age:" + u.getAge().toString() + "\n" + "GymFrequency:" + u.getGymFrequency() + "\n" + "LoseGainPerWeek:" + u.getLoseGainPerWeek() + "\n" + "WaterReminder:" + u.getWaterReminder();
+                    String reply_msg = "Name:" + u.getName() + "\n" + "Weight:"+ u.getWeight().toString() +"\n"+ "Height:" + u.getHeight().toString() + "\n" + "Restrictions:" + u.getRestrictions() + "\n" + "Age:" + u.getAge().toString() + "\n" + "GymFrequency:" + u.getGymFrequency() + "\n" + "LoseGainPerWeek:" + u.getLoseGainPerWeek();
                     this.replyText(replyToken, reply_msg);
                 } else {
                     this.replyText(replyToken, "User not found, type Start:x to begin!");
