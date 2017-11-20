@@ -101,5 +101,8 @@ public class Dish {
 	public void setKeywords(String[] kwords) {
 		this.keywords = kwords;
 	}
+	public Dish getDishRecord() {
+		return this;
+	}
 
 }
