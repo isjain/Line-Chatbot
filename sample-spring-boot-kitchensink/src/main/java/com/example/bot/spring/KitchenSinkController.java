@@ -284,9 +284,10 @@ public class KitchenSinkController {
 //        String[] arr = text.split(":");
         int ind = text.indexOf(":");
         String command= text.substring(0 , ind);
+        command=command.trim();
+        command=command.toLowerCase();
         String inputData = text.substring(ind+1);
-//        String command = arr[0];
-//        String inputData = arr[1];
+        inputData=inputData.trim();
         
         log.info("Got text message from {}: {}", replyToken, text);
         switch (command) {
@@ -327,9 +328,10 @@ public class KitchenSinkController {
             		break;
             }
             case "name": {
+            	
                 String userId = event.getSource().getUserId();
-            	database.updateUserName(userId, inputData);
-            	this.replyText(replyToken,inputData + " received");
+            		database.updateUserName(userId, inputData);
+            		this.replyText(replyToken,inputData + " received");
 
         		break;
         }
@@ -337,6 +339,7 @@ public class KitchenSinkController {
         
             
         case "gender": {
+        	
         	String userId = event.getSource().getUserId();
         	database.updateGender(userId, inputData);
         	this.replyText(replyToken,inputData + " received");
@@ -345,14 +348,20 @@ public class KitchenSinkController {
     		break;
         }
         case "weight": {
+        	Float weight = Float.parseFloat(inputData);
+        	if (weight.isNaN())
+        	{
+        		this.replyText(replyToken,"Invalid input, please enter a number");
+        	}
+        	else {
         	String userId = event.getSource().getUserId();
-        	database.updateWeight(userId, Float.parseFloat(inputData));
+        	database.updateWeight(userId, weight);
         	this.replyText(replyToken,inputData + " received");
         	database.setBMR(userId);
         	database.setBMI(userId);
         	database.updateReqCalDay(userId);
         	break;
-        }
+        }}
         case "height": {
         	String userId = event.getSource().getUserId();
         	database.updateHeight(userId, Float.parseFloat(inputData));
