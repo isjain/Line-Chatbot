@@ -47,24 +47,13 @@ import com.example.bot.spring.DatabaseEngine;
 
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = { KitchenSinkTester.class, UserInputDatabaseEngine.class })
+@SpringBootTest(classes = { KitchenSinkTester.class, UserInputDatabaseEngine.class, RecommendationDatabaseEngine.class })
 public class KitchenSinkTester {
 	@Autowired
 	private UserInputDatabaseEngine databaseEngine;
 
 	private RecommendationDatabaseEngine recomDB;
 
-//	@Test
-//	public void testNotFound() throws Exception {
-//		boolean thrown = false;
-//		try {
-//			
-//			this.databaseEngine.search("no");
-//		} catch (Exception e) {
-//			thrown = true;
-//		}
-//		assertThat(thrown).isEqualTo(true);
-//	}
 
 //	
 //	@Test
@@ -109,19 +98,41 @@ public class KitchenSinkTester {
 ////		assertThat(recommended_dishes[2].getName()).isEqualTo("green salad");
 //	}
 	
-//	@Test
-//	public void testFound2() throws Exception {
-//		boolean thrown = false;
-//		String result = null;
-//		try {
-//			result = this.databaseEngine.search("Hi");
-//		} catch (Exception e) {
-//			thrown = true;
-//		}
-//		assertThat(!thrown).isEqualTo(true);
+	@Test
+	public void testRecommendation() throws Exception 
+	{
+		boolean thrown = false;
+		String userID = "sklo";
+		User c_user = new User(userID);
+		Dish[] result_recom=null;
+		c_user.setHeight(173);
+		c_user.setWeight(62);
+		c_user.setGender("male");
+		c_user.setGymFrequency(2);
+		c_user.setAge(21);
+		c_user.setCalDay(2000.4);
+		String[] menu= {"chicken with rice","noodles","apple","banana"};
+		List<Dish> dis = new ArrayList<Dish>();
+		for(String str: menu)
+		{
+			dis.add(new Dish(str));
+		}
+		Dish[] dis2 = dis.toArray(new Dish[dis.size()]);
+		try {
+			
+			Dish[] final_dishes = recomDB.findCaloricContent(dis2);
+			Recommendation rec = new Recommendation(c_user,final_dishes);
+			result_recom = rec.getRecommendedDishes();
+			
+		}catch(Exception e){
+			thrown = true;
+		}
+		
+//		assertThat(result_recom[0].getName()).isEqualTo(null);
 
-//		assertThat(result).isEqualTo("Hey, how things going?");
-//	}
+	
+	}
+	
 	
 	@Test
 	public void testFound() throws Exception {
