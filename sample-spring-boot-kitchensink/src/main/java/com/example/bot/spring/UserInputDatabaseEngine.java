@@ -267,42 +267,6 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 	}
 	
 
-	public void updateBMI(String UserId, float weight)
-	{
-		try {
-			Connection con = getConnection();
-			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET weight=? WHERE user_id=?");
-
-			smt.setFloat(1,weight);
-			smt.setString(2,UserId);
-			ResultSet rs = smt.executeQuery();
-			rs.close();
-			smt.close();
-			con.close();
-		}
-		catch (Exception e) {
-			System.out.println(e);
-		}
-	}
-	
-
-	public void updateUserBMR(String UserId, float weight)
-	{
-		try {
-			Connection con = getConnection();
-			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET weight=? WHERE user_id=?");
-
-			smt.setFloat(1,weight);
-			smt.setString(2,UserId);
-			ResultSet rs = smt.executeQuery();
-			rs.close();
-			smt.close();
-			con.close();
-		}
-		catch (Exception e) {
-			System.out.println(e);
-		}
-	}
 	
 
 	public void updateLoseGain(String UserId, float loseGain)

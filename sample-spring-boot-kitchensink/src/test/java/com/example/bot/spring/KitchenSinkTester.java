@@ -127,7 +127,7 @@ public class KitchenSinkTester {
 	public void testFound() throws Exception {
 		boolean thrown = false;
 		User result = null;
-		String userId = "heylo";
+		String userId = "test";
 		User new_user = new User(userId);
 		try {
 			
@@ -140,9 +140,14 @@ public class KitchenSinkTester {
 //			this.databaseEngine.updateWaterReminder(userId, 3);
 			this.databaseEngine.updateUserName(userId, "abcd");
 			this.databaseEngine.updateGender(userId, "male");
-//			this.databaseEngine.setCalDay(userId, 210);
+			this.databaseEngine.updateReqCalDay(userId);
 			
+		
 			result = this.databaseEngine.getUserRecord("heylo");
+			result.setBMR();
+			result.setCalDay();
+			result.setBMI();
+			this.databaseEngine.updateCalperDay("heylo","200");
 			
 		} catch (Exception e) {
 			thrown = true;
@@ -155,9 +160,71 @@ public class KitchenSinkTester {
 //		assertThat(result.getWaterReminder()).isEqualTo("3");
 		assertThat(result.getName()).isEqualTo("abcd");
 		assertThat(result.getGender()).isEqualTo("male");
+//		assertThat(result.getGender()).isEqualTo("male");
+		
 //		assertThat(result.getCalDay()).isEqualTo("210");
 		
 		
+	//}
+
+}
+	
+	@Test
+	public void testFound1() throws Exception {
+		boolean thrown = false;
+		String result="";
+		String userId = "test";
+		User new_user = new User(userId);
+//		KitchenSinkController ks;
+		
+		
+		try {
+			JsonTest jst = new JsonTest();
+			Dish[] dishes2 = jst.getJSONlistweb("https://api.myjson.com/bins/d4t4b");
+			
+			this.databaseEngine.CreateNewUser(new_user);
+			this.databaseEngine.updateWeight(userId, 65);
+			this.databaseEngine.updateHeight(userId, 172);
+			this.databaseEngine.updateGymFrequency(userId, 4);
+			this.databaseEngine.updateLoseGain(userId, 5);
+			this.databaseEngine.updateAge(userId, 21);
+//			this.databaseEngine.updateWaterReminder(userId, 3);
+			this.databaseEngine.updateUserName(userId, "abcd");
+			this.databaseEngine.updateGender(userId, "male");
+			this.databaseEngine.updateReqCalDay(userId);
+			
+			result = dishes2[0].getName();
+			
+		} catch (Exception e) {
+			thrown = true;
+		}
+		assertThat(result).isNotEqualTo("");
+		
+	//}
+
+}
+	
+	@Test
+	public void translateTest() {
+		Translator tr = new Translator();
+		try {
+		tr.translate("en", "fr", "hi");
+		
 	}
+		catch (Exception e) {
+		}
+		
+	}
+	
+//	@Test
+//	public void handletext() throws Exception {
+//		Event evnt;
+//		TextMessageContent content= new TextMessageContent("hi", "hi");
+//		KitchenSinkController ks = new KitchenSinkController();
+//		ks.handleTextContent("hi", evnt, content);
+//		assert(true);
+//	}
+	
+	
 
 }
