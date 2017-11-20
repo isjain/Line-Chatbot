@@ -2,6 +2,7 @@ package com.example.bot.spring;
 import org.springframework.boot.SpringApplication;
 import java.net.URI;
 import java.net.URL;
+import java.util.ArrayList;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -52,13 +53,17 @@ public class JsonTest {
 	//    Quote[] quotes = restTemplate.getForObject("https://api.myjson.com/bins/1hhki3", Quote.class);
 	//    log.info(quote.toString());
 		Quote[] test=responseEntity.getBody();
-		Dish[] dishes=new Dish[100];
+		ArrayList<Dish> dishes=new ArrayList<Dish>();
+//		Dish[] dishes=new Dish[100];
 		for (int i=0; i<test.length; i++)
 		{
-			dishes[i]=new Dish((test[i].getName()));
-			
-		}
-	    return dishes;
+			dishes.add(new Dish((test[i].getName())));
+//			dishes[i]=new Dish((test[i].getName()));
+		}	
+		Dish[] dishes2 = dishes.toArray(new Dish[dishes.size()]);
+//		Dish[] final = new Dish[dishes.size()];
+//		dishes.toArray(final);
+	    return dishes2;
 	}
 	
 	
