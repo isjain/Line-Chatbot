@@ -89,7 +89,7 @@ public class RecommendationDatabaseEngine extends DatabaseEngine {
 						 min_words = tempo_arr.length;
 						}
 					}
-					if(k>=0 && k<5000)
+					if(!Double.isNaN(k))
 					{	d.setCalories(k);
 						d.setDishId(l);
 						d.setWeight(wt);
