@@ -245,8 +245,7 @@ public class KitchenSinkController {
 		reply(replyToken, new StickerMessage(content.getPackageId(), content.getStickerId()));
 	}
 	
-	public void setWaterReminder(String inputData, String userID) {
-    	int hourGap = Integer.parseInt(inputData);
+	public void setWaterReminder(int hourGap, String userID) {
     	if (hourGap ==0) 
     		return;
     	
@@ -339,6 +338,13 @@ public class KitchenSinkController {
         
             
         case "gender": {
+        	inputData=inputData.toLowerCase();
+        	if (inputData!="male" && inputData!="female")
+        	{
+        		this.replyText(replyToken,"Please enter either male or female");
+        		break;
+        	}
+        	
         	
         	String userId = event.getSource().getUserId();
         	database.updateGender(userId, inputData);
@@ -387,10 +393,18 @@ public class KitchenSinkController {
 
 
         case "waterme" : {
+        	Integer water;
+        	try {
+        		water = Integer.parseInt(inputData);
+        	}
+        	catch(NumberFormatException nb){
+        		this.replyText(replyToken,"Invalid input, please enter a number");
+        		break;
+        	}
         	String userId = event.getSource().getUserId();
         	
 
-        	setWaterReminder(inputData, userId);
+        	setWaterReminder(water, userId);
         	break;
         }
            
@@ -422,14 +436,30 @@ public class KitchenSinkController {
     		break;
         }
         case "gymfrequency": {
+        	Integer gym;
+        	try {
+        		gym = Integer.parseInt(inputData);
+        	}
+        	catch(NumberFormatException nb){
+        		this.replyText(replyToken,"Invalid input, please enter a number");
+        		break;
+        	}
         	String userId = event.getSource().getUserId();
-    		database.updateGymFrequency(userId, Integer.parseInt(inputData));
+    		database.updateGymFrequency(userId, gym);
     		this.replyText(replyToken,inputData + " received");
     		break;
         }
         case "losegainperweek": {
+        	Integer lg;
+        	try {
+        		lg = Integer.parseInt(inputData);
+        	}
+        	catch(NumberFormatException nb){
+        		this.replyText(replyToken,"Invalid input, please enter a number");
+        		break;
+        	}
         	String userId = event.getSource().getUserId();
-    		database.updateLoseGain(userId, Integer.parseInt(inputData));
+    		database.updateLoseGain(userId, lg);
     		this.replyText(replyToken,inputData + " received");
     		break;
         }
