@@ -34,7 +34,8 @@ public class Recommendation{
 	{
 			rDishes = new Dish[inputDishes.length];
 			for( int i=0; i<inputDishes.length; i++ )
-				rDishes[i] = new Dish(inputDishes[i]);
+				if(inputDishes[i].getCalories()!=0)
+				{rDishes[i] = new Dish(inputDishes[i]);}
 //			rDishes = inputDishes.clone();
 			double reqcal  = Double.parseDouble(inputUser.getCalDay());
 			double mealcal = reqcal/3;
