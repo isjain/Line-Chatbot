@@ -90,9 +90,19 @@ public class RecommendationDatabaseEngine extends DatabaseEngine {
 						 min_words = tempo_arr.length;
 						}
 					}
-					d.setCalories(k);
-					d.setDishId(l);
-					d.setWeight(wt);
+					if(!Double.isNaN(k))
+					{	d.setCalories(k);
+						d.setDishId(l);
+						d.setWeight(wt);
+					}
+					else
+					{
+						d.setCalories(0);
+						d.setDishId(null);
+						d.setWeight(0);
+						String temp = d.getName();
+						d.setName(temp+" "+"Not found in database");
+					}
 					rs.close();
 					smt.close();
 					
