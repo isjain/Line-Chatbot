@@ -70,16 +70,16 @@ public void waterReminderLineClientTestWrongInputtest() {
 		assertThat(true);
 	}
 	
-	@Test	
-
-	// isNotOldUser
-public void isOldUsertest() {  
-	// uday = old user
-				assertThat(this.databaseEngine.isOldUser("U633c7e32ccc0a6b09902d22791eddce8")).isEqualTo(true);		// Uday
-				assertThat(this.databaseEngine.isOldUser("Uc6f9f762ebd52e0abedea651e2982b3c")).isEqualTo(false);		// Irene
-
-}
-	
+//	@Test	
+//
+//	// isNotOldUser
+//public void isOldUsertest() {  
+//	// uday = old user
+//				assertThat(this.databaseEngine.isOldUser("U633c7e32ccc0a6b09902d22791eddce8")).isEqualTo(true);		// Uday
+//				assertThat(this.databaseEngine.isOldUser("Uc6f9f762ebd52e0abedea651e2982b3c")).isEqualTo(false);		// Irene
+//
+//}
+//	
 
 //	@Test
 //public void isredeemedtest() {  

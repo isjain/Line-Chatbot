@@ -295,7 +295,7 @@ public class KitchenSinkController {
                 String userId = event.getSource().getUserId();
                 if (userId != null) {
                     User u = database.getUserRecord(userId);
-                    String reply_msg = "Name:" + u.getName() + "\n" + "Weight:"+ u.getWeight().toString() +"\n"+ "Height:" + u.getHeight().toString() + "\n" + "Restrictions:" + u.getRestrictions() + "\n" + "Age:" + u.getAge().toString() + "\n" ;
+                    String reply_msg = "Name:" + u.getName() + "\n" + "Weight:"+ u.getWeight().toString() +"\n"+ "Height:" + u.getHeight().toString() + "\n" + "Restrictions:" + u.getRestrictions() + "\n" + "Age:" + u.getAge().toString() + "\n" + "GymFrequency:" + u.getGymFrequency() + "\n" + "LoseGainPerWeek:" + u.getLoseGainPerWeek() + "\n" + "WaterReminder:" + u.getWaterReminder();
                     this.replyText(replyToken, reply_msg);
                 } else {
                     this.replyText(replyToken, "User not found, type Start:x to begin!");
@@ -312,7 +312,7 @@ public class KitchenSinkController {
                 this.reply(replyToken, templateMessage);
                 break;
             }
-            case "Start": {
+            case "start": {
 
             		String userId = event.getSource().getUserId();
             		if(database.searchUser(userId)==false)
@@ -320,6 +320,9 @@ public class KitchenSinkController {
             		User user = new User(userId);
             		this.replyText(replyToken,"\t\t\t\t\t\t\t\t\tUser created!\n Please call the following:\nname,\ngender,\nweight(kg),\nheight(cm),\nage,\ngymFrequency(0 to 7 per week),\nloseGainPerWeek(No. of kgs to gain or lose. eg: -10 for losing 10 kgs per week),\nwaterReminder(Integer No. of reminders per day)");	
             		database.CreateNewUser(user);
+            		}
+            		else {
+            			this.replyText(replyToken, "\t\t\t\t\t\t\t\t\tYou already have an existing account");
             		}
             		break;
             }
@@ -347,6 +350,7 @@ public class KitchenSinkController {
         	this.replyText(replyToken,inputData + " received");
         	database.setBMR(userId);
         	database.setBMI(userId);
+        	database.updateReqCalDay(userId);
         	break;
         }
         case "height": {
@@ -362,7 +366,7 @@ public class KitchenSinkController {
         
 
 
-        case "waterMe" : {
+        case "waterme" : {
         	String userId = event.getSource().getUserId();
         	
 
@@ -389,13 +393,13 @@ public class KitchenSinkController {
         	database.setBMI(userId);
     		break;
         }
-        case "gymFrequency": {
+        case "gymfrequency": {
         	String userId = event.getSource().getUserId();
     		database.updateGymFrequency(userId, Integer.parseInt(inputData));
     		this.replyText(replyToken,inputData + " received");
     		break;
         }
-        case "loseGainPerWeek": {
+        case "losegainperweek": {
         	String userId = event.getSource().getUserId();
     		database.updateLoseGain(userId, Integer.parseInt(inputData));
     		this.replyText(replyToken,inputData + " received");
@@ -565,7 +569,7 @@ public class KitchenSinkController {
                 break;
             }
 
-        case "Motivation" : {
+        case "motivation" : {
         		Random rand = new Random();
         		String[] msgs = {"Good progress! One more step towards a healthier lifestyle", "Add oil!", "Strive for progress, not perfection", "The struggle you're in today is developing the strength you need for tomorrow", "Yes, you can! The road may be bumpy, but stay committed to the process.", "Making excuses burns 0 calories per hour."};
         		int  n = rand.nextInt(6);
@@ -662,7 +666,7 @@ public class KitchenSinkController {
 
                 this.replyText(
                         replyToken,
-                        "this is default"
+                        "Invalid input. Please enter one of the following options - \nStart:x to create a new user \nProfile:x to retrieve user profile \nName:x to set x as the user name \nWeight:x, Height:x, Age:x, "
                 );
 
                 break;
