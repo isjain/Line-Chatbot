@@ -13,7 +13,6 @@
  * License for the specific language governing permissions and limitations
  * under the License.
  */
-
 apply plugin: 'org.springframework.boot'
 
 dependencies {
@@ -25,3 +24,13 @@ test {
     environment "DATABASE_URL", "postgres://lkafgipyyrrnbe:4ac6829a708b183fd2a28d79ae52cb0f84f37a5efc1536e4c1a49c3ec8dac523@ec2-23-23-159-84.compute-1.amazonaws.com:5432/dce2ob2nf3v1rj" 
 }
  //   environment "DATABASE_URL", "postgres://xtoimwepeqgqjd:12cf80a17ee22dd2b4eab544324a62a035411d09c78e12c594f02992e2a06c09@ec2-23-21-184-181.compute-1.amazonaws.com:5432/d1k62ad22q24kc" 
+
+apply plugin: "jacoco"
+
+jacocoTestReport {
+     reports {
+         xml.enabled false
+         csv.enabled false
+         html.destination file("${buildDir}/jacocoHtml")
+} }
+ 

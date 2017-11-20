@@ -17,6 +17,8 @@
 package com.linecorp.bot.model.message;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 
 import lombok.Value;
 
@@ -28,4 +30,15 @@ import lombok.Value;
 public class ImageMessage implements Message {
     private final String originalContentUrl;
     private final String previewImageUrl;
+    
+    @JsonCreator
+    // Constructor which has only one argument needs Jackson Annotation.
+    // see MessageJsonReconstructionTest for detail.
+    public ImageMessage(final String imageUrl) {
+        this.originalContentUrl = imageUrl;
+        this.previewImageUrl = imageUrl;   
+    }
+    
+    
+    
 }
