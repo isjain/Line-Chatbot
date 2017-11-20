@@ -32,10 +32,16 @@ public class Recommendation{
 		
 	public void findRecommendation()
 	{
-			rDishes = new Dish[inputDishes.length];
+//			rDishes = new Dish[inputDishes.length];
+			List<Dish> tempo = new ArrayList<Dish>();
+			
 			for( int i=0; i<inputDishes.length; i++ )
-				rDishes[i] = new Dish(inputDishes[i]);
-//			rDishes = inputDishes.clone();
+				if(inputDishes[i].getCalories()!=0)
+				{
+					tempo.add(inputDishes[i]);
+				}
+			rDishes = tempo.toArray(new Dish[tempo.size()]);
+
 			double reqcal  = Double.parseDouble(inputUser.getCalDay());
 			double mealcal = reqcal/3;
 		    // Below lines are similar to insertion sort

@@ -377,7 +377,7 @@ public class KitchenSinkController {
         	String userId = event.getSource().getUserId();
 //        	User u = database.getUserRecord(userId);
 //        	u.setRestrictions(inputData);
-        	database.updateRestrictions(userId, inputData);
+        	database.updateRestrictions(userId, inputData.toLowerCase());
         	this.replyText(replyToken,inputData + " received");
         	break;
         }
@@ -448,6 +448,7 @@ public class KitchenSinkController {
         	
         	String motivation = recommend.motivationMessage();
         	String reply_msg = "Recommended dishes in best to least:\n";
+
         	
         	//*********************************************************************
 		DecimalFormat df = new DecimalFormat("#.#");
@@ -455,8 +456,10 @@ public class KitchenSinkController {
         	String imageUrl = createUri("/static/buttons/final.png");
         	List<CarouselColumn> dishlist = new ArrayList<CarouselColumn>();
         	for(Dish d: recommended_dishes) {
-        		dishlist.add(new CarouselColumn(imageUrl,d.getName(),d.getpropCalories()+" "+d.getCalories()+" "+df.format(d.getPortion()), Arrays.asList(
+        		if(d.getCalories()!=0)
+        		{dishlist.add(new CarouselColumn(imageUrl,d.getName(),d.getpropCalories()+" "+d.getCalories()+" "+df.format(d.getPortion()), Arrays.asList(
                         new PostbackAction("Choose", d.getName()+" confirmed"+ "\n\n" + translator.translate(fromLang, toLang, d.getName()) + "\n\n"+ motivation +" "+ String.valueOf(d.getCalories())))));
+        		}
         	}
         CarouselTemplate carouselTemplate = new CarouselTemplate(dishlist);
         TemplateMessage templateMessage = new TemplateMessage("Carousel alt text", carouselTemplate);
@@ -526,9 +529,11 @@ public class KitchenSinkController {
         	String imageUrl = createUri("/static/buttons/final.png");
         	List<CarouselColumn> dishlist = new ArrayList<CarouselColumn>();
         	for(Dish d: recommended_dishes) {
+        		if(d.getCalories()!=0) {
         		dishlist.add(new CarouselColumn(imageUrl,d.getName(),d.getpropCalories()+" "+d.getCalories()+" "+df.format(d.getPortion()), Arrays.asList(
                         new PostbackAction("Choose", d.getName()+" confirmed"+ "\n\n" + translator.translate(fromLang, toLang, d.getName()) + "\n\n"+ motivation +" "+ String.valueOf(d.getCalories())))));
         	}
+        		}
         CarouselTemplate carouselTemplate = new CarouselTemplate(dishlist);
         TemplateMessage templateMessage = new TemplateMessage("Carousel alt text", carouselTemplate);
         this.reply(replyToken, templateMessage);
