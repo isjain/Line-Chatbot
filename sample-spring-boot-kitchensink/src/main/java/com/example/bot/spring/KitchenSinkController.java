@@ -21,6 +21,7 @@ import java.io.OutputStream;
 import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.ArrayList;
@@ -33,6 +34,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 import com.linecorp.bot.model.profile.UserProfileResponse;
 import java.util.Random;
+import java.text.DecimalFormat;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -80,6 +83,7 @@ import com.linecorp.bot.model.message.template.ConfirmTemplate;
 import com.linecorp.bot.model.response.BotApiResponse;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
+
 import org.springframework.web.bind.annotation.*;
 import com.linecorp.bot.client.LineMessagingServiceBuilder;
 import com.linecorp.bot.model.response.BotApiResponse;
@@ -94,12 +98,12 @@ import com.linecorp.bot.model.*;
 import java.util.Timer;
 import java.util.TimerTask;
 
+
 import lombok.NonNull;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.URI;
-import org.json.JSONException;
 
 @Slf4j
 @LineMessageHandler
@@ -109,12 +113,8 @@ public class KitchenSinkController {
 	@Autowired
 	private LineMessagingClient lineMessagingClient;
 	private UserInputDatabaseEngine database;
-
-	private CouponDatabaseEngine icedb;
-
-
 	private RecommendationDatabaseEngine recomDB;
-
+	private CouponDatabaseEngine icedb;
 
 	@EventMapping
 	public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) throws Exception {
@@ -358,43 +358,17 @@ public class KitchenSinkController {
         }
         
 
+
         case "waterMe" : {
         	String userId = event.getSource().getUserId();
         	
 
         	setWaterReminder(inputData, userId);
-//        	int hourGap = Integer.parseInt(inputData);
-//        	
-//        	Timer timer = new Timer ();
-//        	TimerTask hourlyTask = new TimerTask () {
-//        	    @Override
-//        	    public void run () {
-//        	        // your code here...
-//                	String userId = event.getSource().getUserId();
-//                	TextMessage textMessage = new TextMessage("It is time to drink your water :)");
-//                	PushMessage pushMessage = new PushMessage(userId, textMessage);
-//                	try {
-//                	Response<BotApiResponse> response =
-//                	        LineMessagingServiceBuilder
-//                	                .create("CJo3Ka/VX7VW4fsG78i5dNDpP5qqYgr1PD7YUclFFc62ZtnrIpHiM/Muof6oLc/J/bPoaheiYdHNoUkg09kAt5VqnD+tMyzOCClGLwvJaR3+etoVOdsHo1DGXv2UqOljNgUIFR/zQWk1U4iFRPr4TQdB04t89/1O/w1cDnyilFU=") // channel access token
-//                	                .build()
-//                	                .pushMessage(pushMessage)
-//                	                .execute();
-//                	System.out.println(response.code() + " " + response.message());
-//                	}
-//                	catch (Exception e) {
-//                		e.printStackTrace();
-//                	}
-//        	    }
-//        	};
-//
-//        	// schedule the task to run starting now and then every hour...
-//        	timer.schedule (hourlyTask, 0l, 1000*60*60*hourGap);
-
         	break;
         }
            
         
+
 
         case "restrictions": {
         	String userId = event.getSource().getUserId();
@@ -404,7 +378,6 @@ public class KitchenSinkController {
         	this.replyText(replyToken,inputData + " received");
         	break;
         }
-
         case "age": {
         	String userId = event.getSource().getUserId();
     		database.updateAge(userId, Integer.parseInt(inputData));
@@ -429,9 +402,7 @@ public class KitchenSinkController {
         case "vege": {	
         	
         }
-
         case "recommend" : {
-    		//this.replyText(replyToken,"We recommend a corn soup with salad and cheese, and croutons.");
         	
         	if( (inputData.equals("Cafe")) || (inputData.equals("Bistro")) || (inputData.equals("Subway")) || (inputData.equals("LSK")) || (inputData.equals("LG7")))
 			{
@@ -444,6 +415,7 @@ public class KitchenSinkController {
             String fromLang = "en";
             String toLang = "zh-CN";
         	Translator translator = new Translator();
+        	
         	//Recommendation
         	String[] menu = inputData.split(",");
         	List<Dish> dishes = new ArrayList<Dish>();
@@ -475,11 +447,12 @@ public class KitchenSinkController {
         	String reply_msg = "Recommended dishes in best to least:\n";
         	
         	//*********************************************************************
-        	
-        	String imageUrl = createUri("/static/buttons/1040.jpg");
+		DecimalFormat df = new DecimalFormat("#.#");
+
+        	String imageUrl = createUri("/static/buttons/final.png");
         	List<CarouselColumn> dishlist = new ArrayList<CarouselColumn>();
         	for(Dish d: recommended_dishes) {
-        		dishlist.add(new CarouselColumn(imageUrl,d.getName(),d.getpropCalories()+" "+d.getCalories()+" "+d.getPortion(), Arrays.asList(
+        		dishlist.add(new CarouselColumn(imageUrl,d.getName(),d.getpropCalories()+" "+d.getCalories()+" "+df.format(d.getPortion()), Arrays.asList(
                         new PostbackAction("Choose", d.getName()+" confirmed"+ "\n\n" + translator.translate(fromLang, toLang, d.getName()) + "\n\n"+ motivation +" "+ String.valueOf(d.getCalories())))));
         	}
         CarouselTemplate carouselTemplate = new CarouselTemplate(dishlist);
@@ -525,14 +498,14 @@ public class KitchenSinkController {
           }
         
         
-        case "json": {
-	        	JSON_Conversion obj1= new JSON_Conversion();
-	        	String jsonStr = inputData;
-	//        	String jsonStr = "{\"userInput\": [{\r\n\t\"name\":\"Spicy Bean curd with Minced Pork served with Rice\",\r\n\t\"price\":35,\r\n\t\"ingredients\":[\"Pork\",\"Bean curd\",\"Rice\"]\r\n},\r\n{\r\n\t\"name\":\"Sweet and Sour Pork served with Rice\",\r\n\t\"price\":36,\r\n\t\"ingredients\":[\"Pork\",\"Sweet and Sour Sauce\",\"Pork\"]\r\n},\r\n{\r\n\t\"name\":\"Chili Chicken on Rice\",\r\n\t\"price\":28,\r\n\t\"ingredients\":[\"Chili\",\"Chicken\",\"Rice\"]\r\n}]}";
-	        	this.replyText(replyToken, obj1.ResultJSON(jsonStr));
-	        	break;
-        }
-        
+//        case "json": {
+//	        	JSON_Conversion obj1= new JSON_Conversion();
+//	        	String jsonStr = inputData;
+//	//        	String jsonStr = "{\"userInput\": [{\r\n\t\"name\":\"Spicy Bean curd with Minced Pork served with Rice\",\r\n\t\"price\":35,\r\n\t\"ingredients\":[\"Pork\",\"Bean curd\",\"Rice\"]\r\n},\r\n{\r\n\t\"name\":\"Sweet and Sour Pork served with Rice\",\r\n\t\"price\":36,\r\n\t\"ingredients\":[\"Pork\",\"Sweet and Sour Sauce\",\"Pork\"]\r\n},\r\n{\r\n\t\"name\":\"Chili Chicken on Rice\",\r\n\t\"price\":28,\r\n\t\"ingredients\":[\"Chili\",\"Chicken\",\"Rice\"]\r\n}]}";
+//	        	this.replyText(replyToken, obj1.ResultJSON(jsonStr));
+//	        	break;
+//        }
+//        
         case "friend": {
 	    		int MAX_QUANT_COUPON = 4999;
 	    	 	int couponQuant = icedb.getCouponNumber();
@@ -608,8 +581,14 @@ public class KitchenSinkController {
 
 
 
-    default:{
-        this.replyText(replyToken, "this is default");
+
+            default:{
+
+                this.replyText(
+                        replyToken,
+                        "this is default"
+                );
+
                 break;
             }
         }
@@ -654,32 +633,15 @@ public class KitchenSinkController {
 		return new DownloadedContent(tempFile, createUri("/downloaded/" + tempFile.getFileName()));
 	}
 
-	@RequestMapping("/")
-	public String index (@RequestParam(value="to", defaultValue="Ishan") String name) {
-		TextMessage textMessage = new TextMessage("hello" + name);
-		PushMessage pushMessage = new PushMessage(name, textMessage);
-		lineMessagingClient.pushMessage(pushMessage);
-		System.out.println("Message Pushed");
-		return "Greetings from Spring Boot";
-	}
-
-
-	@RequestMapping(value="/hi", method = RequestMethod.GET)
-		public Student sayHitoStudent(
-			@RequestParam(value = "parameter1", defaultValue= "Ishan") String name,
-			@RequestParam(value ="parameter2", defaultValue = "") String who
-			) {
-			return new Student(name + " " + who, 3);
-		}
 
 	
 
 
 	public KitchenSinkController() {
 		database = new UserInputDatabaseEngine();
-		icedb = new CouponDatabaseEngine();
 		itscLOGIN = System.getenv("ITSC_LOGIN");
 		recomDB = new RecommendationDatabaseEngine();
+		icedb = new CouponDatabaseEngine();
 	}
 
 	private String itscLOGIN;
@@ -719,25 +681,6 @@ public class KitchenSinkController {
         	);
     	}
     }
-	
-	class Student {
-		private String name;
-		private int year;
-
-		public Student(String name, int year) {
-			this.name = name;
-			this.year = year;
-		}
-
-		public String getName() {
-			return name;
-		}
-
-		public int getYear() {
-			return year;	
-		}
-
-	}
 	
 	
 

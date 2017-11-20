@@ -54,40 +54,42 @@ public class Recommendation{
 		            
 		        }
 		    }
-		    
-		    //Diet Restrictions
-		    List<Dish> restricted_dishes = new ArrayList<Dish>();
-			String restr= inputUser.getRestrictions();
-			String[] restric = restr.split(",");
-			for(Dish d: rDishes)
-			{	int skt=0;
-				String[] kwrds = d.getKeywords();
-				
-				for(String st: kwrds)
-				{	
-					for(String st2: restric )
-					{
-						if(st.toLowerCase().equals(st2.toLowerCase()))
+		    if(!(inputUser.getRestrictions().equals("")))
+		    {
+			    //Diet Restrictions
+			    List<Dish> restricted_dishes = new ArrayList<Dish>();
+				String restr= inputUser.getRestrictions();
+				String[] restric = restr.split(",");
+				for(Dish d: rDishes)
+				{	int skt=0;
+					String[] kwrds = d.getKeywords();
+					
+					for(String st: kwrds)
+					{	
+						for(String st2: restric )
 						{
-							skt=1;
-							break;
+							if(st.toLowerCase().equals(st2.toLowerCase()))
+							{
+								skt=1;
+								break;
+								
+							}
 							
 						}
 						
 					}
 					
+					if(skt==0)
+					{	
+						restricted_dishes.add(new Dish(d));
+						
+					}
 				}
 				
-				if(skt==0)
-				{	
-					restricted_dishes.add(new Dish(d));
-					
-				}
-			}
-			
-			Dish[] temp_rDishes = restricted_dishes.toArray(new Dish[restricted_dishes.size()]);
-		   
-			rDishes = temp_rDishes;
+				Dish[] temp_rDishes = restricted_dishes.toArray(new Dish[restricted_dishes.size()]);
+			   
+				rDishes = temp_rDishes;
+		    }
 		    		    
 		    //keep only the first 5 elements of rDishes
 		    if (rDishes.length>5)
@@ -99,11 +101,15 @@ public class Recommendation{
 			    rDishes = tempp.clone();	   
 		    }
 		    
+		    //portion size
 		    for (int i = 0; i < rDishes.length; i++) {
-		    		int portion = (int)Math.round((reqcal/3)/rDishes[i].getCalories());
+		    		double portion = (reqcal/3)/rDishes[i].getpropCalories();
+		    		if(portion>0.6)
+		    			portion = Math.round(portion);
+		    		else 
+		    			portion=0.5;
 		        rDishes[i].setPortion(portion);
-		    }
-		
+		    }	
 	}
 	
 	public Dish[] getRecommendedDishes() 

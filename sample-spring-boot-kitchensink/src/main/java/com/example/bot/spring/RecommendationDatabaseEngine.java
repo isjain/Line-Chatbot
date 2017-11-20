@@ -18,7 +18,6 @@ public class RecommendationDatabaseEngine extends DatabaseEngine {
 		String msg = "The vegetarian dishes at "+ input + " are:\n\n";
 		String fragment= "";
 		
-		
 		try {
 			
 				Connection con = getConnection();
