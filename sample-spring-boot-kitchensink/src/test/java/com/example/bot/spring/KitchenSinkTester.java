@@ -119,6 +119,7 @@ public class KitchenSinkTester {
 //			thrown = true;
 //		}
 //		assertThat(!thrown).isEqualTo(true);
+
 //		assertThat(result).isEqualTo("Hey, how things going?");
 //	}
 	
@@ -158,4 +159,5 @@ public class KitchenSinkTester {
 		
 		
 	}
+
 }
