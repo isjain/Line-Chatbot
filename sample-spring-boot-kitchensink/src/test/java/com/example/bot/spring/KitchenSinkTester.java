@@ -140,7 +140,7 @@ public class KitchenSinkTester {
 //			this.databaseEngine.updateWaterReminder(userId, 3);
 			this.databaseEngine.updateUserName(userId, "abcd");
 			this.databaseEngine.updateGender(userId, "male");
-//			this.databaseEngine.updateReqCalDay(userId, 210);
+//			this.databaseEngine.setCalDay(userId, 210);
 			
 			result = this.databaseEngine.getUserRecord("heylo");
 			

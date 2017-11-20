@@ -125,17 +125,17 @@ public class KitchenSinkController {
 		handleTextContent(event.getReplyToken(), event, message);
 	}
 
-	@EventMapping
-	public void handleStickerMessageEvent(MessageEvent<StickerMessageContent> event) {
-		handleSticker(event.getReplyToken(), event.getMessage());
-	}
-
-	@EventMapping
-	public void handleLocationMessageEvent(MessageEvent<LocationMessageContent> event) {
-		LocationMessageContent locationMessage = event.getMessage();
-		reply(event.getReplyToken(), new LocationMessage(locationMessage.getTitle(), locationMessage.getAddress(),
-				locationMessage.getLatitude(), locationMessage.getLongitude()));
-	}
+//	@EventMapping
+//	public void handleStickerMessageEvent(MessageEvent<StickerMessageContent> event) {
+//		handleSticker(event.getReplyToken(), event.getMessage());
+//	}
+//
+//	@EventMapping
+//	public void handleLocationMessageEvent(MessageEvent<LocationMessageContent> event) {
+//		LocationMessageContent locationMessage = event.getMessage();
+//		reply(event.getReplyToken(), new LocationMessage(locationMessage.getTitle(), locationMessage.getAddress(),
+//				locationMessage.getLatitude(), locationMessage.getLongitude()));
+//	}
 
 	@EventMapping
 	public void handleImageMessageEvent(MessageEvent<ImageMessageContent> event) throws IOException {
@@ -153,20 +153,20 @@ public class KitchenSinkController {
 
 	}
 
-	@EventMapping
-	public void handleAudioMessageEvent(MessageEvent<AudioMessageContent> event) throws IOException {
-		final MessageContentResponse response;
-		String replyToken = event.getReplyToken();
-		String messageId = event.getMessage().getId();
-		try {
-			response = lineMessagingClient.getMessageContent(messageId).get();
-		} catch (InterruptedException | ExecutionException e) {
-			reply(replyToken, new TextMessage("Cannot get image: " + e.getMessage()));
-			throw new RuntimeException(e);
-		}
-		DownloadedContent mp4 = saveContent("mp4", response);
-		reply(event.getReplyToken(), new AudioMessage(mp4.getUri(), 100));
-	}
+//	@EventMapping
+//	public void handleAudioMessageEvent(MessageEvent<AudioMessageContent> event) throws IOException {
+//		final MessageContentResponse response;
+//		String replyToken = event.getReplyToken();
+//		String messageId = event.getMessage().getId();
+//		try {
+//			response = lineMessagingClient.getMessageContent(messageId).get();
+//		} catch (InterruptedException | ExecutionException e) {
+//			reply(replyToken, new TextMessage("Cannot get image: " + e.getMessage()));
+//			throw new RuntimeException(e);
+//		}
+//		DownloadedContent mp4 = saveContent("mp4", response);
+//		reply(event.getReplyToken(), new AudioMessage(mp4.getUri(), 100));
+//	}
 
 	@EventMapping
 	public void handleUnfollowEvent(UnfollowEvent event) {
@@ -605,41 +605,41 @@ public class KitchenSinkController {
 	    }
 
         
-        case "translate": {
-        	String userId = event.getSource().getUserId();
-            String fromLang = "en";
-            String toLang = "zh-CN";
-        	Translator translator = new Translator();
-        	
-       this.replyText(replyToken, translator.translate(fromLang, toLang, inputData));        	
-        	break;
-        
-        
-        }
+//        case "translate": {
+//        	String userId = event.getSource().getUserId();
+//            String fromLang = "en";
+//            String toLang = "zh-CN";
+//        	Translator translator = new Translator();
+//        	
+//       this.replyText(replyToken, translator.translate(fromLang, toLang, inputData));        	
+//        	break;
+//        
+//        
+//        }
         
 
-        case "carousel": {
-           String imageUrl = createUri("/static/buttons/1040.jpg");
-           CarouselTemplate carouselTemplate = new CarouselTemplate(
-           Arrays.asList(
-              new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
-                     new URIAction("Go to line.me","https://line.me"),
-                     new PostbackAction("Say hello1", "hello ã�“ã‚“ã�«ã�¡ã�¯"))),
-                     new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
-                     new PostbackAction("è¨€ hello2", "hello ã�“ã‚“ã�«ã�¡ã�¯", "hello ã�“ã‚“ã�«ã�¡ã�¯"),
-                     new MessageAction("Say message","Rice=ç±³")))));
-                TemplateMessage templateMessage = new TemplateMessage("Carousel alt text", carouselTemplate);
-                this.reply(replyToken, templateMessage);
-                break;
-            }
+//        case "carousel": {
+//           String imageUrl = createUri("/static/buttons/1040.jpg");
+//           CarouselTemplate carouselTemplate = new CarouselTemplate(
+//           Arrays.asList(
+//              new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
+//                     new URIAction("Go to line.me","https://line.me"),
+//                     new PostbackAction("Say hello1", "hello ã�“ã‚“ã�«ã�¡ã�¯"))),
+//                     new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
+//                     new PostbackAction("è¨€ hello2", "hello ã�“ã‚“ã�«ã�¡ã�¯", "hello ã�“ã‚“ã�«ã�¡ã�¯"),
+//                     new MessageAction("Say message","Rice=ç±³")))));
+//                TemplateMessage templateMessage = new TemplateMessage("Carousel alt text", carouselTemplate);
+//                this.reply(replyToken, templateMessage);
+//                break;
+//            }
 
-        case "motivation" : {
-        		Random rand = new Random();
-        		String[] msgs = {"Good progress! One more step towards a healthier lifestyle", "Add oil!", "Strive for progress, not perfection", "The struggle you're in today is developing the strength you need for tomorrow", "Yes, you can! The road may be bumpy, but stay committed to the process.", "Making excuses burns 0 calories per hour."};
-        		int  n = rand.nextInt(6);
-        		this.replyText(replyToken,msgs[n]);    
-        		break;
-          }
+//        case "motivation" : {
+//        		Random rand = new Random();
+//        		String[] msgs = {"Good progress! One more step towards a healthier lifestyle", "Add oil!", "Strive for progress, not perfection", "The struggle you're in today is developing the strength you need for tomorrow", "Yes, you can! The road may be bumpy, but stay committed to the process.", "Making excuses burns 0 calories per hour."};
+//        		int  n = rand.nextInt(6);
+//        		this.replyText(replyToken,msgs[n]);    
+//        		break;
+//          }
         
         
 //        case "json": {
