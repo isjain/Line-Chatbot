@@ -84,11 +84,23 @@ import com.linecorp.bot.model.*;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * waterReminder class is used to send reminders to the user to drink water in intervals set by the user. 
+*
+* @author Project Group 25
+* @version 1.0
+* @since 2017-11-20
+*/
+
 public class waterReminder {
 	
 	
 	
-	
+	/**
+	    * This method is used to set water reminders for the user to be reminded of it.
+	    * @param hourGap Sets the hours of gap between both
+	    * @param userID  Sets the user id to who to send the message ti
+	    */
 	public void setWaterReminder(int hourGap, String userID) {
     	if (hourGap ==0) 
     		return;

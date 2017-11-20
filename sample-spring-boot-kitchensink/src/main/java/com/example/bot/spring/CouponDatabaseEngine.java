@@ -10,10 +10,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.lang.Object;
 import java.util.Random;
+/**
+* this class connects to the coupon database and is used to retrieve and add coupons 
+* @author Project Group 25
+* @version 1.0
+* @since 2017-11-20
+*/
 public class CouponDatabaseEngine extends DatabaseEngine {
 	
 	
 	// thsi is not working properly, need to change to check whether it has been redeemed or not and the 5000 limit and return static image
+	/**
+	   * This is called to redeem the code, and update in the db the claimed user for a given coupon code if it hasnt been redeemed yet.
+	   * @param code 	This is the code of the user to input
+	   * @param UserId  This is the user id of the user to store in db. 
+	   * @return Returns true if checkRedeemed is true false otherwise.
+	   */
 	public boolean redeemCode(String code, String UserId) {
 		boolean isChecked = false;
 		// over here call a boolean to check if it has already been redeemed if it has been redeemed, then exit and return a string, saying "sorry this code has already been redeemed, otherwise execute""
@@ -39,6 +51,11 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 		return isChecked;
 	}
 	
+	/**
+	   * Checks whether the user was signed up before promotion or not. Returns true if old user.
+	   * @param userId 	This is the code of the user to input
+	   * @return Returns true if olduser, true false otherwise.
+	   */
 	public boolean isOldUser(String userId) {
 		int userStatus =0;
 		try {			
@@ -128,6 +145,7 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 		return true;
 	}
 	
+	
 	public boolean checkRedeemed(String code) {
 		int redeemed =0;
 		try {
@@ -158,7 +176,11 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 	
 	
 	// check if setting to redeemed works
-	
+	/**
+	* This function saves the coupon code into the database
+	* @param UserId first parameter to saveCouponCode
+	* @return String Returns the coupon code
+	*/
 	public String saveCouponCode(String UserId)
 	{
 		String code = "404";
@@ -183,6 +205,10 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 		return code;
 	}
 	
+	/**
+		*Counts the amount of coupon numbers to limit to 5000. 
+		* @return int 	returns number of coupons
+		*/
 	int getCouponNumber() {
 		int quant = 0;
 		try {
@@ -203,6 +229,10 @@ public class CouponDatabaseEngine extends DatabaseEngine {
 	}
 	
 	
+	/**
+	* This function generates a new coupon code 
+	* @return int This returns the code.
+	*/
 	int generateNewCode() throws Exception{
 		try {
 				Connection con = getConnection();

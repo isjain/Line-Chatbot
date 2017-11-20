@@ -13,57 +13,31 @@ import org.springframework.http.ResponseEntity;
 import java.io.*;
 //import org.apache.http.client.utils.URIBuilder;
 
+/**
+* JsonTest is used to convert a url to a list of dish objects which will be used to give recommendations to the user
+*
+* @author Project Group 25
+* @version 1.0
+* @since 2017-11-20
+*/
 public class JsonTest {
 	
-	public String getJSONweb(String url, String userID)
-	{
-	RestTemplate restTemplate = new RestTemplate();
-	
-//	JsonDatabaseEngine jsondb=new JsonDatabaseEngine();
-//	jsondb.addjsonurl(url, userID);
-////	String newjsonlink = "https://api.myjson.com/bins/d4t4b";
-//	
-//	String newjsonlink = jsondb.getjsonurl(userID);
-//	System.out.println("Vinamra's json url" + newjsonlink + "ddd");
-
-//	ResponseEntity<Quote[]> responseEntity = restTemplate.getForEntity(url, Quote[].class);
-	ResponseEntity<Quote[]> responseEntity = restTemplate.getForEntity(url, Quote[].class);
-
-//    Quote[] quotes = restTemplate.getForObject("https://api.myjson.com/bins/1hhki3", Quote.class);
-//    log.info(quote.toString());
-	Quote[] test=new Quote[20];
-	test=responseEntity.getBody();
-    return test[2].getName();
-	}
-	
-	public String getJSONuri(String url)
-	{
-//		URI uri = null;
-//		uri = new URI(url);
-//		URL newurl=null;
-//		newurl=uri.toURL();
-//		return newurl.toString();
-		return url.toString();
-	}
+	/**
+	*This method extracts the menu in json format from a url and returns an array of dish objects
+	* @param url This is the paramter to getJSONlistweb
+	* @return Dish[] This returns the array of dishes.
+	*/
 	public Dish[] getJSONlistweb(String url)
 	{
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<Quote[]> responseEntity = restTemplate.getForEntity(url, Quote[].class);
 	
-	//    Quote[] quotes = restTemplate.getForObject("https://api.myjson.com/bins/1hhki3", Quote.class);
-	//    log.info(quote.toString());
+
 		Quote[] test=responseEntity.getBody();
-//		ArrayList<Dish> dishes=new ArrayList<Dish>();
 		DishAdapter ds=new DishAdapter(test);
-//		Dish[] dishes=new Dish[100];
-//		for (int i=0; i<test.length; i++)
-//		{
-//			dishes.add(new Dish((test[i].getName())));
-////			dishes[i]=new Dish((test[i].getName()));
-//		}	
+
 		Dish[] dishes2 = ds.dishes.toArray(new Dish[ds.dishes.size()]);
-//		Dish[] final = new Dish[dishes.size()];
-//		dishes.toArray(final);
+
 	    return dishes2;
 	}
 	

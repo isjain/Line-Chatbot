@@ -58,123 +58,16 @@ public class KitchenSinkTester {
 
 
 	
-//	//test for recommendation
-////	@Test
-////	public void testRecom() throws Exception {
-////		boolean thrown = false;
-////		String userId = "heylo";
-////		User new_user = new User(userId);
-////		Dish[] result2=null;
-////		User curr_user=null;
-////		//test recommendation
-////		String inputData = "chicken with rice,apple,banana,noodles";
-////    		String[] menu = inputData.split(",");
-////		List<Dish> dishes1 = new ArrayList<Dish>();
-////		Dish[] dishes2;
-////		Dish[] final_dishes;
-////		Recommendation recommend2;
-////		
-////    		try {
-////			this.databaseEngine.CreateNewUser(new_user);
-////			this.databaseEngine.updateWeight(userId, 65);
-////			this.databaseEngine.updateHeight(userId, 172);
-////			this.databaseEngine.updateGymFrequency(userId, 4);
-////			this.databaseEngine.updateLoseGain(userId, 5);
-////			this.databaseEngine.updateAge(userId, 21);
-//////			this.databaseEngine.updateWaterReminder(userId, 3);
-////			this.databaseEngine.updateUserName(userId, "abcd");
-////			this.databaseEngine.updateGender(userId, "male");
-////			this.databaseEngine.updateReqCalDay(userId);
-////			
-////			curr_user = databaseEngine.getUserRecord(userId);
-////
-////			
-////	        	for (String str: menu)
-////	        	{
-////	        		dishes1.add(new Dish(str));
-////	        	}
-////	        	dishes2 = dishes1.toArray(new Dish[dishes1.size()]);
-////	        final_dishes = recomDB.findCaloricContent(dishes2);
-////	        
-////	        	
-////	        	recommend2 = new Recommendation(curr_user, final_dishes);
-////	        	
-////            	result2 = recommend2.getRecommendedDishes();            	
-////				
-////		}catch (Exception e) {
-////			thrown = true;
-////		}
-////    		
-////    		assertThat(curr_user.getWeight()).isEqualTo("65");
-//////    		assertThat(result2).isEqualTo(null);
-//////		assertThat(result2[0].getName()).isEqualTo("banana");
-//////		assertThat(result[1].getName()).isEqualTo("noodles");
-//////		assertThat(result[2].getName()).isEqualTo("apple");
-//////		assertThat(result[3].getName()).isEqualTo("chicken and rice");
-////
-//////		assertThat(result.getHeight()).isEqualTo("172");
-//////		assertThat(result.getGymFrequency()).isEqualTo("4");
-//////		assertThat(result.getLoseGainPerWeek()).isEqualTo("5");
-//////		assertThat(result.getAge()).isEqualTo("21");
-////////		assertThat(result.getWaterReminder()).isEqualTo("3");
-//////		assertThat(result.getName()).isEqualTo("abcd");
-//////		assertThat(result.getGender()).isEqualTo("male");
-//////		assertThat(result.getCalDay()).isEqualTo("210");
-////		
-////		
-////	}
-//
-//}
-//		} catch (Exception e) {
-//			thrown = true;
-//		}
-//		assertThat(recommended_dishes.length).isEqualTo("3");
-////		assertThat(recommended_dishes[0].getName()).isEqualTo("apples");
-////		assertThat(recommended_dishes[1].getName()).isEqualTo("noodles and soup");
-////		assertThat(recommended_dishes[2].getName()).isEqualTo("green salad");
-//	}
-	
-	@Test
-	public void testRecommendation() throws Exception 
-	{
-		boolean thrown = false;
-		String userID = "sklo";
-		User c_user = new User(userID);
-		Dish[] result_recom=null;
-		c_user.setHeight(173);
-		c_user.setWeight(62);
-		c_user.setGender("male");
-		c_user.setGymFrequency(2);
-		c_user.setAge(21);
-		c_user.setCalDay(2000.4);
-		String[] menu= {"chicken with rice","noodles","apple","banana"};
-		List<Dish> dis = new ArrayList<Dish>();
-		for(String str: menu)
-		{
-			dis.add(new Dish(str));
-		}
-		Dish[] dis2 = dis.toArray(new Dish[dis.size()]);
-		try {
-			
-			Dish[] final_dishes = recomDB.findCaloricContent(dis2);
-			Recommendation rec = new Recommendation(c_user,final_dishes);
-			result_recom = rec.getRecommendedDishes();
-			
-		}catch(Exception e){
-			thrown = true;
-		}
-		
-//		assertThat(result_recom[0].getName()).isEqualTo(null);
 
 	
-	}
+	
 	
 	
 	@Test
 	public void testFound() throws Exception {
 		boolean thrown = false;
 		User result = null;
-		String userId = "heylo";
+		String userId = "test";
 		User new_user = new User(userId);
 		try {
 			
@@ -187,9 +80,22 @@ public class KitchenSinkTester {
 //			this.databaseEngine.updateWaterReminder(userId, 3);
 			this.databaseEngine.updateUserName(userId, "abcd");
 			this.databaseEngine.updateGender(userId, "male");
-//			this.databaseEngine.updateReqCalDay(userId, 210);
+			this.databaseEngine.updateReqCalDay(userId);
 			
+		
 			result = this.databaseEngine.getUserRecord("heylo");
+			result.setBMR();
+			result.setCalDay();
+			result.setBMI();
+			
+			float bmr1=this.databaseEngine.calcBMI("test");
+			float bmr2=this.databaseEngine.calcBMR("test");
+			this.databaseEngine.updateCalperDay("heylo","200");
+			this.databaseEngine.setBMI("test");
+			this.databaseEngine.setBMR("test");
+			this.databaseEngine.updateRestrictions("test","chicken");
+			this.databaseEngine.searchUser("heylo");
+			double db = this.databaseEngine.getRequiredCalories("heylo");
 			
 		} catch (Exception e) {
 			thrown = true;
@@ -202,9 +108,114 @@ public class KitchenSinkTester {
 //		assertThat(result.getWaterReminder()).isEqualTo("3");
 		assertThat(result.getName()).isEqualTo("abcd");
 		assertThat(result.getGender()).isEqualTo("male");
+//		assertThat(result.getGender()).isEqualTo("male");
+		
 //		assertThat(result.getCalDay()).isEqualTo("210");
 		
 		
+	//}
+
+}
+	
+	@Test
+	public void testFound1() throws Exception {
+		boolean thrown = false;
+		String result="";
+		String userId = "test";
+		User new_user = new User(userId);
+//		KitchenSinkController ks;
+		
+		
+		try {
+			JsonTest jst = new JsonTest();
+			Dish[] dishes2 = jst.getJSONlistweb("https://api.myjson.com/bins/d4t4b");
+			
+			this.databaseEngine.CreateNewUser(new_user);
+			this.databaseEngine.updateWeight(userId, 65);
+			this.databaseEngine.updateHeight(userId, 172);
+			this.databaseEngine.updateGymFrequency(userId, 4);
+			this.databaseEngine.updateLoseGain(userId, 5);
+			this.databaseEngine.updateAge(userId, 21);
+//			this.databaseEngine.updateWaterReminder(userId, 3);
+			this.databaseEngine.updateUserName(userId, "abcd");
+			this.databaseEngine.updateGender(userId, "male");
+			this.databaseEngine.updateReqCalDay(userId);
+			
+			result = dishes2[0].getName();
+			
+		} catch (Exception e) {
+			thrown = true;
+		}
+		assertThat(result).isNotEqualTo("");
+		
+	//}
+
+}
+	
+	@Test
+	public void testRecommendation2() throws Exception 
+	{	
+		RecommendationDatabaseEngine recomDB=new RecommendationDatabaseEngine();
+		boolean thrown = false;
+		String userID = "sklo";
+		User c_user = new User(userID);
+		Dish[] result_recom=null;
+		Dish[] veg_result=null;
+		c_user.setHeight(173);
+		c_user.setWeight(62);
+		c_user.setGender("male");
+		c_user.setGymFrequency(2);
+		c_user.setAge(21);
+		c_user.setCalDay(2000.4);
+		c_user.setRestrictions("chicken,beef");
+		Dish[] final_dishes = null;
+		String[] menu= {"chicken with rice","noodles","apple","banana"};
+		List<Dish> dis = new ArrayList<Dish>();
+		for(String str: menu)
+		{
+			dis.add(new Dish(str));
+		}
+		Dish[] dis2 = dis.toArray(new Dish[dis.size()]);			
+		
+		final_dishes = recomDB.findCaloricContent(dis2);
+			
+			
+		
+		
+		Recommendation rec = new Recommendation(c_user,final_dishes);
+		result_recom = rec.getRecommendedDishes();
+		veg_result = rec.getVegRecommendedDishes();
+//		assert rec==null;
+//		System.out.println(final_dishes[0].getName());
+
+//		assert result_recom[0].getName().equals("banana");
+		
+
+	
 	}
+	
+	@Test
+	public void translateTest() {
+		Translator tr = new Translator();
+		try {
+		tr.translate("en", "fr", "hi");
+		
+		
+	}
+		catch (Exception e) {
+		}
+		
+	}
+	
+//	@Test
+//	public void handletext() throws Exception {
+//		Event evnt;
+//		TextMessageContent content= new TextMessageContent("hi", "hi");
+//		KitchenSinkController ks = new KitchenSinkController();
+//		ks.handleTextContent("hi", evnt, content);
+//		assert(true);
+//	}
+	
+	
 
 }

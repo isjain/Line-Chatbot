@@ -12,6 +12,13 @@ import java.lang.*;
 import java.util.Calendar;
 import java.text.SimpleDateFormat;
 
+/**
+ * this class is used to access the databases for all functions related to the user.
+*
+* @author Project Group 25
+* @version 1.0
+* @since 2017-11-20
+*/
 public class UserInputDatabaseEngine extends DatabaseEngine {
 	
 	public void setBMR(String UserId)
@@ -267,42 +274,6 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 	}
 	
 
-	public void updateBMI(String UserId, float weight)
-	{
-		try {
-			Connection con = getConnection();
-			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET weight=? WHERE user_id=?");
-
-			smt.setFloat(1,weight);
-			smt.setString(2,UserId);
-			ResultSet rs = smt.executeQuery();
-			rs.close();
-			smt.close();
-			con.close();
-		}
-		catch (Exception e) {
-			System.out.println(e);
-		}
-	}
-	
-
-	public void updateUserBMR(String UserId, float weight)
-	{
-		try {
-			Connection con = getConnection();
-			PreparedStatement smt = con.prepareStatement("UPDATE userdatatable SET weight=? WHERE user_id=?");
-
-			smt.setFloat(1,weight);
-			smt.setString(2,UserId);
-			ResultSet rs = smt.executeQuery();
-			rs.close();
-			smt.close();
-			con.close();
-		}
-		catch (Exception e) {
-			System.out.println(e);
-		}
-	}
 	
 
 	public void updateLoseGain(String UserId, float loseGain)
@@ -549,7 +520,9 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 	public void CreateNewUser(User new_User) throws Exception{
 		try {
 			Connection con = getConnection();
+
 			PreparedStatement smt = con.prepareStatement("INSERT INTO userdatatable (weight, user_id, height, gymFrequency, bmi, bmr, loseGainPerWeek, age, waterReminder, name, gender, goal, reqcalday, restrictions) VALUES (0,?,0,0,0,0,0,0,0,'noname','nogender','nogoal',0,'none')");
+
 			smt.setString(1,new_User.getUserId());
 			ResultSet rs = smt.executeQuery();
 			rs.close();
@@ -620,32 +593,7 @@ public class UserInputDatabaseEngine extends DatabaseEngine {
 	
 
 	
-//	@Override
-//	String search(String text) throws Exception {
-//		//Write your code here
-//		String result = null;
-//		try {
-//			Connection con = getConnection();
-//			PreparedStatement smt = con.prepareStatement("SELECT response FROM msg where keyword like concat('%', ? ,'%')");
-//			smt.setString(1,text);
-//			ResultSet rs = smt.executeQuery();
-//			while(rs.next())
-//			{
-//				result = rs.getString("response");
-//			}
-//			rs.close();
-//			smt.close();
-//			con.close();
-//		}catch (Exception e) {
-//			System.out.println(e);
-//		}
-//		
-//		if(result!=null)
-//			return result;
-//		throw new Exception("NOT FOUND");
-//		
-//	}
-//	
+
 	
 	private Connection getConnection() throws URISyntaxException, SQLException {
 		Connection connection;

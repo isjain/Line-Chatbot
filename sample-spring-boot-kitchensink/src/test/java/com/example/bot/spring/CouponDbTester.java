@@ -71,7 +71,6 @@ public void waterReminderLineClientTestWrongInputtest() {
 	}
 	
 	@Test	
-
 	// isNotOldUser
 public void isOldUsertest() {  
 	// uday = old user
@@ -82,125 +81,62 @@ public void isOldUsertest() {
 	
 	
 
-//	@Test
-//public void checkRedeemedtest() {  
-//		KitchenSinkController ks = new KitchenSinkController();
-//		ks.setWaterReminder("0", "Uc748ae75a91014989d8664a356ffab8d");
-//		assertThat(true);
-//	}
-//	
-//	@Test
-//public void redeemnowtest() {  
-//		KitchenSinkController ks = new KitchenSinkController();
-//		ks.setWaterReminder("0", "Uc748ae75a91014989d8664a356ffab8d");
-//		assertThat(true);
-//	}
-//	
-//	
-//	@Test
-//public void hasuserredeemedbeforetest() {  
-//		KitchenSinkController ks = new KitchenSinkController();
-//		ks.setWaterReminder("0", "Uc748ae75a91014989d8664a356ffab8d");
-//		assertThat(true);
-//	}
-//	
-//	@Test
-//public void getrecommenderuseridtest() {  
-//		KitchenSinkController ks = new KitchenSinkController();
-//		ks.setWaterReminder("0", "Uc748ae75a91014989d8664a356ffab8d");
-//		assertThat(true);
-//	}
-//	
-//	@Test
-//public void isvalidcodetest() {  
-//		KitchenSinkController ks = new KitchenSinkController();
-//		ks.setWaterReminder("0", "Uc748ae75a91014989d8664a356ffab8d");
-//		assertThat(true);
-//	}
-//	
-//	@Test
-//public void checkredeemedtest() {  
-//		KitchenSinkController ks = new KitchenSinkController();
-//		ks.setWaterReminder("0", "Uc748ae75a91014989d8664a356ffab8d");
-//		assertThat(true);
-//	}
-//	
-//	@Test
-//public void saveCouponTest() {  
-//		KitchenSinkController ks = new KitchenSinkController();
-//		ks.setWaterReminder("0", "Uc748ae75a91014989d8664a356ffab8d");
-//		assertThat(true);
-//	}
-//	
-//	@Test
-//public void getCouponNumberTest() {  
-//		KitchenSinkController ks = new KitchenSinkController();
-//		ks.setWaterReminder("0", "Uc748ae75a91014989d8664a356ffab8d");
-//		assertThat(true);
-//	}
-//	
-//	@Test
-//public void getCouponNumberTest() {  
-//		KitchenSinkController ks = new KitchenSinkController();
-//		ks.setWaterReminder("0", "Uc748ae75a91014989d8664a356ffab8d");
-//		assertThat(true);
-//	}
-//	
-//	@Test
-//public void generateCouponNumberTest() {  
-//		KitchenSinkController ks = new KitchenSinkController();
-//		ks.setWaterReminder("0", "Uc748ae75a91014989d8664a356ffab8d");
-//		assertThat(true);
-//	}	
+	@Test
+public void checkRedeemedtest() {  
+		assertThat(this.databaseEngine.checkRedeemed("702124")).isEqualTo(false);		
+		assertThat(this.databaseEngine.checkRedeemed("528435")).isEqualTo(true);		
+	}
 	
 	
-//	@Test
-//	public void testNotFound() throws Exception {
-//		boolean thrown = false;
-//		try {
-//			
-//			this.databaseEngine.search("no");
-//		} catch (Exception e) {
-//			thrown = true;
-//		}
-//		assertThat(thrown).isEqualTo(true);
-//	}
+	//////////LATER MAYBEE WILL DO NOT FOR NOW
+	@Test
+public void RedeemedCodeTest() {  
+		assertThat(this.databaseEngine.redeemCode("x", "Testing")).isEqualTo(true);		
+//		assertThat(this.databaseEngine.redeemCode("741359", "TestingAgain")).isEqualTo(false);		
+	}	
 
-//	
-//	@Test
-//	public void testFound() throws Exception {
-//		boolean thrown = false;
-//		User result = null;
-//		String userId = "heylo";
-//		User new_user = new User(userId);
-//		try {
-//			
-//			this.databaseEngine.CreateNewUser(new_user);
-//			this.databaseEngine.updateWeight(userId, 65);
-//			this.databaseEngine.updateHeight(userId, 172);
-//			this.databaseEngine.updateGymFrequency(userId, 4);
-//			this.databaseEngine.updateLoseGain(userId, 5);
-//			this.databaseEngine.updateAge(userId, 21);
-////			this.databaseEngine.updateWaterReminder(userId, 3);
-//			this.databaseEngine.updateUserName(userId, "abcd");
-//			this.databaseEngine.updateGender(userId, "male");
-////			this.databaseEngine.updateReqCalDay(userId, 210);
-//			
-//			result = this.databaseEngine.getUserRecord("heylo");
-//			
-//		} catch (Exception e) {
-//			thrown = true;
-//		}
-//		assertThat(result.getWeight()).isEqualTo("65");
-//		assertThat(result.getHeight()).isEqualTo("172");
-//		assertThat(result.getGymFrequency()).isEqualTo("4");
-//		assertThat(result.getLoseGainPerWeek()).isEqualTo("5");
-//		assertThat(result.getAge()).isEqualTo("21");
-////		assertThat(result.getWaterReminder()).isEqualTo("3");
-//		assertThat(result.getName()).isEqualTo("abcd");
-//		assertThat(result.getGender()).isEqualTo("male");
-////		assertThat(result.getCalDay()).isEqualTo("210");
-//		
-//		
-//	}
+	
+	@Test
+public void generateNewCodeTest() {  
+		int x =100000;
+		try {
+			x = this.databaseEngine.generateNewCode();
+	}
+		catch (Exception e) {
+			System.out.println(e);
+		}
+		
+		if (x >100000 && x <999999 )
+			assert(true);
+		else assert(false);	
+	}
+	
+	
+	@Test
+public void saveCouponCodeTest() {  
+		assertThat(this.databaseEngine.saveCouponCode("test")).isNotEqualTo("404");
+	}
+	
+
+	@Test
+public void isValidCodeTest() {  
+		assertThat(this.databaseEngine.isValidCode("test")).isEqualTo(false);
+		assertThat(this.databaseEngine.isValidCode("702124")).isEqualTo(true);
+	}
+	
+	@Test
+public void getCouponNumberTest() {  
+		try {
+			assertThat(this.databaseEngine.getCouponNumber()).isNotEqualTo(0);
+		}
+		
+	
+		catch (Exception e) {
+			System.out.println(e);
+		}	
+	
+	// getCouponNumber
+
+	
+}
 }
