@@ -64,7 +64,6 @@ public class Translator {
     String output;
     while ((output = br.readLine()) != null) {
         System.out.println(output);
-        return output;
     }
     conn.disconnect();
 

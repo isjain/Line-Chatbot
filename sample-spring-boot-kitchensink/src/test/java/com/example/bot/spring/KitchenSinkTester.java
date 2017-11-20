@@ -147,7 +147,15 @@ public class KitchenSinkTester {
 			result.setBMR();
 			result.setCalDay();
 			result.setBMI();
+			
+			float bmr1=this.databaseEngine.calcBMI("test");
+			float bmr2=this.databaseEngine.calcBMR("test");
 			this.databaseEngine.updateCalperDay("heylo","200");
+			this.databaseEngine.setBMI("test");
+			this.databaseEngine.setBMR("test");
+			this.databaseEngine.updateRestrictions("test","chicken");
+			this.databaseEngine.searchUser("heylo");
+			double db = this.databaseEngine.getRequiredCalories("heylo");
 			
 		} catch (Exception e) {
 			thrown = true;
@@ -205,10 +213,53 @@ public class KitchenSinkTester {
 }
 	
 	@Test
+	public void testRecommendation() throws Exception 
+	{	
+		RecommendationDatabaseEngine recomDB=new RecommendationDatabaseEngine();
+		boolean thrown = false;
+		String userID = "sklo";
+		User c_user = new User(userID);
+		Dish[] result_recom=null;
+		Dish[] veg_result=null;
+		c_user.setHeight(173);
+		c_user.setWeight(62);
+		c_user.setGender("male");
+		c_user.setGymFrequency(2);
+		c_user.setAge(21);
+		c_user.setCalDay(2000.4);
+		c_user.setRestrictions("chicken,beef");
+		Dish[] final_dishes = null;
+		String[] menu= {"chicken with rice","noodles","apple","banana"};
+		List<Dish> dis = new ArrayList<Dish>();
+		for(String str: menu)
+		{
+			dis.add(new Dish(str));
+		}
+		Dish[] dis2 = dis.toArray(new Dish[dis.size()]);			
+		
+		final_dishes = recomDB.findCaloricContent(dis2);
+			
+			
+		
+		
+		Recommendation rec = new Recommendation(c_user,final_dishes);
+		result_recom = rec.getRecommendedDishes();
+		veg_result = rec.getVegRecommendedDishes();
+//		assert rec==null;
+//		System.out.println(final_dishes[0].getName());
+
+//		assert result_recom[0].getName().equals("banana");
+		
+
+	
+	}
+	
+	@Test
 	public void translateTest() {
 		Translator tr = new Translator();
 		try {
 		tr.translate("en", "fr", "hi");
+		
 		
 	}
 		catch (Exception e) {
