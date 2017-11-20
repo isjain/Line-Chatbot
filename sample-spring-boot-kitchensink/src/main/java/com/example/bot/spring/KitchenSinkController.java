@@ -348,12 +348,15 @@ public class KitchenSinkController {
     		break;
         }
         case "weight": {
-        	Float weight = Float.parseFloat(inputData);
-        	if (weight.isNaN())
-        	{
-        		this.replyText(replyToken,"Invalid input, please enter a number");
+        	Float weight;
+        	
+        	try {
+        		weight = Float.parseFloat(inputData);
         	}
-        	else {
+        	catch(NumberFormatException nb){
+        		this.replyText(replyToken,"Invalid input, please enter a number");
+        		break;
+        	}
         	String userId = event.getSource().getUserId();
         	database.updateWeight(userId, weight);
         	this.replyText(replyToken,inputData + " received");
@@ -361,7 +364,7 @@ public class KitchenSinkController {
         	database.setBMI(userId);
         	database.updateReqCalDay(userId);
         	break;
-        }}
+        }
         case "height": {
         	String userId = event.getSource().getUserId();
         	database.updateHeight(userId, Float.parseFloat(inputData));
