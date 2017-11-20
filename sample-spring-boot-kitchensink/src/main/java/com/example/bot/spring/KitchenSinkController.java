@@ -222,9 +222,12 @@ public class KitchenSinkController {
 	private void handleTextContent(String replyToken, Event event, TextMessageContent content)
             throws Exception {
         String text = content.getText();
-        String[] arr = text.split(":");
-        String command = arr[0];
-        String inputData = arr[1];
+//        String[] arr = text.split(":");
+        int ind = text.indexOf(":");
+        String command= text.substring(0 , ind);
+        String inputData = text.substring(ind+1);
+//        String command = arr[0];
+//        String inputData = arr[1];
         
         log.info("Got text message from {}: {}", replyToken, text);
         switch (command) {
@@ -408,15 +411,72 @@ public class KitchenSinkController {
 //        	this.replyText(replyToken, reply_msg + "User reqcalday:"+ curr_user.getCalDay() + "\n\n" + translator.translate(fromLang, toLang, reply_msg) + "\n\n"+ motivation);    	
         }
         
-        
+        case "json": {
+        	JsonTest jst = new JsonTest();
+    		String userId = event.getSource().getUserId();
+    		Dish[] dishes2 = jst.getJSONlistweb(inputData.trim());
+//???        	
+        	if( (inputData.equals("Cafe")) || (inputData.equals("Bistro")) || (inputData.equals("Subway")) || (inputData.equals("LSK")) || (inputData.equals("LG7")))
+			{
+				String location_dishes = recomDB.giveVegDishes(inputData);
+				this.replyText(replyToken, location_dishes);
+				break;
+			}
+        	
+            String fromLang = "en";
+            String toLang = "zh-CN";
+        	Translator translator = new Translator();
+        	
+        	//Recommendation
+        	
+        	Dish[] final_dishes = recomDB.findCaloricContent(dishes2);
+        	User curr_user = database.getUserRecord(userId);
+//        	String[] a = curr_user.getRestrictions().split(",");
+        	
+        	Recommendation recommend = new Recommendation(curr_user, final_dishes);
+//        	log.info("inputted dishes: "+recommend.getInputDishes());
+        	Dish[] recommended_dishes;
+        	//vege function
+        	if(command.equals("vege")) {
+        		
+        		recommended_dishes = recommend.getVegRecommendedDishes();
+        		
+        	}
+        	else {
+        		
+            	recommended_dishes = recommend.getRecommendedDishes();
+
+        	}
+        	
+        	String motivation = recommend.motivationMessage();
+        	String reply_msg = "Recommended dishes in best to least:\n";
+        	
+        	//*********************************************************************
+		DecimalFormat df = new DecimalFormat("#.#");
+
+        	String imageUrl = createUri("/static/buttons/final.png");
+        	List<CarouselColumn> dishlist = new ArrayList<CarouselColumn>();
+        	for(Dish d: recommended_dishes) {
+        		dishlist.add(new CarouselColumn(imageUrl,d.getName(),d.getpropCalories()+" "+d.getCalories()+" "+df.format(d.getPortion()), Arrays.asList(
+                        new PostbackAction("Choose", d.getName()+" confirmed"+ "\n\n" + translator.translate(fromLang, toLang, d.getName()) + "\n\n"+ motivation +" "+ String.valueOf(d.getCalories())))));
+        	}
+        CarouselTemplate carouselTemplate = new CarouselTemplate(dishlist);
+        TemplateMessage templateMessage = new TemplateMessage("Carousel alt text", carouselTemplate);
+        this.reply(replyToken, templateMessage);
+        recomDB.useStoredCal(userId);
+        break;
+	    }
         
         case "translate": {
         	String userId = event.getSource().getUserId();
             String fromLang = "en";
             String toLang = "zh-CN";
         	Translator translator = new Translator();
-        this.replyText(replyToken, translator.translate(fromLang, toLang, inputData));        	
+        	
+       this.replyText(replyToken, translator.translate(fromLang, toLang, inputData));        	
         	break;
+        
+        
         }
         
 
