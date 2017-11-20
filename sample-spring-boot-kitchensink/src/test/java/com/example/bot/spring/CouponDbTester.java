@@ -57,7 +57,7 @@ public class CouponDbTester {
 	// not a CouponDb but still why not
 	@Test
 public void waterReminderCorrectInputtest() {  
-		KitchenSinkController ks = new KitchenSinkController();
+		waterReminder ks = new waterReminder();
 		ks.setWaterReminder(1, "Uc748ae75a91014989d8664a356ffab8d");
 		assertThat(true);
 	}
@@ -65,24 +65,25 @@ public void waterReminderCorrectInputtest() {
 	
 	@Test
 public void waterReminderLineClientTestWrongInputtest() {  
-		KitchenSinkController ks = new KitchenSinkController();
+		waterReminder ks = new waterReminder();
 		ks.setWaterReminder(0, "Uc748ae75a91014989d8664a356ffab8d");
 		assertThat(true);
 	}
 	
-//	@Test	
-//
-//	// isNotOldUser
-//public void isOldUsertest() {  
-//	// uday = old user
-//				assertThat(this.databaseEngine.isOldUser("U633c7e32ccc0a6b09902d22791eddce8")).isEqualTo(true);		// Uday
-//				assertThat(this.databaseEngine.isOldUser("Uc6f9f762ebd52e0abedea651e2982b3c")).isEqualTo(false);		// Irene
-//
-//}
-//	
+	@Test	
+
+	// isNotOldUser
+public void isOldUsertest() {  
+	// uday = old user
+				assertThat(this.databaseEngine.isOldUser("U633c7e32ccc0a6b09902d22791eddce8")).isEqualTo(true);		// Uday
+				assertThat(this.databaseEngine.isOldUser("Uc6f9f762ebd52e0abedea651e2982b3c")).isEqualTo(false);		// Irene
+
+}
+	
+	
 
 //	@Test
-//public void isredeemedtest() {  
+//public void checkRedeemedtest() {  
 //		KitchenSinkController ks = new KitchenSinkController();
 //		ks.setWaterReminder("0", "Uc748ae75a91014989d8664a356ffab8d");
 //		assertThat(true);
