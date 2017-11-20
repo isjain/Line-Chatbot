@@ -366,8 +366,16 @@ public class KitchenSinkController {
         	break;
         }
         case "height": {
+        	Float height;
+        	try {
+        		height = Float.parseFloat(inputData);
+        	}
+        	catch(NumberFormatException nb){
+        		this.replyText(replyToken,"Invalid input, please enter a number");
+        		break;
+        	}
         	String userId = event.getSource().getUserId();
-        	database.updateHeight(userId, Float.parseFloat(inputData));
+        	database.updateHeight(userId, height);
         	this.replyText(replyToken,inputData + " received");
         	database.setBMR(userId);
         	database.setBMI(userId);
@@ -398,8 +406,16 @@ public class KitchenSinkController {
         	break;
         }
         case "age": {
+        	Integer age;
+        	try {
+        		age = Integer.parseInt(inputData);
+        	}
+        	catch(NumberFormatException nb){
+        		this.replyText(replyToken,"Invalid input, please enter a number");
+        		break;
+        	}
         	String userId = event.getSource().getUserId();
-    		database.updateAge(userId, Integer.parseInt(inputData));
+    		database.updateAge(userId, age);
     		this.replyText(replyToken,inputData + " received");
     		database.setBMR(userId);
         	database.setBMI(userId);
