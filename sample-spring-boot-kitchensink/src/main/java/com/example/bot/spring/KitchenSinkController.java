@@ -295,7 +295,7 @@ public class KitchenSinkController {
                 String userId = event.getSource().getUserId();
                 if (userId != null) {
                     User u = database.getUserRecord(userId);
-                    String reply_msg = "Name:" + u.getName() + "\n" + "Weight:"+ u.getWeight().toString() +"\n"+ "Height:" + u.getHeight().toString() + "\n" + "Restrictions:" + u.getRestrictions() + "\n" + "Age:" + u.getAge().toString() + "\n" + "GymFrequency:" + u.getGymFrequency() + "\n" + "LoseGainPerWeek:" + u.getLoseGainPerWeek() + "\n" + "WaterReminder:" + u.getWaterReminder();
+                    String reply_msg = "Name:" + u.getName() + "\n" + "Weight:"+ u.getWeight().toString() +"\n"+ "Height:" + u.getHeight().toString() + "\n" + "Restrictions:" + u.getRestrictions() + "\n" + "Age:" + u.getAge().toString() + "\n" + "GymFrequency:" + u.getGymFrequency() + "\n" + "LoseGainPerWeek:" + u.getLoseGainPerWeek();
                     this.replyText(replyToken, reply_msg);
                 } else {
                     this.replyText(replyToken, "User not found, type Start:x to begin!");
@@ -530,7 +530,7 @@ public class KitchenSinkController {
         	List<CarouselColumn> dishlist = new ArrayList<CarouselColumn>();
         	for(Dish d: recommended_dishes) {
         		if(d.getCalories()!=0)
-        		{dishlist.add(new CarouselColumn(imageUrl,d.getName(),d.getpropCalories()+" "+d.getCalories()+" "+df.format(d.getPortion()), Arrays.asList(
+        		{dishlist.add(new CarouselColumn(imageUrl,d.getName(),df.format(d.getpropCalories())+" calories, "+ df.format(d.getPortion())+" portions", Arrays.asList(
                         new PostbackAction("Choose", d.getName()+" confirmed"+ "\n\n" + translator.translate(fromLang, toLang, d.getName()) + "\n\n"+ motivation +" "+ String.valueOf(d.getCalories())))));
         		}
         	}
@@ -603,7 +603,7 @@ public class KitchenSinkController {
         	List<CarouselColumn> dishlist = new ArrayList<CarouselColumn>();
         	for(Dish d: recommended_dishes) {
         		if(d.getCalories()!=0) {
-        		dishlist.add(new CarouselColumn(imageUrl,d.getName(),d.getpropCalories()+" "+d.getCalories()+" "+df.format(d.getPortion()), Arrays.asList(
+        		dishlist.add(new CarouselColumn(imageUrl,d.getName(),df.format(d.getpropCalories())+" calories, "+df.format(d.getPortion())+" portions", Arrays.asList(
                         new PostbackAction("Choose", d.getName()+" confirmed"+ "\n\n" + translator.translate(fromLang, toLang, d.getName()) + "\n\n"+ motivation +" "+ String.valueOf(d.getCalories())))));
         	}
         		}

@@ -1,3 +1,4 @@
+
 package com.example.bot.spring;
 
 
@@ -55,40 +56,75 @@ public class KitchenSinkTester {
 	private RecommendationDatabaseEngine recomDB;
 
 
-//	
-//	@Test
-//	public void testFound2() throws Exception {
-//		boolean thrown = false;
-//		String userID = "testing";
-//		User new_user = new User(userID);
-//		new_user.setWeight(62);
-//		new_user.setHeight(173);
-//		new_user.setAge(21);
-//		new_user.setRestrictions("chicken,beef");
-//		new_user.setGender("male");
-//		new_user.setLostGainPerWeek(0);
-//		new_user.setGymFrequency(2);
-//		new_user.setName("Gregor");
-////		new_user.setWaterReminder(2);
-//		String inputData = "noodles and soup,chicken with rice,beef buns,green salad,apples";
-//		Dish[] recommended_dishes = null;
-//		Dish[] dishes2 = null;
-//		Dish[] final_dishes= null;
-//		Recommendation recommend;
-//		try {
-////			result = this.databaseEngine.search("Hi");
-//			String[] menu = inputData.split(",");
-//        	List<Dish> dishes = new ArrayList<Dish>();
-//        	for (String str: menu)
-//        	{
-//        		dishes.add(new Dish(str));
-//        	}
-//        		dishes2 = dishes.toArray(new Dish[dishes.size()]);
-//        		final_dishes = recomDB.findCaloricContent(dishes2);
-//        	
-//        	recommend = new Recommendation(new_user, dishes2);
-//        	recommended_dishes = recommend.getRecommendedDishes();
-//			
+
+	
+//	//test for recommendation
+////	@Test
+////	public void testRecom() throws Exception {
+////		boolean thrown = false;
+////		String userId = "heylo";
+////		User new_user = new User(userId);
+////		Dish[] result2=null;
+////		User curr_user=null;
+////		//test recommendation
+////		String inputData = "chicken with rice,apple,banana,noodles";
+////    		String[] menu = inputData.split(",");
+////		List<Dish> dishes1 = new ArrayList<Dish>();
+////		Dish[] dishes2;
+////		Dish[] final_dishes;
+////		Recommendation recommend2;
+////		
+////    		try {
+////			this.databaseEngine.CreateNewUser(new_user);
+////			this.databaseEngine.updateWeight(userId, 65);
+////			this.databaseEngine.updateHeight(userId, 172);
+////			this.databaseEngine.updateGymFrequency(userId, 4);
+////			this.databaseEngine.updateLoseGain(userId, 5);
+////			this.databaseEngine.updateAge(userId, 21);
+//////			this.databaseEngine.updateWaterReminder(userId, 3);
+////			this.databaseEngine.updateUserName(userId, "abcd");
+////			this.databaseEngine.updateGender(userId, "male");
+////			this.databaseEngine.updateReqCalDay(userId);
+////			
+////			curr_user = databaseEngine.getUserRecord(userId);
+////
+////			
+////	        	for (String str: menu)
+////	        	{
+////	        		dishes1.add(new Dish(str));
+////	        	}
+////	        	dishes2 = dishes1.toArray(new Dish[dishes1.size()]);
+////	        final_dishes = recomDB.findCaloricContent(dishes2);
+////	        
+////	        	
+////	        	recommend2 = new Recommendation(curr_user, final_dishes);
+////	        	
+////            	result2 = recommend2.getRecommendedDishes();            	
+////				
+////		}catch (Exception e) {
+////			thrown = true;
+////		}
+////    		
+////    		assertThat(curr_user.getWeight()).isEqualTo("65");
+//////    		assertThat(result2).isEqualTo(null);
+//////		assertThat(result2[0].getName()).isEqualTo("banana");
+//////		assertThat(result[1].getName()).isEqualTo("noodles");
+//////		assertThat(result[2].getName()).isEqualTo("apple");
+//////		assertThat(result[3].getName()).isEqualTo("chicken and rice");
+////
+//////		assertThat(result.getHeight()).isEqualTo("172");
+//////		assertThat(result.getGymFrequency()).isEqualTo("4");
+//////		assertThat(result.getLoseGainPerWeek()).isEqualTo("5");
+//////		assertThat(result.getAge()).isEqualTo("21");
+////////		assertThat(result.getWaterReminder()).isEqualTo("3");
+//////		assertThat(result.getName()).isEqualTo("abcd");
+//////		assertThat(result.getGender()).isEqualTo("male");
+//////		assertThat(result.getCalDay()).isEqualTo("210");
+////		
+////		
+////	}
+//
+//}
 //		} catch (Exception e) {
 //			thrown = true;
 //		}
