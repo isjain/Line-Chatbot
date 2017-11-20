@@ -318,11 +318,11 @@ public class KitchenSinkController {
             		if(database.searchUser(userId)==false)
             		{
             		User user = new User(userId);
-            		this.replyText(replyToken,"\t\t\t\t\t\t\t\t\tUser created!\n Please call the following:\nname,\ngender,\nweight(kg),\nheight(cm),\nage,\ngymFrequency(0 to 7 per week),\nloseGainPerWeek(No. of kgs to gain or lose. eg: -10 for losing 10 kgs per week),\nwaterReminder(Integer No. of reminders per day)");	
+            		this.replyText(replyToken,"User created!\n Please call the following:\nname,\ngender,\nweight(kg),\nheight(cm),\nage,\ngymFrequency(0 to 7 per week),\nloseGainPerWeek(No. of kgs to gain or lose. eg: -10 for losing 10 kgs per week),\nwaterReminder(Integer No. of reminders per day)");	
             		database.CreateNewUser(user);
             		}
             		else {
-            			this.replyText(replyToken, "\t\t\t\t\t\t\t\t\tYou already have an existing account");
+            			this.replyText(replyToken, "You already have an existing account");
             		}
             		break;
             }
@@ -477,7 +477,17 @@ public class KitchenSinkController {
 				break;
 			}
         	
+        	
         	String userId = event.getSource().getUserId();
+        	
+        	User curr_user = database.getUserRecord(userId);
+        	
+        	if(curr_user.getWeight().equals("0") || curr_user.getHeight().equals("0") || curr_user.getGender().equals("nogender") || curr_user.getAge().equals("0"))
+        	{
+        		this.replyText(replyToken, "Please make sure that weight, height, gender and age are accepted first!");
+        		break;
+        	}
+        	
             String fromLang = "en";
             String toLang = "zh-CN";
         	Translator translator = new Translator();
@@ -491,7 +501,7 @@ public class KitchenSinkController {
         	}
         	Dish[] dishes2 = dishes.toArray(new Dish[dishes.size()]);
         	Dish[] final_dishes = recomDB.findCaloricContent(dishes2);
-        	User curr_user = database.getUserRecord(userId);
+        	
 //        	String[] a = curr_user.getRestrictions().split(",");
         	
         	Recommendation recommend = new Recommendation(curr_user, final_dishes);
