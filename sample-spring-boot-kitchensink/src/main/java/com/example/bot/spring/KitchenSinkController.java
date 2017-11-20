@@ -664,24 +664,23 @@ public class KitchenSinkController {
             default:{
 //            		String reply_text="this is default";
             		String reply_text="Incorrect input! Please write your message in the following format:"+"\n"+
-            				"Start:<string> - to create a new user profile"+"\n"+
-            				"Profile:<string> - to display values of user attributes"+"\n"+
-            				"Start:<string> - to create a new user profile"+"\n"+
-            				"Name:<string> - to set the user's name"+"\n"+
-            				"Gender:<male/female> - to set the user's gender"+"\n"+
-            				"Weight:<float> - to set the user's weight"+"\n"+
-           				"Height:<float> - to set the user's height"+"\n"+
-           				"Age:<int> - to set the user's age"+"\n"+
-           				"loseGainPerWeek:<(+/-)float> - to set weight to be gained/lost"+"\n"+
-           				"Restrictions:<string> - to set ingredients that the user wants to avoid"+"\n"+
-           				"waterMe:<integer> - to set the hour interval for water reminders"+"\n"+
-           				"gymFrequency:<integer> - to set the number of days in a week user exercises"+"\n"+
-           				"vege:<Bistro/LSK/Cafe/LG7/Subway> - to get vegetarian dishes at a location"+"\n"+
-           				"vege:<dish name,dish name> - to get vegetarian recommendations from a menu"+"\n"+
-           				"recommend:<dish name,dish name> - to get recommendations from a menu"+"\n"+
-           				"json:<url> - to get recommendations from a json"+"\n"+
-           				"friend:<string> - to generate a 6 digit code for the campaign"+"\n"+
-           				"code:<code> - to redeem the 6 digit code "+"\n";
+            				"Start:<string>"+"\n"+
+            				"Profile:<string>"+"\n"+
+            				"Name:<string>"+"\n"+
+            				"Gender:<male/female>"+"\n"+
+            				"Weight:<float(kg)>"+"\n"+
+           				"Height:<float(cm)>"+"\n"+
+           				"Age:<int(years)>"+"\n"+
+           				"loseGainPerWeek:<(+/-)float>"+"\n"+
+           				"Restrictions:<ingredient,ingredient>"+"\n"+
+           				"waterMe:<integer>"+"\n"+
+           				"gymFrequency:<integer>"+"\n"+
+           				"vege:<Bistro/LSK/Cafe/LG7/Subway>"+"\n"+
+           				"vege:<dish name,dish name>"+"\n"+
+           				"recommend:<dish name,dish name>"+"\n"+
+           				"json:<url>"+"\n"+
+           				"friend:<string>"+"\n"+
+           				"code:<code>";
 
                 this.replyText(
                         replyToken,
