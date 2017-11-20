@@ -318,11 +318,11 @@ public class KitchenSinkController {
             		if(database.searchUser(userId)==false)
             		{
             		User user = new User(userId);
-            		this.replyText(replyToken,"\t\t\t\t\t\t\t\t\tUser created!\n Please call the following:\nname,\ngender,\nweight(kg),\nheight(cm),\nage,\ngymFrequency(0 to 7 per week),\nloseGainPerWeek(No. of kgs to gain or lose. eg: -10 for losing 10 kgs per week),\nwaterReminder(Integer No. of reminders per day)");	
+            		this.replyText(replyToken,"User created!\n Please call the following:\nname,\ngender,\nweight(kg),\nheight(cm),\nage,\ngymFrequency(0 to 7 per week),\nloseGainPerWeek(No. of kgs to gain or lose. eg: -10 for losing 10 kgs per week),\nwaterReminder(Integer No. of reminders per day)");	
             		database.CreateNewUser(user);
             		}
             		else {
-            			this.replyText(replyToken, "\t\t\t\t\t\t\t\t\tYou already have an existing account");
+            			this.replyText(replyToken, "You already have an existing account");
             		}
             		break;
             }
@@ -482,7 +482,7 @@ public class KitchenSinkController {
         	
         	User curr_user = database.getUserRecord(userId);
         	
-        	if(curr_user.getWeight().equals('0') || curr_user.getHeight().equals('0') || curr_user.getGender()==null || curr_user.getAge().equals('0'))
+        	if(curr_user.getWeight().equals('0') || curr_user.getHeight().equals('0') || curr_user.getGender().equals('nogender') || curr_user.getAge().equals('0'))
         	{
         		this.replyText(replyToken, "Please make sure that weight, height, gender and age are accepted first!");
         		break;
