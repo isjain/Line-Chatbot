@@ -21,6 +21,7 @@ import java.io.OutputStream;
 import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.ArrayList;
@@ -33,11 +34,14 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 import com.linecorp.bot.model.profile.UserProfileResponse;
 import java.util.Random;
+import java.text.DecimalFormat;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.google.common.io.ByteStreams;
+import java.util.ArrayList;
 
 import com.linecorp.bot.client.LineMessagingClient;
 import com.linecorp.bot.client.MessageContentResponse;
@@ -80,6 +84,21 @@ import com.linecorp.bot.model.response.BotApiResponse;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 
+import org.springframework.web.bind.annotation.*;
+import com.linecorp.bot.client.LineMessagingServiceBuilder;
+import com.linecorp.bot.model.response.BotApiResponse;
+import com.linecorp.bot.model.profile.UserProfileResponse;
+import retrofit2.Response;
+import com.linecorp.bot.model.message.ImageMessage;
+
+
+
+import com.linecorp.bot.client.LineMessagingClient;
+import com.linecorp.bot.model.*;
+import java.util.Timer;
+import java.util.TimerTask;
+
+
 import lombok.NonNull;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
@@ -91,11 +110,11 @@ import java.net.URI;
 public class KitchenSinkController {
 	
 
-
 	@Autowired
 	private LineMessagingClient lineMessagingClient;
 	private UserInputDatabaseEngine database;
 	private RecommendationDatabaseEngine recomDB;
+	private CouponDatabaseEngine icedb;
 
 	@EventMapping
 	public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) throws Exception {
@@ -130,7 +149,7 @@ public class KitchenSinkController {
 			throw new RuntimeException(e);
 		}
 		DownloadedContent jpg = saveContent("jpg", response);
-		reply(((MessageEvent) event).getReplyToken(), new ImageMessage(jpg.getUri(), jpg.getUri()));
+		reply(((MessageEvent) event).getReplyToken(), new ImageMessage(jpg.getUri()));
 
 	}
 
@@ -169,7 +188,11 @@ public class KitchenSinkController {
 	@EventMapping
 	public void handlePostbackEvent(PostbackEvent event) {
 		String replyToken = event.getReplyToken();
-		this.replyText(replyToken, "Got postback " + event.getPostbackContent().getData());
+		System.out.println(event.getSource().getUserId());
+		String cal = (event.getPostbackContent().getData()).substring(event.getPostbackContent().getData().lastIndexOf(" ")+1);
+		String userId = event.getSource().getUserId();
+		database.updateCalperDay(userId, cal);
+		this.replyText(replyToken, (event.getPostbackContent().getData()).substring(0, (event.getPostbackContent().getData()).lastIndexOf(" ")));
 	}
 
 	@EventMapping
@@ -206,18 +229,64 @@ public class KitchenSinkController {
 		this.reply(replyToken, new TextMessage(message));
 	}
 
+	private void replyImage(@NonNull String replyToken, @NonNull String message) {
+		if (replyToken.isEmpty()) {
+			throw new IllegalArgumentException("replyToken must not be empty");
+		}
+//		if (message.length() > 1000) {
+//			message = message.substring(0, 1000 - 2) + "..";
+//		}
+		this.reply(replyToken, new ImageMessage(message));
+	}
+	
+	
 
 	private void handleSticker(String replyToken, StickerMessageContent content) {
 		reply(replyToken, new StickerMessage(content.getPackageId(), content.getStickerId()));
+	}
+	
+	public void setWaterReminder(String inputData, String userID) {
+    	int hourGap = Integer.parseInt(inputData);
+    	if (hourGap ==0) 
+    		return;
+    	
+    	Timer timer = new Timer ();
+    	TimerTask hourlyTask = new TimerTask () {
+    	    @Override
+    	    public void run () {
+    	        // your code here...
+            	TextMessage textMessage = new TextMessage("It is time to drink your water :)");
+            	PushMessage pushMessage = new PushMessage(userID, textMessage);
+            	try {
+            	Response<BotApiResponse> response =
+            	        LineMessagingServiceBuilder
+            	                .create("CJo3Ka/VX7VW4fsG78i5dNDpP5qqYgr1PD7YUclFFc62ZtnrIpHiM/Muof6oLc/J/bPoaheiYdHNoUkg09kAt5VqnD+tMyzOCClGLwvJaR3+etoVOdsHo1DGXv2UqOljNgUIFR/zQWk1U4iFRPr4TQdB04t89/1O/w1cDnyilFU=") // channel access token
+            	                .build()
+            	                .pushMessage(pushMessage)
+            	                .execute();
+            	System.out.println(response.code() + " " + response.message());
+            	}
+            	catch (Exception e) {
+            		e.printStackTrace();
+            	}
+    	    }
+    	};
+
+    	// schedule the task to run starting now and then every hour...
+    	timer.schedule (hourlyTask, 0l, 1000*60*60*hourGap);
+
 	}
 	
 	@SuppressWarnings("fallthrough")
 	private void handleTextContent(String replyToken, Event event, TextMessageContent content)
             throws Exception {
         String text = content.getText();
-        String[] arr = text.split(":");
-        String command = arr[0];
-        String inputData = arr[1];
+//        String[] arr = text.split(":");
+        int ind = text.indexOf(":");
+        String command= text.substring(0 , ind);
+        String inputData = text.substring(ind+1);
+//        String command = arr[0];
+//        String inputData = arr[1];
         
         log.info("Got text message from {}: {}", replyToken, text);
         switch (command) {
@@ -261,6 +330,9 @@ public class KitchenSinkController {
 
         		break;
         }
+            
+        
+            
         case "gender": {
         	String userId = event.getSource().getUserId();
         	database.updateGender(userId, inputData);
@@ -288,6 +360,19 @@ public class KitchenSinkController {
     		break;
         }
         
+
+
+        case "waterMe" : {
+        	String userId = event.getSource().getUserId();
+        	
+
+        	setWaterReminder(inputData, userId);
+        	break;
+        }
+           
+        
+
+
         case "restrictions": {
         	String userId = event.getSource().getUserId();
 //        	User u = database.getUserRecord(userId);
@@ -316,17 +401,11 @@ public class KitchenSinkController {
     		this.replyText(replyToken,inputData + " received");
     		break;
         }
-        case "waterReminder": {
-        	String userId = event.getSource().getUserId();
-    		database.updateWaterReminder(userId, Integer.parseInt(inputData));
-    		this.replyText(replyToken,"Thank you, you will be alerted");
-    		break;
-        }
+
         case "vege": {	
         	
         }
         case "recommend" : {
-    		//this.replyText(replyToken,"We recommend a corn soup with salad and cheese, and croutons.");
         	
         	if( (inputData.equals("Cafe")) || (inputData.equals("Bistro")) || (inputData.equals("Subway")) || (inputData.equals("LSK")) || (inputData.equals("LG7")))
 			{
@@ -339,6 +418,7 @@ public class KitchenSinkController {
             String fromLang = "en";
             String toLang = "zh-CN";
         	Translator translator = new Translator();
+        	
         	//Recommendation
         	String[] menu = inputData.split(",");
         	List<Dish> dishes = new ArrayList<Dish>();
@@ -368,21 +448,110 @@ public class KitchenSinkController {
         	
         	String motivation = recommend.motivationMessage();
         	String reply_msg = "Recommended dishes in best to least:\n";
-        	for(Dish d: recommended_dishes)
-        	{	if(d.getCalories()!=0)
-        			{reply_msg = reply_msg + d.getName() + "  " + d.getpropCalories() + "\n";}
+
+        	
+        	//*********************************************************************
+		DecimalFormat df = new DecimalFormat("#.#");
+
+        	String imageUrl = createUri("/static/buttons/final.png");
+        	List<CarouselColumn> dishlist = new ArrayList<CarouselColumn>();
+        	for(Dish d: recommended_dishes) {
+        		if(d.getCalories()!=0)
+        		{dishlist.add(new CarouselColumn(imageUrl,d.getName(),d.getpropCalories()+" "+d.getCalories()+" "+df.format(d.getPortion()), Arrays.asList(
+                        new PostbackAction("Choose", d.getName()+" confirmed"+ "\n\n" + translator.translate(fromLang, toLang, d.getName()) + "\n\n"+ motivation +" "+ String.valueOf(d.getCalories())))));
+        		}
         	}
-        	this.replyText(replyToken, reply_msg + "User reqcalday:"+ curr_user.getCalDay() + "\n\n" + translator.translate(fromLang, toLang, reply_msg) + "\n\n"+ motivation);
-        	break;
-        }
+        CarouselTemplate carouselTemplate = new CarouselTemplate(dishlist);
+        TemplateMessage templateMessage = new TemplateMessage("Carousel alt text", carouselTemplate);
+        this.reply(replyToken, templateMessage);
+        recomDB.useStoredCal(userId);
+        break;
+        	
+//        	
+//        CarouselTemplate carouselTemplate = new CarouselTemplate(
+//        Arrays.asList(
+//    				new CarouselColumn(imageUrl,"Chicken with rice","xx", Arrays.asList(
+//                  new PostbackAction("Choose", "Dish confirmed"))),
+//                  new CarouselColumn(imageUrl,"Noodles and soup", "xx",Arrays.asList(
+//                  new PostbackAction("Choose", "Dish confirmed")))));
+//             TemplateMessage templateMessage = new TemplateMessage("Carousel alt text", carouselTemplate);
+//             this.reply(replyToken, templateMessage);
+//         break;
+//        	for(Dish d: recommended_dishes)
+//        	{
+//        		reply_msg = reply_msg + d.getName() + "  " + d.getpropCalories() +  "  " + d.getCalories()+"  " + d.getPortion() + "\n";
+//        	}
+//        	this.replyText(replyToken, reply_msg + "User reqcalday:"+ curr_user.getCalDay() + "\n\n" + translator.translate(fromLang, toLang, reply_msg) + "\n\n"+ motivation);    	
+        }        
+        case "json": {
+        	JsonTest jst = new JsonTest();
+    		String userId = event.getSource().getUserId();
+    		Dish[] dishes2 = jst.getJSONlistweb(inputData.trim());
+//???        	
+        	if( (inputData.equals("Cafe")) || (inputData.equals("Bistro")) || (inputData.equals("Subway")) || (inputData.equals("LSK")) || (inputData.equals("LG7")))
+			{
+				String location_dishes = recomDB.giveVegDishes(inputData);
+				this.replyText(replyToken, location_dishes);
+				break;
+			}
+        	
+            String fromLang = "en";
+            String toLang = "zh-CN";
+        	Translator translator = new Translator();
+        	
+        	//Recommendation
+        	
+        	Dish[] final_dishes = recomDB.findCaloricContent(dishes2);
+        	User curr_user = database.getUserRecord(userId);
+//        	String[] a = curr_user.getRestrictions().split(",");
+        	
+        	Recommendation recommend = new Recommendation(curr_user, final_dishes);
+//        	log.info("inputted dishes: "+recommend.getInputDishes());
+        	Dish[] recommended_dishes;
+        	//vege function
+        	if(command.equals("vege")) {
+        		
+        		recommended_dishes = recommend.getVegRecommendedDishes();
+        		
+        	}
+        	else {
+        		
+            	recommended_dishes = recommend.getRecommendedDishes();
+
+        	}
+        	
+        	String motivation = recommend.motivationMessage();
+        	String reply_msg = "Recommended dishes in best to least:\n";
+        	
+        	//*********************************************************************
+		DecimalFormat df = new DecimalFormat("#.#");
+
+        	String imageUrl = createUri("/static/buttons/final.png");
+        	List<CarouselColumn> dishlist = new ArrayList<CarouselColumn>();
+        	for(Dish d: recommended_dishes) {
+        		if(d.getCalories()!=0) {
+        		dishlist.add(new CarouselColumn(imageUrl,d.getName(),d.getpropCalories()+" "+d.getCalories()+" "+df.format(d.getPortion()), Arrays.asList(
+                        new PostbackAction("Choose", d.getName()+" confirmed"+ "\n\n" + translator.translate(fromLang, toLang, d.getName()) + "\n\n"+ motivation +" "+ String.valueOf(d.getCalories())))));
+        	}
+        		}
+        CarouselTemplate carouselTemplate = new CarouselTemplate(dishlist);
+        TemplateMessage templateMessage = new TemplateMessage("Carousel alt text", carouselTemplate);
+        this.reply(replyToken, templateMessage);
+        recomDB.useStoredCal(userId);
+        break;
+	    }
+
         
         case "translate": {
         	String userId = event.getSource().getUserId();
             String fromLang = "en";
             String toLang = "zh-CN";
         	Translator translator = new Translator();
-        this.replyText(replyToken, translator.translate(fromLang, toLang, inputData));        	
+        	
+       this.replyText(replyToken, translator.translate(fromLang, toLang, inputData));        	
         	break;
+        
+        
         }
         
 
@@ -400,7 +569,99 @@ public class KitchenSinkController {
                 this.reply(replyToken, templateMessage);
                 break;
             }
+
+        case "Motivation" : {
+        		Random rand = new Random();
+        		String[] msgs = {"Good progress! One more step towards a healthier lifestyle", "Add oil!", "Strive for progress, not perfection", "The struggle you're in today is developing the strength you need for tomorrow", "Yes, you can! The road may be bumpy, but stay committed to the process.", "Making excuses burns 0 calories per hour."};
+        		int  n = rand.nextInt(6);
+        		this.replyText(replyToken,msgs[n]);    
+        		break;
+          }
         
+        
+//        case "json": {
+//	        	JSON_Conversion obj1= new JSON_Conversion();
+//	        	String jsonStr = inputData;
+//	//        	String jsonStr = "{\"userInput\": [{\r\n\t\"name\":\"Spicy Bean curd with Minced Pork served with Rice\",\r\n\t\"price\":35,\r\n\t\"ingredients\":[\"Pork\",\"Bean curd\",\"Rice\"]\r\n},\r\n{\r\n\t\"name\":\"Sweet and Sour Pork served with Rice\",\r\n\t\"price\":36,\r\n\t\"ingredients\":[\"Pork\",\"Sweet and Sour Sauce\",\"Pork\"]\r\n},\r\n{\r\n\t\"name\":\"Chili Chicken on Rice\",\r\n\t\"price\":28,\r\n\t\"ingredients\":[\"Chili\",\"Chicken\",\"Rice\"]\r\n}]}";
+//	        	this.replyText(replyToken, obj1.ResultJSON(jsonStr));
+//	        	break;
+//        }
+//        
+        case "friend": {
+	    		int MAX_QUANT_COUPON = 4999;
+	    	 	int couponQuant = icedb.getCouponNumber();
+		    		if (couponQuant > MAX_QUANT_COUPON ) {
+		    	 		this.replyText(replyToken,"Sorry, this promotion is no longer available!");
+		    	 		break;
+		    		}
+	    	 	String userId = event.getSource().getUserId();
+	    	 	String code = icedb.saveCouponCode(userId);
+	    	 	if (code == "404")
+	    	     	this.replyText(replyToken,"We cannot currently generate a code, please try again later.");    	 	
+	    	 	else 
+	    	 		this.replyText(replyToken,"Your code is " + code);
+	
+	 		break;
+    }
+        
+        case "code": {
+	    	 	String userId = event.getSource().getUserId();
+	    	 	boolean isOldUser = icedb.isOldUser(userId);
+	    	 	if (isOldUser) {
+        			this.replyText(replyToken, "Sorry, you are not eligible for this promotion.");
+        			break;
+	    	 	}
+        		boolean userRedeemed = icedb.hasUserRedeemed(userId);
+        		if (userRedeemed)  {
+        			this.replyText(replyToken, "Sorry, you have already redeemed a code.");
+        			break;
+        		}
+        		
+
+	     	boolean valid = icedb.isValidCode(inputData);
+	     	
+	     	if (valid == false) {
+	     		this.replyText(replyToken, "Sorry, the entered code " + inputData + " is invalid. Try again");
+	     		break;
+	     	}
+	     	
+    	 		String recommendUserId = icedb.getRecommenderUserID(inputData);
+	     	boolean redeemed = icedb.redeemCode(inputData, userId);
+
+	     	if (redeemed) {
+	            String imageUrl = createUri("/static/buttons/ice.jpg");
+	            CarouselTemplate carouselTemplate = new CarouselTemplate(
+	            Arrays.asList(
+	               new CarouselColumn(imageUrl, "Congratulations", "The coupon " + inputData + " has been redeemed!", Arrays.asList(
+	                      new MessageAction("Accept","Thank you!")))));
+	                 TemplateMessage templateMessage = new TemplateMessage("Carousel alt text", carouselTemplate);
+	                 this.reply(replyToken, templateMessage);	     	
+
+	                 // try to push message to old user
+//	                	TextMessage textMessage = new TextMessage("Thank you for your recommendation, your friend has redeemed your code!");
+	                	PushMessage pushMessage = new PushMessage(recommendUserId, templateMessage);
+	                	try {
+	                	Response<BotApiResponse> response =
+	                	        LineMessagingServiceBuilder
+	                	                .create("CJo3Ka/VX7VW4fsG78i5dNDpP5qqYgr1PD7YUclFFc62ZtnrIpHiM/Muof6oLc/J/bPoaheiYdHNoUkg09kAt5VqnD+tMyzOCClGLwvJaR3+etoVOdsHo1DGXv2UqOljNgUIFR/zQWk1U4iFRPr4TQdB04t89/1O/w1cDnyilFU=") // channel access token
+	                	                .build()
+	                	                .pushMessage(pushMessage)
+	                	                .execute();
+	                	}
+	                	catch (Exception e) {
+	                		e.printStackTrace();
+	                	}
+	                	break;              
+	     	}
+	     	
+	     	else 
+	     		this.replyText(replyToken, "Sorry, the code " + inputData + " has already been redeemed!");
+	     	// hopefully it works
+	     	break;
+    }
+
+
+
 
             default:{
 
@@ -408,6 +669,7 @@ public class KitchenSinkController {
                         replyToken,
                         "this is default"
                 );
+
                 break;
             }
         }
@@ -453,13 +715,11 @@ public class KitchenSinkController {
 	}
 
 
-	
-
-
 	public KitchenSinkController() {
 		database = new UserInputDatabaseEngine();
 		itscLOGIN = System.getenv("ITSC_LOGIN");
 		recomDB = new RecommendationDatabaseEngine();
+		icedb = new CouponDatabaseEngine();
 	}
 
 	private String itscLOGIN;

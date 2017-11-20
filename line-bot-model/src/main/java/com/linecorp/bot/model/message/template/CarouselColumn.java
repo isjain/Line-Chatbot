@@ -53,7 +53,7 @@ public class CarouselColumn {
      * Max: 120 characters (no image or title)<br>
      * Max: 60 characters (message with an image or title)
      */
-    private final String text;
+   private final String text;
 
     /**
      * Action when tapped(Max: 3)
@@ -71,4 +71,14 @@ public class CarouselColumn {
         this.text = text;
         this.actions = actions != null ? actions : Collections.emptyList();
     }
+    
+//    @JsonCreator
+//    public CarouselColumn(
+//            @JsonProperty("title") String title,
+//            @JsonProperty("actions") List<Action> actions) {
+//        this.thumbnailImageUrl = null;
+//        this.title = title;
+//        this.text = null;
+//        this.actions = actions != null ? actions : Collections.emptyList();
+//    }
 }

@@ -51,7 +51,9 @@ import com.example.bot.spring.DatabaseEngine;
 public class KitchenSinkTester {
 	@Autowired
 	private UserInputDatabaseEngine databaseEngine;
+
 	private RecommendationDatabaseEngine recomDB;
+
 //	@Test
 //	public void testNotFound() throws Exception {
 //		boolean thrown = false;
@@ -63,6 +65,7 @@ public class KitchenSinkTester {
 //		}
 //		assertThat(thrown).isEqualTo(true);
 //	}
+
 //	
 //	@Test
 //	public void testFound2() throws Exception {
@@ -104,6 +107,19 @@ public class KitchenSinkTester {
 ////		assertThat(recommended_dishes[0].getName()).isEqualTo("apples");
 ////		assertThat(recommended_dishes[1].getName()).isEqualTo("noodles and soup");
 ////		assertThat(recommended_dishes[2].getName()).isEqualTo("green salad");
+//	}
+	
+//	@Test
+//	public void testFound2() throws Exception {
+//		boolean thrown = false;
+//		String result = null;
+//		try {
+//			result = this.databaseEngine.search("Hi");
+//		} catch (Exception e) {
+//			thrown = true;
+//		}
+//		assertThat(!thrown).isEqualTo(true);
+//		assertThat(result).isEqualTo("Hey, how things going?");
 //	}
 	
 	@Test

@@ -1,11 +1,9 @@
 package com.example.bot.spring;
-
+import org.springframework.boot.SpringApplication;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;  
 import java.util.*;
-
-
 public class Dish {
 
 	private String dishId;
@@ -15,15 +13,19 @@ public class Dish {
 	private String sodium;
 	private String fatty_acids;
 	private double weight;
+	private double portion;
 
 	public Dish(String name) {
 		this.dishId = null;
-		this.name = name;
+		if(name.length()<41)
+			this.name = name;
+		else
+			this.name = name.substring(0,40);
     		this.keywords = name.toLowerCase().split(" ");
     		cleanKWORDS();    		
 		this.calories = 0;
 		this.weight = 0;
-		
+		this.portion = 1;		
 	}	
 	public Dish(Dish dishes) {
 		this.dishId = dishes.dishId;
@@ -37,8 +39,11 @@ public class Dish {
     		}
 		this.calories = dishes.calories;
 		this.weight = dishes.weight;	
+		this.portion = dishes.portion;	
+
 	}	
 	public void cleanKWORDS() {	
+		
 		ArrayList<String> words = new ArrayList<String>();
 		words.add("the");
 		words.add("and");
@@ -62,6 +67,9 @@ public class Dish {
 	public double getCalories() {
 		return calories;
 	}
+	public double getWeight() {
+		return weight;
+	}
 	//return calories per 600 gms of the food item
 	public double getpropCalories() {
 		return ((calories/weight)*600);
@@ -69,12 +77,17 @@ public class Dish {
 	public String getName() {
 		return name;
 	}
+	public double getPortion() {
+		return portion;
+	}
 	public String[] getKeywords() {
 		return keywords;
 	}
-	
 	public void setDishId(String id) {
 		this.dishId = id;
+	}
+	public void setPortion(double portion) {
+		this.portion = portion;
 	}
 	public void setCalories(double cal) {
 		this.calories = cal;
