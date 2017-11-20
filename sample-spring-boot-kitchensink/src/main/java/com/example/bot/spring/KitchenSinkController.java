@@ -340,7 +340,7 @@ public class KitchenSinkController {
         case "gender": {
         	inputData=inputData.toLowerCase();
         	inputData=inputData.trim();
-        	if (inputData!="male" && inputData!="female")
+        	if (inputData.equals("male")!=true && inputData.equals("female")!=true)
         	{
         		this.replyText(replyToken,"Please enter either male or female");
         		break;
