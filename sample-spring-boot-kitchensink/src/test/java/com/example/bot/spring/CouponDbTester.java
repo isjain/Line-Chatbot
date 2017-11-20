@@ -56,7 +56,7 @@ public class CouponDbTester {
 	
 	// not a CouponDb but still why not
 	@Test
-public void waterReminderCorrectInput() {  
+public void waterReminderCorrectInputtest() {  
 		KitchenSinkController ks = new KitchenSinkController();
 		ks.setWaterReminder("1", "Uc748ae75a91014989d8664a356ffab8d");
 		assertThat(true);
@@ -64,7 +64,25 @@ public void waterReminderCorrectInput() {
 	
 	
 	@Test
-public void waterReminderLineClientTestWrongInput() {  
+public void waterReminderLineClientTestWrongInputtest() {  
+		KitchenSinkController ks = new KitchenSinkController();
+		ks.setWaterReminder("0", "Uc748ae75a91014989d8664a356ffab8d");
+		assertThat(true);
+	}
+	
+	@Test	
+
+	// isNotOldUser
+public void isOldUsertest() {  
+	// uday = old user
+				assertThat(this.databaseEngine.isOldUser("U633c7e32ccc0a6b09902d22791eddce8")).isEqualTo(true);		// Uday
+				assertThat(this.databaseEngine.isOldUser("Uc6f9f762ebd52e0abedea651e2982b3c")).isEqualTo(false);		// Irene
+
+}
+	
+
+	@Test
+public void isredeemedtest() {  
 		KitchenSinkController ks = new KitchenSinkController();
 		ks.setWaterReminder("0", "Uc748ae75a91014989d8664a356ffab8d");
 		assertThat(true);
@@ -72,11 +90,72 @@ public void waterReminderLineClientTestWrongInput() {
 	
 	
 	
+//	
+//	@Test
+//public void redeemnowtest() {  
+//		KitchenSinkController ks = new KitchenSinkController();
+//		ks.setWaterReminder("0", "Uc748ae75a91014989d8664a356ffab8d");
+//		assertThat(true);
+//	}
+//	
+//	
+//	@Test
+//public void hasuserredeemedbeforetest() {  
+//		KitchenSinkController ks = new KitchenSinkController();
+//		ks.setWaterReminder("0", "Uc748ae75a91014989d8664a356ffab8d");
+//		assertThat(true);
+//	}
+//	
+//	@Test
+//public void getrecommenderuseridtest() {  
+//		KitchenSinkController ks = new KitchenSinkController();
+//		ks.setWaterReminder("0", "Uc748ae75a91014989d8664a356ffab8d");
+//		assertThat(true);
+//	}
+//	
+//	@Test
+//public void isvalidcodetest() {  
+//		KitchenSinkController ks = new KitchenSinkController();
+//		ks.setWaterReminder("0", "Uc748ae75a91014989d8664a356ffab8d");
+//		assertThat(true);
+//	}
+//	
+//	@Test
+//public void checkredeemedtest() {  
+//		KitchenSinkController ks = new KitchenSinkController();
+//		ks.setWaterReminder("0", "Uc748ae75a91014989d8664a356ffab8d");
+//		assertThat(true);
+//	}
+//	
+//	@Test
+//public void saveCouponTest() {  
+//		KitchenSinkController ks = new KitchenSinkController();
+//		ks.setWaterReminder("0", "Uc748ae75a91014989d8664a356ffab8d");
+//		assertThat(true);
+//	}
+//	
+//	@Test
+//public void getCouponNumberTest() {  
+//		KitchenSinkController ks = new KitchenSinkController();
+//		ks.setWaterReminder("0", "Uc748ae75a91014989d8664a356ffab8d");
+//		assertThat(true);
+//	}
+//	
+//	@Test
+//public void getCouponNumberTest() {  
+//		KitchenSinkController ks = new KitchenSinkController();
+//		ks.setWaterReminder("0", "Uc748ae75a91014989d8664a356ffab8d");
+//		assertThat(true);
+//	}
+//	
+//	@Test
+//public void generateCouponNumberTest() {  
+//		KitchenSinkController ks = new KitchenSinkController();
+//		ks.setWaterReminder("0", "Uc748ae75a91014989d8664a356ffab8d");
+//		assertThat(true);
+//	}	
 	
 	
-	
-	
-
 //	@Test
 //	public void testNotFound() throws Exception {
 //		boolean thrown = false;
@@ -88,19 +167,7 @@ public void waterReminderLineClientTestWrongInput() {
 //		}
 //		assertThat(thrown).isEqualTo(true);
 //	}
-//	
-//	@Test
-//	public void testFound2() throws Exception {
-//		boolean thrown = false;
-//		String result = null;
-//		try {
-//			result = this.databaseEngine.search("Hi");
-//		} catch (Exception e) {
-//			thrown = true;
-//		}
-//		assertThat(!thrown).isEqualTo(true);
-////		assertThat(result).isEqualTo("Hey, how things going?");
-//	}
+
 //	
 //	@Test
 //	public void testFound() throws Exception {
