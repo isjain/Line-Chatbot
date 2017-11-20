@@ -721,15 +721,34 @@ public class KitchenSinkController {
 
 
 
-            default:{
+        default:{
+//    		String reply_text="this is default";
+    		String reply_text="Incorrect input! Please write your message in the following format:"+"\n"+
+    				"Start:<string>"+"\n"+
+    				"Profile:<string>"+"\n"+
+    				"Name:<string>"+"\n"+
+    				"Gender:<male/female>"+"\n"+
+    				"Weight:<float(kg)>"+"\n"+
+   				"Height:<float(cm)>"+"\n"+
+   				"Age:<int(years)>"+"\n"+
+   				"loseGainPerWeek:<(+/-)float>"+"\n"+
+   				"Restrictions:<ingredient,ingredient>"+"\n"+
+   				"waterMe:<integer>"+"\n"+
+   				"gymFrequency:<integer>"+"\n"+
+   				"vege:<Bistro/LSK/Cafe/LG7/Subway>"+"\n"+
+   				"vege:<dish name,dish name>"+"\n"+
+   				"recommend:<dish name,dish name>"+"\n"+
+   				"json:<url>"+"\n"+
+   				"friend:<string>"+"\n"+
+   				"code:<code>";
 
-                this.replyText(
-                        replyToken,
-                        "Invalid input. Please enter one of the following options - \nStart:x to create a new user \nProfile:x to retrieve user profile \nName:x to set x as the user name \nWeight:x, Height:x, Age:x, "
-                );
+        this.replyText(
+                replyToken,
+                reply_text
+        );
 
-                break;
-            }
+        break;
+    }
         }
     }
 	
