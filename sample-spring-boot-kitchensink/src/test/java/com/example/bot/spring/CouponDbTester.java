@@ -80,13 +80,14 @@ public void isOldUsertest() {
 
 }
 	
+	
 
-//	@Test
-//public void isredeemedtest() {  
-//		KitchenSinkController ks = new KitchenSinkController();
-//		ks.setWaterReminder("0", "Uc748ae75a91014989d8664a356ffab8d");
-//		assertThat(true);
-//	}
+	@Test
+public void checkRedeemedtest() {  
+		KitchenSinkController ks = new KitchenSinkController();
+		ks.setWaterReminder("0", "Uc748ae75a91014989d8664a356ffab8d");
+		assertThat(true);
+	}
 //	
 //	@Test
 //public void redeemnowtest() {  
