@@ -41,8 +41,7 @@ public class Recommendation{
 					tempo.add(inputDishes[i]);
 				}
 			rDishes = tempo.toArray(new Dish[tempo.size()]);
-//			rDishes[i] = new Dish(inputDishes[i]);
-//			rDishes = inputDishes.clone();
+
 			double reqcal  = Double.parseDouble(inputUser.getCalDay());
 			double mealcal = reqcal/3;
 		    // Below lines are similar to insertion sort
